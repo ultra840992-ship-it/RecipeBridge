@@ -236,7 +236,10 @@ def load_agent_multi_profile(agent_key):
         return (
             "You must strictly follow the character role, user context, rules, and memory provided below.\n\n"
             + "\n\n".join(merged_prompts)
-            + "\n\nCRITICAL RULE: Always speak in Korean, maintaining the specified tone and character of this profile."
+            + "\n\nCRITICAL RULE: Always speak in Korean, maintaining the specified tone and character of this profile.\n"
+            + "SYSTEM OPTIMIZATION: 너는 문제를 해결하기 위해 필요한 최소한의 코드 실행과 도구 호출만 수행해야 한다. "
+            + "중간 과정의 불필요한 설명(Chain of Thought)은 출력하지 말고 결과 위주로 간결하게 추론해라. "
+            + "또한 다음 에이전트에게 전달될 상태나 결과는 최소한의 핵심 요약 형태로만 전달해라."
         )
     else:
         return FALLBACK_SYSTEM_PROMPTS.get(agent_key, FALLBACK_SYSTEM_PROMPTS["aegis"])
@@ -472,71 +475,45 @@ title: "{title}"
 
 
     def generate_live_replies_pack(self, agent_key, message):
-        """요청 타입(1:1 혹은 group 협업)에 맞춰 라이브 응답 리스트 반환 (MIT Reflection 추가)"""
+        """요청 타입(1:1 혹은 group 협업)에 맞춰 라이브 응답 리스트 반환 (Orchestrator Router 반영)"""
         if agent_key != "group":
             # 1:1 대화일 때는 싱글 리플라이 팩 구성
             text = self.call_gemini_api(agent_key, message)
             return [{"agent": agent_key, "text": text}]
         else:
-            # 협업방(group)일 때는 오토 핸드오프 회의 체인 기동 (Reflection Loop 융합)
-            print("[Group Chat] 6인 에이전트 자발적 연쇄 회의 시작 (Reflection)...")
+            # 협업방(group)일 때는 경량화된 라우터가 필수 에이전트만 호출
+            print("[Group Chat] Orchestrator Router 가동 중...")
+            router_prompt = (
+                f"사용자의 다음 지시를 분석하여 이를 해결하기 위해 꼭 필요한 에이전트 이름(들)만 콤마로 구분해서 대답해라. "
+                f"선택 가능한 에이전트: [aegis, nova, vivid, bitz, echo, carey]. "
+                f"불필요한 설명 없이 이름만 출력해라. 예: aegis, bitz\n\n지시: {message}"
+            )
+            # 마스터(Aegis)를 라우터로 활용
+            router_response = self.call_gemini_api("aegis", router_prompt)
+            agents = ["aegis", "nova", "vivid", "bitz", "echo", "carey"]
+            selected_agents = [x.strip().lower() for x in router_response.split(",") if x.strip().lower() in agents]
+            
+            if not selected_agents:
+                selected_agents = ["aegis"] # fallback
+            
+            print(f"[Orchestrator] 선택된 에이전트: {selected_agents}")
+            
             replies = []
             accumulated_context = f"사장님의 지시: {message}\n\n"
             
-            # 1. Aegis: 회의 소집
-            aegis_prompt = f"사장님께서 다음 지시를 내려 회의를 소집하셨습니다: '{message}'. 마스터로서 회의의 시작을 선언하고 안건을 간략히 정리해 Nova에게 마이크를 넘겨주세요."
-            aegis_reply = self.call_gemini_api("aegis", aegis_prompt)
-            replies.append({"agent": "aegis", "text": aegis_reply})
-            accumulated_context += f"[Aegis 발언]\n{aegis_reply}\n\n"
+            for ag in selected_agents:
+                prompt = f"{accumulated_context}\n위의 진행 상황을 참고하여 너의 역할을 수행하고, 다음 에이전트가 알 수 있도록 핵심 결과만 짧게(JSON 또는 불릿포인트) 요약해서 반환해라."
+                reply = self.call_gemini_api(ag, prompt)
+                replies.append({"agent": ag, "text": reply})
+                accumulated_context += f"[{ag.upper()} 요약]\n{reply}\n\n"
             
-            # 2. Nova: 기획 아이디어 제시
-            nova_prompt = f"{accumulated_context}마스터 Aegis의 지시를 수용하여, 사장님의 과제에 부합하는 취업 시장 고통 극복용 '블라인드 프로젝트 인증 플랫폼' 기획안/아이디어를 제안해 주세요. 발언 완료 후 Vivid에게 디자인 스펙을 부탁하며 마이크를 넘기세요."
-            nova_reply = self.call_gemini_api("nova", nova_prompt)
-            replies.append({"agent": "nova", "text": nova_reply})
-            accumulated_context += f"[Nova 발언]\n{nova_reply}\n\n"
+            # 마지막 마스터(Aegis)의 총괄 보고 (선택된 에이전트들에 Aegis가 없을 경우 추가)
+            if "aegis" not in selected_agents:
+                summary_prompt = f"모든 토론이 종료되었습니다. 최종 요약 브리핑과 사장님 결재안을 신뢰감 있게 보고해 주세요.\n\n누적 회의록:\n{accumulated_context}"
+                summary_reply = self.call_gemini_api("aegis", summary_prompt)
+                replies.append({"agent": "aegis", "text": summary_reply})
             
-            # 3. Vivid: 디자인 방향 제안
-            vivid_prompt = f"{accumulated_context}기획자 Nova의 아이디어를 시각화하기 위한 프리미엄 크림 라이트 테마 및 글래스모피즘 디자인 토큰(CSS 변수 적용안)을 제안해 주세요. 발언 완료 후 Bitz에게 코드 구현 방식을 조언해 달라고 하며 마이크를 넘기세요."
-            vivid_reply = self.call_gemini_api("vivid", vivid_prompt)
-            replies.append({"agent": "vivid", "text": vivid_reply})
-            accumulated_context += f"[Vivid 발언]\n{vivid_reply}\n\n"
-            
-            # 4. Bitz: 1차 개발 구현 설계
-            bitz_prompt = f"{accumulated_context}디자이너 Vivid의 스펙 가이드를 담을 프론트엔드/백엔드 API 연동 구조와 토큰 절약 최적화 개발 1차 방안을 설계해 주세요. 발언 후 마스터 Aegis에게 검수를 요청하며 마이크를 넘기세요."
-            bitz_reply = self.call_gemini_api("bitz", bitz_prompt)
-            replies.append({"agent": "bitz", "text": bitz_reply})
-            accumulated_context += f"[Bitz 1차 발언]\n{bitz_reply}\n\n"
-            
-            # 5. ★ [MIT Reflection] Aegis: 딴지 및 1차 비판 (Critic)
-            aegis_critique_prompt = f"{accumulated_context}Bitz가 작성한 1차 개발 명세와 소스에 대해 예외 처리 미흡, 토큰 비효율 등의 결점을 매섭게 지적하고(Critic) 수정 가이드를 내려주세요. 발언 후 Bitz에게 마이크를 넘기며 수정을 요구하세요."
-            aegis_critique = self.call_gemini_api("aegis", aegis_critique_prompt)
-            replies.append({"agent": "aegis", "text": f"[마스터 크리틱]\n{aegis_critique}"})
-            accumulated_context += f"[Aegis 크리틱 발언]\n{aegis_critique}\n\n"
-
-            # 6. ★ [Reflection 반영] Bitz: 2차 최종 보완 설계
-            bitz_prompt_2 = f"{accumulated_context}마스터 Aegis의 지적(크리틱) 사항을 적극적으로 반영하여, 예외 처리와 효율성이 보강된 2차 최종 구현 코드를 완성해 주세요. 발언 후 Echo에게 마케팅 방안을 질문하며 마이크를 넘기세요."
-            bitz_reply_2 = self.call_gemini_api("bitz", bitz_prompt_2)
-            replies.append({"agent": "bitz", "text": f"[최종 코드 반영]\n{bitz_reply_2}"})
-            accumulated_context += f"[Bitz 2차 최종 발언]\n{bitz_reply_2}\n\n"
-            
-            # 7. Echo: 마케팅 SEO 및 CS Carey 연계
-            echo_prompt = f"{accumulated_context}개발 완료된 최종 릴리즈를 참고하여, 이 플랫폼을 바이럴할 수 있는 구글 서치 콘솔 SEO 키워드 및 카드뉴스 문구 시안을 잡으세요. 마지막으로 CS 담당 Carey에게 고객 불만 및 퍼널 이탈 방어 방안을 요청하며 마이크를 넘기세요."
-            echo_reply = self.call_gemini_api("echo", echo_prompt)
-            replies.append({"agent": "echo", "text": echo_reply})
-            accumulated_context += f"[Echo 발언]\n{echo_reply}\n\n"
-
-            # 8. Carey: CS 지표 및 에스컬레이션 정리
-            carey_prompt = f"{accumulated_context}마케터 Echo의 바이럴 키워드 유입 이후, 가입 페이지에서 나타날 수 있는 이탈 병목 방지 메일링 방안과 고객 불만 대응 티켓 구조를 제안해 주세요. 마지막으로 마스터 Aegis에게 최종 승인 검수를 위해 보고하며 마이크를 반납하세요."
-            carey_reply = self.call_gemini_api("carey", carey_prompt)
-            replies.append({"agent": "carey", "text": carey_reply})
-            accumulated_context += f"[Carey 발언]\n{carey_reply}\n\n"
-            
-            # 9. Aegis: 회의 총괄 요약 브리핑 및 대표 보고
-            aegis_summary_prompt = f"모든 토론(Reflection 피드백 루프 포함)이 종료되었습니다. 최종 요약 브리핑과 사장님 결재안을 신뢰감 있게 보고해 주세요.\n\n누적 회의록:\n{accumulated_context}"
-            aegis_summary_reply = self.call_gemini_api("aegis", aegis_summary_prompt)
-            replies.append({"agent": "aegis", "text": aegis_summary_reply})
-            
-            print(f"[Group Chat] 6인 에이전트 리플렉션 토론 완료. 총 {len(replies)}개 발언 생성 완료.")
+            print(f"[Group Chat] 라우팅 기반 리플렉션 완료. 총 {len(replies)}개 발언 생성 완료.")
             return replies
 
     def call_gemini_api(self, agent_key, message):
@@ -563,24 +540,75 @@ title: "{title}"
             except Exception as e:
                 print(f"[Context Load Error] {e}")
 
-        # API 호환성을 극대화하기 위해 시스템 프롬프트를 메시지 본문에 결합
-        full_prompt = f"{system_instruction}{recent_context}\n\nUser 지시사항:\n{message}"
+        full_system_prompt = f"{system_instruction}{recent_context}"
         
-        url = f"https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key={api_key}"
-        payload = {
-            "contents": [{
-                "parts": [{"text": full_prompt}]
-            }],
-            "generationConfig": {
-                "temperature": 0.7,
-                "maxOutputTokens": 4000
+        # ── Context Caching 적용 (최소 4000토큰/32k 제한 우회용 Fallback 포함) ──
+        global CACHE_STORE
+        if 'CACHE_STORE' not in globals():
+            CACHE_STORE = {}
+            
+        import datetime
+        now = datetime.datetime.now()
+        cache_info = CACHE_STORE.get(agent_key)
+        cached_name = None
+        
+        if cache_info and cache_info.get("expiry") > now:
+            cached_name = cache_info["name"]
+        elif cache_info and cache_info.get("name") == "failed_too_short":
+            # 한 번 실패했던 에이전트는 당분간 시도 안함
+            cached_name = None
+        else:
+            cache_url = f"https://generativelanguage.googleapis.com/v1beta/cachedContents?key={api_key}"
+            cache_payload = {
+                "model": "models/gemini-1.5-flash-001",
+                "contents": [{"parts": [{"text": full_system_prompt}], "role": "user"}],
+                "ttl": "3600s"
             }
-        }
+            try:
+                cache_req = urllib.request.Request(cache_url, data=json.dumps(cache_payload).encode("utf-8"), headers={"Content-Type": "application/json"})
+                with urllib.request.urlopen(cache_req, timeout=10) as c_res:
+                    c_data = json.loads(c_res.read().decode("utf-8"))
+                    cached_name = c_data.get("name")
+                    CACHE_STORE[agent_key] = {"name": cached_name, "expiry": now + datetime.timedelta(minutes=55)}
+                    print(f"[Context Caching] Agent {agent_key} 캐시 생성 성공: {cached_name}")
+            except urllib.error.HTTPError as e:
+                # 400 Bad Request (토큰 수 미달) 방어
+                CACHE_STORE[agent_key] = {"name": "failed_too_short", "expiry": now + datetime.timedelta(minutes=55)}
+                cached_name = None
+            except Exception as e:
+                print(f"[Context Caching Error] {e}")
+                cached_name = None
+
+        gen_url = f"https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key={api_key}"
         
+        if cached_name and cached_name != "failed_too_short":
+            payload = {
+                "cachedContent": cached_name,
+                "contents": [{
+                    "parts": [{"text": f"User 지시사항:\n{message}"}],
+                    "role": "user"
+                }],
+                "generationConfig": {
+                    "temperature": 0.7,
+                    "maxOutputTokens": 4000
+                }
+            }
+        else:
+            payload = {
+                "contents": [{
+                    "parts": [{"text": f"{full_system_prompt}\n\nUser 지시사항:\n{message}"}],
+                    "role": "user"
+                }],
+                "generationConfig": {
+                    "temperature": 0.7,
+                    "maxOutputTokens": 4000
+                }
+            }
+            
         try:
             data = json.dumps(payload).encode("utf-8")
             req = urllib.request.Request(
-                url, data=data, headers={"Content-Type": "application/json"}
+                gen_url, data=data, headers={"Content-Type": "application/json"}
             )
             with urllib.request.urlopen(req, timeout=90) as res:
                 response = json.loads(res.read().decode("utf-8"))
