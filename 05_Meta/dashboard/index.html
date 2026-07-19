@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RecipeBridge AI Agent OS — Portal Dashboard</title>
+  <meta name="description" content="RecipeBridge 가상 AI 기업 오퍼레이팅 포털 대시보드">
+  <link rel="stylesheet" href="dashboard.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+
+  <!-- 설정 모달 -->
+  <div class="modal-overlay hidden" id="settingsModal">
+    <div class="modal-box">
+      <div class="modal-header">
+        <h3 class="modal-title">⚙️ 시스템 설정</h3>
+        <button class="modal-close" onclick="closeModal('settingsModal')">✕</button>
+      </div>
+      <div class="modal-body">
+        <p class="modal-desc">현재 RecipeBridge AI OS 백엔드 서버 주소 및 API 키를 확인합니다.</p>
+        <div class="setting-row">
+          <span class="setting-label">백엔드 API 주소</span>
+          <span class="setting-val">http://localhost:8000</span>
+        </div>
+        <div class="setting-row">
+          <span class="setting-label">Stitch 디자인 프로젝트</span>
+          <a href="https://stitch.withgoogle.com/projects/3948981696864625229" target="_blank" class="setting-link">Stitch 열기 →</a>
+        </div>
+        <div class="setting-row">
+          <span class="setting-label">대시보드 자동새로고침</span>
+          <span class="setting-val">30초</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 검색 모달 -->
+  <div class="modal-overlay hidden" id="searchModal">
+    <div class="modal-box">
+      <div class="modal-header">
+        <h3 class="modal-title">🔍 위키 검색</h3>
+        <button class="modal-close" onclick="closeModal('searchModal')">✕</button>
+      </div>
+      <div class="modal-body">
+        <input type="text" id="wikiSearchInput" placeholder="프로젝트, 개념, 에이전트 이름 검색..." class="modal-input">
+        <ul class="search-results" id="searchResults">
+          <li class="search-result-item" onclick="closeModal('searchModal');location.href='../../02_Wiki/projects/micro_project_recipe_platform.md'">📄 AI 레시피 기반 마이크로 프로젝트 기획서</li>
+          <li class="search-result-item" onclick="closeModal('searchModal');location.href='../../02_Wiki/projects/recipebridge_action_plan.md'">📄 RecipeBridge MVP Action List & 4주 로드맵</li>
+          <li class="search-result-item" onclick="closeModal('searchModal');location.href='../../02_Wiki/projects/recipebridge_multi_agent_setup.md'">📄 RecipeBridge 멀티 에이전트 운영 설계도</li>
+          <li class="search-result-item" onclick="closeModal('searchModal');location.href='chat.html'">💬 AI 에이전트 협업방 열기</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="dashboard-shell">
+
+    <!-- 좌측 글로벌 아이콘 내비바 -->
+    <nav class="icon-nav" aria-label="주 내비게이션">
+      <div class="icon-nav__brand" title="RecipeBridge AI OS">
+        <span class="brand-avatar">R</span>
+      </div>
+      <ul class="icon-nav__items">
+        <li>
+          <button class="icon-btn icon-btn--active" title="포털 대시보드" onclick="location.href='index.html'">
+            <svg width="20" height="20" fill="none" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1.5" fill="currentColor"/><rect x="14" y="3" width="7" height="7" rx="1.5" fill="currentColor"/><rect x="3" y="14" width="7" height="7" rx="1.5" fill="currentColor" opacity=".4"/><rect x="14" y="14" width="7" height="7" rx="1.5" fill="currentColor" opacity=".4"/></svg>
+          </button>
+        </li>
+        <li>
+          <button class="icon-btn" title="에이전트 협업방" onclick="location.href='chat.html'">
+            <svg width="20" height="20" fill="none" viewBox="0 0 24 24"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+        </li>
+        <li>
+          <button class="icon-btn" title="간트차트로 이동" onclick="document.getElementById('ganttSection').scrollIntoView({behavior:'smooth'})">
+            <svg width="20" height="20" fill="none" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2" stroke="currentColor" stroke-width="2"/><path d="M8 9h8M8 13h5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+          </button>
+        </li>
+        <li>
+          <button class="icon-btn" title="🏢 AI 메타버스 오피스" onclick="document.getElementById('metaverseSection').scrollIntoView({behavior:'smooth'})">
+            <svg width="20" height="20" fill="none" viewBox="0 0 24 24"><rect x="2" y="10" width="20" height="12" rx="2" stroke="currentColor" stroke-width="2"/><path d="M7 22V10M12 22V10M17 22V10M2 10l10-8 10 8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+        </li>
+        <li>
+          <button class="icon-btn" title="Stitch 디자인 에셋" onclick="window.open('https://stitch.withgoogle.com/projects/3948981696864625229','_blank')">
+            <svg width="20" height="20" fill="none" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="2"/><path d="M12 8v8M8 12h8" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+          </button>
+        </li>
+        <li>
+          <button class="icon-btn" title="위키 검색" onclick="openModal('searchModal')">
+            <svg width="20" height="20" fill="none" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8" stroke="currentColor" stroke-width="2"/><path d="M21 21l-4.35-4.35" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+          </button>
+        </li>
+      </ul>
+      <div class="icon-nav__bottom">
+        <button class="icon-btn" title="시스템 설정" onclick="openModal('settingsModal')">
+          <svg width="20" height="20" fill="none" viewBox="0 0 24 24"><path d="M12 15a3 3 0 100-6 3 3 0 000 6z" stroke="currentColor" stroke-width="2"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z" stroke="currentColor" stroke-width="2"/></svg>
+        </button>
+        <span class="offline-dot" id="serverStatusDot" title="서버 상태"></span>
+      </div>
+    </nav>
+
+    <!-- 메인 콘텐츠 -->
+    <main class="dashboard-main">
+
+      <!-- ① 히어로 섹션 — 영상 배경 + 로고 + 설명 -->
+      <section class="hero-section">
+        <!-- 배경 영상 -->
+        <video class="hero-video" autoplay muted loop playsinline>
+          <source src="A_cinematic_high_end_corporate.mp4" type="video/mp4">
+        </video>
+        <!-- 오버레이 -->
+        <div class="hero-overlay"></div>
+        <!-- 콘텐츠 -->
+        <div class="hero-content">
+          <img src="recipebridge_logo.jpg" alt="RecipeBridge Logo" class="hero-logo">
+          <div class="hero-text">
+            <h1 class="hero-title">RecipeBridge AI Portal</h1>
+            <p class="hero-subtitle">6인의 AI 에이전트 조직망 · 마스터 크리틱 루프 · 블라인드 경력 인증 플랫폼</p>
+            <div class="hero-actions-container">
+              <div class="hero-actions">
+                <button class="primary-portal-btn" onclick="location.href='chat.html'">💬 AI 협업 회의실 입장</button>
+                <button class="secondary-portal-btn" onclick="document.getElementById('ganttSection').scrollIntoView({behavior:'smooth'})">📊 진행 현황 보기</button>
+                <button class="ghost-portal-btn" onclick="window.open('https://stitch.withgoogle.com/projects/3948981696864625229','_blank')">🎨 Stitch 디자인</button>
+              </div>
+              <div class="hero-meta">
+                <span class="meta-tag">👤 Operator: Mathew Choi</span>
+                <span class="meta-tag">📅 Since 2026-07-18</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ② Aegis 업무 보고 위젯 (최우선 표시) -->
+      <section class="aegis-briefing-section" id="aegisBriefing">
+        <div class="aegis-briefing-card">
+          <div class="aegis-briefing__avatar-area">
+            <img src="aegis_avatar.jpg" alt="Aegis" class="aegis-avatar">
+            <div class="aegis-status-dot"></div>
+          </div>
+          <div class="aegis-briefing__content">
+            <div class="aegis-briefing__header">
+              <span class="aegis-badge">🛡️ Master Coordinator</span>
+              <span class="aegis-briefing__time" id="aegisBriefingTime">보고 대기 중...</span>
+            </div>
+            <p class="aegis-briefing__message" id="aegisBriefingMsg">
+              Aegis (이지스)가 현재 업무 진행 현황을 분석 중입니다. 잠시만 기다려 주십시오...
+            </p>
+            <button class="aegis-request-btn" id="aegisRequestBtn" onclick="requestAegisBriefing()">
+              📋 Aegis에게 현황 보고 요청
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- ③ 간트차트 — 최우선 섹션 -->
+      <section class="gantt-section" id="ganttSection">
+        <div class="section-header">
+          <h2 class="section-title">📅 MVP 4주 로드맵 — 에이전트별 업무 일정 & 진도율</h2>
+          <div class="gantt-legend">
+            <span class="legend-dot" style="background:#d4af37"></span><span>계획</span>
+            <span class="legend-dot" style="background:#3d8f5f"></span><span>완료</span>
+            <span class="legend-dot" style="background:#ba1a1a"></span><span>지연</span>
+            <span class="legend-dot today-line-legend"></span><span>오늘</span>
+          </div>
+        </div>
+        <div class="gantt-wrapper dashboard-card">
+          <div class="gantt-header-row">
+            <div class="gantt-agent-col">담당자</div>
+            <div class="gantt-weeks">
+              <div class="gantt-week" data-week="1">Week 1 <span>07/19–07/25</span></div>
+              <div class="gantt-week" data-week="2">Week 2 <span>07/26–08/01</span></div>
+              <div class="gantt-week" data-week="3">Week 3 <span>08/02–08/08</span></div>
+              <div class="gantt-week" data-week="4">Week 4 <span>08/09–08/15</span></div>
+            </div>
+          </div>
+          <div class="gantt-body" id="ganttBody">
+            <!-- JS로 동적 렌더링 -->
+          </div>
+          <!-- 오늘 기준선 -->
+          <div class="gantt-today-line" id="ganttTodayLine"></div>
+        </div>
+      </section>
+
+      <!-- ③-B 🏢 AI Agent Live Office & Controller -->
+      <section class="metaverse-section" id="metaverseSection">
+        <div class="section-header">
+          <h2 class="section-title">🏢 AI Agent Live Office — 실시간 메타버스 모니터링</h2>
+          <div class="office-header-controls">
+            <span class="office-status-lbl" id="officeStatusLbl">에이전트 현황 불러오는 중...</span>
+          </div>
+        </div>
+
+        <div class="metaverse-grid">
+
+          <!-- 좌: RPG 사무실 맵 -->
+          <div class="office-map-wrap dashboard-card">
+            <div class="office-map" id="officeMap">
+              <!-- 회의 테이블 영역 -->
+              <div class="office-room room-meeting" data-room="meeting">
+                <span class="room-label">👥 중앙 협업 테이블</span>
+              </div>
+              <!-- Aegis 실 -->
+              <div class="office-room room-aegis" data-room="aegis">
+                <span class="room-label">🛡️ Aegis 지휘실</span>
+                <div class="desk-icon">🖥️</div>
+              </div>
+              <!-- Nova 실 -->
+              <div class="office-room room-nova" data-room="nova">
+                <span class="room-label">💡 Nova 기획실</span>
+                <div class="desk-icon">📋</div>
+              </div>
+              <!-- Vivid 실 -->
+              <div class="office-room room-vivid" data-room="vivid">
+                <span class="room-label">🎨 Vivid 디자인실</span>
+                <div class="desk-icon">🖌️</div>
+              </div>
+              <!-- Bitz 실 -->
+              <div class="office-room room-bitz" data-room="bitz">
+                <span class="room-label">💻 Bitz 개발실</span>
+                <div class="desk-icon">⌨️</div>
+              </div>
+              <!-- Echo 실 -->
+              <div class="office-room room-echo" data-room="echo">
+                <span class="room-label">📢 Echo 마케팅룸</span>
+                <div class="desk-icon">📊</div>
+              </div>
+              <!-- Carey 실 -->
+              <div class="office-room room-carey" data-room="carey">
+                <span class="room-label">🎧 Carey CS 부스</span>
+                <div class="desk-icon">🎙️</div>
+              </div>
+              <!-- 라운지 -->
+              <div class="office-room room-lounge" data-room="lounge">
+                <span class="room-label">☕ 사내 라운지</span>
+                <div class="lounge-deco">🛋️ &nbsp; ☕</div>
+              </div>
+
+              <!-- 에이전트 아바타 토큰 (JS로 배치) -->
+              <div class="agent-token" id="token-aegis" data-agent="aegis" onclick="selectAgent('aegis')">
+                <img src="aegis_avatar.jpg" alt="Aegis">
+                <div class="agent-token__bubble" id="bubble-aegis"></div>
+                <span class="agent-token__name">Aegis</span>
+              </div>
+              <div class="agent-token" id="token-nova" data-agent="nova" onclick="selectAgent('nova')">
+                <img src="nova_avatar.jpg" alt="Nova">
+                <div class="agent-token__bubble" id="bubble-nova"></div>
+                <span class="agent-token__name">Nova</span>
+              </div>
+              <div class="agent-token" id="token-vivid" data-agent="vivid" onclick="selectAgent('vivid')">
+                <img src="vivid_avatar.jpg" alt="Vivid">
+                <div class="agent-token__bubble" id="bubble-vivid"></div>
+                <span class="agent-token__name">Vivid</span>
+              </div>
+              <div class="agent-token" id="token-bitz" data-agent="bitz" onclick="selectAgent('bitz')">
+                <img src="bitz_avatar.jpg" alt="Bitz">
+                <div class="agent-token__bubble" id="bubble-bitz"></div>
+                <span class="agent-token__name">Bitz</span>
+              </div>
+              <div class="agent-token" id="token-echo" data-agent="echo" onclick="selectAgent('echo')">
+                <img src="echo_avatar.jpg" alt="Echo">
+                <div class="agent-token__bubble" id="bubble-echo"></div>
+                <span class="agent-token__name">Echo</span>
+              </div>
+              <div class="agent-token" id="token-carey" data-agent="carey" onclick="selectAgent('carey')">
+                <img src="carey_avatar.jpg" alt="Carey">
+                <div class="agent-token__bubble" id="bubble-carey"></div>
+                <span class="agent-token__name">Carey</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- 우: 컨트롤러 + 에이전트 스펙 -->
+          <div class="controller-wrap">
+
+            <!-- ① 가동 중지 컨트롤러 -->
+            <div class="dashboard-card pause-controller-card">
+              <h3 class="card-title">⚡ 에이전트 가동 컨트롤러</h3>
+              <div class="pause-status-row">
+                <div class="pause-status-indicator" id="pauseStatusIndicator">
+                  <span class="status-dot" id="pauseStatusDot"></span>
+                  <span class="status-text" id="pauseStatusText">상태 확인 중...</span>
+                </div>
+                <button class="pause-toggle-btn" id="pauseToggleBtn" onclick="togglePause()">
+                  <span id="pauseBtnLabel">⏸ 가동 중지</span>
+                </button>
+              </div>
+              <p class="pause-desc">
+                에이전트를 일시 중지하면 모든 Gemini API 호출과 자동화 크론 루틴이 즉시 차단됩니다. 
+                토큰 사용 비용을 효율적으로 제어하세요.
+              </p>
+              <div class="pause-reason-row" id="pauseReasonRow" style="display:none">
+                <span class="pause-reason-lbl">중지 사유:</span>
+                <span class="pause-reason-val" id="pauseReasonVal"></span>
+              </div>
+              <div class="pause-paused-at-row" id="pauseAtRow" style="display:none">
+                <span class="pause-reason-lbl">중지 시각:</span>
+                <span class="pause-reason-val" id="pauseAtVal"></span>
+              </div>
+            </div>
+
+            <!-- ② 에이전트 MCP & API 스펙 보드 -->
+            <div class="dashboard-card spec-board-card">
+              <h3 class="card-title">🔌 에이전트 MCP · API 연동 명세</h3>
+              <p class="spec-board-hint">에이전트 아바타를 클릭하거나 탭을 선택하세요</p>
+              <div class="spec-tabs" id="specTabs">
+                <button class="spec-tab active" onclick="selectAgent('aegis')">🛡️ Aegis</button>
+                <button class="spec-tab" onclick="selectAgent('nova')">💡 Nova</button>
+                <button class="spec-tab" onclick="selectAgent('vivid')">🎨 Vivid</button>
+                <button class="spec-tab" onclick="selectAgent('bitz')">💻 Bitz</button>
+                <button class="spec-tab" onclick="selectAgent('echo')">📢 Echo</button>
+                <button class="spec-tab" onclick="selectAgent('carey')">🎧 Carey</button>
+              </div>
+              <div class="spec-detail" id="specDetail">
+                <!-- JS로 렌더링 -->
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </section>
+
+      <!-- ④ 통계 + 로그 그리드 -->
+      <div class="dashboard-grid">
+
+        <!-- 좌: 핵심 사업 + 사원 카드 -->
+        <div class="grid-left-col">
+
+          <div class="dashboard-card project-summary-card">
+            <h2 class="card-title">핵심 사업 정보</h2>
+            <div class="business-info">
+              <div class="business-badge">주력 사업</div>
+              <h3 class="business-title">AI 레시피 기반 신입 경력 인증 플랫폼</h3>
+              <p class="business-desc">이력서의 '나이/학벌' 필터링을 타격하기 위해 마이크로 실무 프로젝트 기여도를 AI 검증(Proof of Contribution) 체인으로 인증하여 보증서를 발급합니다.</p>
+            </div>
+            <h4 class="sub-section-title">활성 프로젝트 위키</h4>
+            <ul class="project-wiki-list" id="projectWikiList">
+              <li class="loading-item">위키 데이터 수집 중...</li>
+            </ul>
+          </div>
+
+          <div class="agents-grid-header">
+            <h2 class="card-title">AI Staff 사원 정보</h2>
+            <span class="active-count-lbl">6 Members Active</span>
+          </div>
+          <div class="agents-card-grid">
+            <!-- Aegis -->
+            <div class="agent-card">
+              <div class="agent-card__header">
+                <img src="aegis_avatar.jpg" alt="Aegis" class="agent-card__avatar">
+                <span class="agent-card__badge agent-card__badge--aegis">Master</span>
+              </div>
+              <h3 class="agent-card__name">Aegis (이지스)</h3>
+              <p class="agent-card__role">Master Coordinator</p>
+              <div class="agent-card__progress">
+                <span class="progress-label">R&R 진행률</span>
+                <div class="progress-bar-container"><div class="progress-bar" id="pb-aegis"></div></div>
+                <span class="progress-pct" id="pt-aegis">0%</span>
+              </div>
+              <button class="agent-card__btn" onclick="location.href='chat.html?agent=aegis'">1:1 대화</button>
+            </div>
+            <!-- Nova -->
+            <div class="agent-card">
+              <div class="agent-card__header">
+                <img src="nova_avatar.jpg" alt="Nova" class="agent-card__avatar">
+                <span class="agent-card__badge agent-card__badge--nova">Planner</span>
+              </div>
+              <h3 class="agent-card__name">Nova (노바)</h3>
+              <p class="agent-card__role">Service Planner</p>
+              <div class="agent-card__progress">
+                <span class="progress-label">R&R 진행률</span>
+                <div class="progress-bar-container"><div class="progress-bar" id="pb-nova"></div></div>
+                <span class="progress-pct" id="pt-nova">0%</span>
+              </div>
+              <button class="agent-card__btn" onclick="location.href='chat.html?agent=nova'">1:1 대화</button>
+            </div>
+            <!-- Vivid -->
+            <div class="agent-card">
+              <div class="agent-card__header">
+                <img src="vivid_avatar.jpg" alt="Vivid" class="agent-card__avatar">
+                <span class="agent-card__badge agent-card__badge--vivid">Designer</span>
+              </div>
+              <h3 class="agent-card__name">Vivid (비비드)</h3>
+              <p class="agent-card__role">UI/UX Designer</p>
+              <div class="agent-card__progress">
+                <span class="progress-label">R&R 진행률</span>
+                <div class="progress-bar-container"><div class="progress-bar" id="pb-vivid"></div></div>
+                <span class="progress-pct" id="pt-vivid">0%</span>
+              </div>
+              <button class="agent-card__btn" onclick="location.href='chat.html?agent=vivid'">1:1 대화</button>
+            </div>
+            <!-- Bitz -->
+            <div class="agent-card">
+              <div class="agent-card__header">
+                <img src="bitz_avatar.jpg" alt="Bitz" class="agent-card__avatar">
+                <span class="agent-card__badge agent-card__badge--bitz">Developer</span>
+              </div>
+              <h3 class="agent-card__name">Bitz (비츠)</h3>
+              <p class="agent-card__role">Lead Developer</p>
+              <div class="agent-card__progress">
+                <span class="progress-label">R&R 진행률</span>
+                <div class="progress-bar-container"><div class="progress-bar" id="pb-bitz"></div></div>
+                <span class="progress-pct" id="pt-bitz">0%</span>
+              </div>
+              <button class="agent-card__btn" onclick="location.href='chat.html?agent=bitz'">1:1 대화</button>
+            </div>
+            <!-- Echo -->
+            <div class="agent-card">
+              <div class="agent-card__header">
+                <img src="echo_avatar.jpg" alt="Echo" class="agent-card__avatar">
+                <span class="agent-card__badge agent-card__badge--echo">Marketer</span>
+              </div>
+              <h3 class="agent-card__name">Echo (에코)</h3>
+              <p class="agent-card__role">Growth Marketer</p>
+              <div class="agent-card__progress">
+                <span class="progress-label">R&R 진행률</span>
+                <div class="progress-bar-container"><div class="progress-bar" id="pb-echo"></div></div>
+                <span class="progress-pct" id="pt-echo">0%</span>
+              </div>
+              <button class="agent-card__btn" onclick="location.href='chat.html?agent=echo'">1:1 대화</button>
+            </div>
+            <!-- Carey -->
+            <div class="agent-card">
+              <div class="agent-card__header">
+                <img src="carey_avatar.jpg" alt="Carey" class="agent-card__avatar">
+                <span class="agent-card__badge agent-card__badge--carey">CS</span>
+              </div>
+              <h3 class="agent-card__name">Carey (케리)</h3>
+              <p class="agent-card__role">Customer Success</p>
+              <div class="agent-card__progress">
+                <span class="progress-label">R&R 진행률</span>
+                <div class="progress-bar-container"><div class="progress-bar" id="pb-carey"></div></div>
+                <span class="progress-pct" id="pt-carey">0%</span>
+              </div>
+              <button class="agent-card__btn" onclick="location.href='chat.html?agent=carey'">1:1 대화</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- 우: 통계 차트 + 로그 피드 -->
+        <div class="grid-right-col">
+          <div class="dashboard-card stats-card">
+            <h2 class="card-title">AI 에이전트 업무 통계 (실시간)</h2>
+            <div class="chart-container">
+              <h3 class="chart-title">담당자별 태스크 완료 현황</h3>
+              <canvas id="progressChart" height="150"></canvas>
+            </div>
+            <div class="chart-container" style="margin-top:24px">
+              <h3 class="chart-title">명령어 실행 통계 (log.md)</h3>
+              <canvas id="logsDoughnutChart" height="140"></canvas>
+            </div>
+          </div>
+          <div class="dashboard-card feed-card">
+            <div class="feed-header">
+              <h2 class="card-title">실시간 활동 피드</h2>
+              <div style="display:flex;align-items:center;gap:8px">
+                <button class="feed-refresh-btn" onclick="fetchDashboardData()" title="새로고침">↻</button>
+                <span class="pulse-indicator"></span>
+              </div>
+            </div>
+            <ul class="activity-feed" id="activityFeed">
+              <li class="loading-item">실시간 로그 피드 수집 중...</li>
+            </ul>
+          </div>
+        </div>
+
+      </div><!-- /.dashboard-grid -->
+    </main>
+  </div>
+
+  <script src="dashboard.js"></script>
+</body>
+</html>

@@ -1,0 +1,98 @@
+{
+  "schema_version": "1",
+  "flavor": "antigravity",
+  "multiagent_root_env": "MULTIAGENT_ROOT",
+  "_note": "RecipeBridge 1인 기업 자동화를 위한 6인 멀티 에이전트 백엔드 정의",
+  "workers": {
+    "aegis": {
+      "model": "gemini-3.5-flash-medium",
+      "call_type": "cli",
+      "brief_mode": "content",
+      "cli": {
+        "command": "agy",
+        "args_template": ["subagent", "invoke", "aegis", "--prompt", "@brief_content"],
+        "non_interactive": { "stdin": "/dev/null", "no_tty": true, "on_permission_prompt": "fail" }
+      },
+      "cwd_policy": "repo_root",
+      "write_policy": "all",
+      "approval_class": "orchestrator",
+      "result_capture": "envelope",
+      "timeout": 600
+    },
+    "nova": {
+      "model": "gemini-3.5-flash-medium",
+      "call_type": "cli",
+      "brief_mode": "content",
+      "cli": {
+        "command": "agy",
+        "args_template": ["subagent", "invoke", "nova", "--prompt", "@brief_content"],
+        "non_interactive": { "stdin": "/dev/null", "no_tty": true, "on_permission_prompt": "fail" }
+      },
+      "cwd_policy": "repo_root",
+      "write_policy": "all",
+      "approval_class": "worker",
+      "result_capture": "envelope",
+      "timeout": 600
+    },
+    "vivid": {
+      "model": "gemini-3.5-flash-medium",
+      "call_type": "cli",
+      "brief_mode": "content",
+      "cli": {
+        "command": "agy",
+        "args_template": ["subagent", "invoke", "vivid", "--prompt", "@brief_content"],
+        "non_interactive": { "stdin": "/dev/null", "no_tty": true, "on_permission_prompt": "fail" }
+      },
+      "cwd_policy": "repo_root",
+      "write_policy": "all",
+      "approval_class": "worker",
+      "result_capture": "envelope",
+      "timeout": 600
+    },
+    "bitz": {
+      "model": "gemini-3.5-flash-medium",
+      "call_type": "cli",
+      "brief_mode": "content",
+      "cli": {
+        "command": "agy",
+        "args_template": ["subagent", "invoke", "bitz", "--prompt", "@brief_content"],
+        "non_interactive": { "stdin": "/dev/null", "no_tty": true, "on_permission_prompt": "fail" }
+      },
+      "cwd_policy": "repo_root",
+      "write_policy": "all",
+      "approval_class": "worker",
+      "result_capture": "envelope",
+      "timeout": 600
+    },
+    "echo": {
+      "model": "gemini-3.5-flash-medium",
+      "call_type": "cli",
+      "brief_mode": "content",
+      "cli": {
+        "command": "agy",
+        "args_template": ["subagent", "invoke", "echo", "--prompt", "@brief_content"],
+        "non_interactive": { "stdin": "/dev/null", "no_tty": true, "on_permission_prompt": "fail" }
+      },
+      "cwd_policy": "repo_root",
+      "write_policy": "all",
+      "approval_class": "worker",
+      "result_capture": "envelope",
+      "timeout": 600
+    },
+    "carey": {
+      "model": "gemini-3.5-flash-medium",
+      "call_type": "cli",
+      "brief_mode": "content",
+      "cli": {
+        "command": "agy",
+        "args_template": ["subagent", "invoke", "carey", "--prompt", "@brief_content"],
+        "non_interactive": { "stdin": "/dev/null", "no_tty": true, "on_permission_prompt": "fail" }
+      },
+      "cwd_policy": "repo_root",
+      "write_policy": "all",
+      "approval_class": "worker",
+      "result_capture": "envelope",
+      "timeout": 600
+    }
+  }
+}

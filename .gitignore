@@ -1,0 +1,13 @@
+.DS_Store
+Thumbs.db
+*.log
+*.tmp
+.env
+.env.*
+node_modules/
+__pycache__/
+*.key
+*.pem
+*.ppk
+.pm2/
+RecipeBridge_Deploy.zip

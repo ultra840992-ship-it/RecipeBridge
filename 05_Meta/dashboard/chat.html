@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RecipeBridge AI Agent OS — Aetheris Chat</title>
+  <meta name="description" content="RecipeBridge 6인 AI 에이전트 실시간 협업 대시보드">
+  <link rel="stylesheet" href="index.css">
+</head>
+<body>
+
+  <!-- 검색 모달 -->
+  <div class="modal-overlay-chat hidden" id="searchModalChat">
+    <div class="modal-box-chat">
+      <div class="modal-header-chat">
+        <h3>🔍 대화 내역 검색</h3>
+        <button onclick="closeChatModal('searchModalChat')">✕</button>
+      </div>
+      <input type="text" id="chatSearchInput" placeholder="메시지 내용 검색..." class="chat-modal-input" oninput="searchMessages(this.value)">
+      <ul id="chatSearchResults" class="chat-search-results"></ul>
+    </div>
+  </div>
+
+  <!-- 더보기 메뉴 -->
+  <div class="context-menu hidden" id="moreMenu">
+    <button class="context-menu-item" onclick="clearMessages();closeContextMenu()">🗑 대화 초기화</button>
+    <button class="context-menu-item" onclick="exportChat();closeContextMenu()">📤 대화 내보내기</button>
+    <button class="context-menu-item" onclick="location.href='index.html';closeContextMenu()">🏠 포털 대시보드</button>
+    <button class="context-menu-item" onclick="window.open('https://stitch.withgoogle.com/projects/3948981696864625229','_blank');closeContextMenu()">🎨 Stitch 디자인</button>
+  </div>
+
+  <!-- 팀 현황 패널 (Team 탭 오버레이) -->
+  <div class="team-overlay hidden" id="teamOverlay">
+    <div class="team-panel">
+      <div class="team-panel__header">
+        <h3>🧑‍💼 팀 현황</h3>
+        <button onclick="closeTeamOverlay()">✕</button>
+      </div>
+      <div class="team-grid">
+        <div class="team-member" onclick="closeTeamOverlay();location.href='index.html'">
+          <img src="aegis_avatar.jpg" alt="Aegis">
+          <div><strong>Aegis</strong><span>Master Coordinator</span></div>
+        </div>
+        <div class="team-member" onclick="selectAgentAndClose('nova')">
+          <img src="nova_avatar.jpg" alt="Nova">
+          <div><strong>Nova</strong><span>Service Planner</span></div>
+        </div>
+        <div class="team-member" onclick="selectAgentAndClose('vivid')">
+          <img src="vivid_avatar.jpg" alt="Vivid">
+          <div><strong>Vivid</strong><span>UI/UX Designer</span></div>
+        </div>
+        <div class="team-member" onclick="selectAgentAndClose('bitz')">
+          <img src="bitz_avatar.jpg" alt="Bitz">
+          <div><strong>Bitz</strong><span>Lead Developer</span></div>
+        </div>
+        <div class="team-member" onclick="selectAgentAndClose('echo')">
+          <img src="echo_avatar.jpg" alt="Echo">
+          <div><strong>Echo</strong><span>Growth Marketer</span></div>
+        </div>
+        <div class="team-member" onclick="selectAgentAndClose('carey')">
+          <img src="carey_avatar.jpg" alt="Carey">
+          <div><strong>Carey</strong><span>Customer Success</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="app-shell">
+
+    <!-- ① 좌측 아이콘 네비게이션 바 -->
+    <nav class="icon-nav" aria-label="주 내비게이션">
+      <div class="icon-nav__brand">
+        <span class="brand-avatar" id="userAvatar" title="포털로 이동" onclick="location.href='index.html'" style="cursor:pointer">R</span>
+      </div>
+
+      <ul class="icon-nav__items">
+        <!-- 포털 대시보드 -->
+        <li>
+          <button class="icon-btn" aria-label="포털 대시보드" title="포털 대시보드" onclick="location.href='index.html'">
+            <svg width="20" height="20" fill="none" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1.5" fill="currentColor"/><rect x="14" y="3" width="7" height="7" rx="1.5" fill="currentColor"/><rect x="3" y="14" width="7" height="7" rx="1.5" fill="currentColor" opacity=".4"/><rect x="14" y="14" width="7" height="7" rx="1.5" fill="currentColor" opacity=".4"/></svg>
+          </button>
+        </li>
+        <!-- 현재 페이지: 채팅 -->
+        <li>
+          <button class="icon-btn icon-btn--active" aria-label="에이전트 채팅" title="에이전트 채팅">
+            <svg width="20" height="20" fill="none" viewBox="0 0 24 24"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+        </li>
+        <!-- 팀 현황 -->
+        <li>
+          <button class="icon-btn" aria-label="팀 현황" title="팀 현황 보기" onclick="openTeamOverlay()">
+            <svg width="20" height="20" fill="none" viewBox="0 0 24 24"><circle cx="9" cy="7" r="4" stroke="currentColor" stroke-width="2"/><path d="M3 21v-2a4 4 0 014-4h4a4 4 0 014 4v2" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M16 11l2 2 4-4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+        </li>
+        <!-- 간트차트 (포털로 이동) -->
+        <li>
+          <button class="icon-btn" aria-label="일정 / 간트차트" title="일정 간트차트 (포털)" onclick="location.href='index.html#ganttSection'">
+            <svg width="20" height="20" fill="none" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2" stroke="currentColor" stroke-width="2"/><path d="M8 9h8M8 13h5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+          </button>
+        </li>
+        <!-- Stitch 디자인 -->
+        <li>
+          <button class="icon-btn" aria-label="디자인 에셋" title="Stitch 디자인 에셋" onclick="window.open('https://stitch.withgoogle.com/projects/3948981696864625229','_blank')">
+            <svg width="20" height="20" fill="none" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="2"/><path d="M12 8v8M8 12h8" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+          </button>
+        </li>
+      </ul>
+
+      <div class="icon-nav__bottom">
+        <!-- 설정 -->
+        <button class="icon-btn" aria-label="설정" title="시스템 설정" onclick="toggleSettingsPopup()">
+          <svg width="20" height="20" fill="none" viewBox="0 0 24 24"><path d="M12 15a3 3 0 100-6 3 3 0 000 6z" stroke="currentColor" stroke-width="2"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z" stroke="currentColor" stroke-width="2"/></svg>
+        </button>
+        <!-- 통계 -->
+        <button class="icon-btn" aria-label="통계" title="포털 통계 차트" onclick="location.href='index.html'">
+          <svg width="20" height="20" fill="none" viewBox="0 0 24 24"><path d="M18 20V10M12 20V4M6 20v-6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+        </button>
+        <!-- 설정 팝업 (인라인) -->
+        <div class="settings-popup hidden" id="settingsPopup">
+          <div class="settings-popup__item" onclick="clearMessages();closeSettingsPopup()">🗑 대화 초기화</div>
+          <div class="settings-popup__item" onclick="exportChat();closeSettingsPopup()">📤 대화 내보내기</div>
+          <div class="settings-popup__item" onclick="window.open('https://stitch.withgoogle.com/projects/3948981696864625229','_blank');closeSettingsPopup()">🎨 Stitch 열기</div>
+          <div class="settings-popup__item" onclick="location.href='index.html'">🏠 포털로 이동</div>
+        </div>
+      </div>
+    </nav>
+
+    <!-- ② 중앙 채팅 패널 -->
+    <main class="chat-panel" id="chatDashboard" aria-live="polite">
+
+      <!-- 상단 헤더 -->
+      <header class="chat-panel__header">
+        <div class="chat-panel__title-area">
+          <div class="chat-panel__agent-info">
+            <img src="" alt="Active Agent" id="activeAgentPic" class="agent-pic">
+            <div>
+              <h1 class="agent-name" id="activeAgentName">Aegis (이지스)</h1>
+              <span class="agent-role-badge" id="activeAgentRole">Master Coordinator</span>
+            </div>
+          </div>
+          <div class="chat-panel__tab-meta" id="sessionMeta">6 Agents Active in Session</div>
+        </div>
+
+        <div class="chat-panel__actions">
+          <span class="offline-chip hidden" id="offlineBanner" role="alert">⚠️ 서버 오프라인</span>
+          <!-- 검색 -->
+          <button class="action-icon-btn" aria-label="검색" title="대화 내역 검색" onclick="openChatModal('searchModalChat')">
+            <svg width="18" height="18" fill="none" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8" stroke="currentColor" stroke-width="2"/><path d="M21 21l-4.35-4.35" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+          </button>
+          <!-- 더보기 -->
+          <button class="action-icon-btn" aria-label="더보기" title="더보기 메뉴" onclick="toggleContextMenu(event)">
+            <svg width="18" height="18" fill="none" viewBox="0 0 24 24"><circle cx="5" cy="12" r="1.5" fill="currentColor"/><circle cx="12" cy="12" r="1.5" fill="currentColor"/><circle cx="19" cy="12" r="1.5" fill="currentColor"/></svg>
+          </button>
+        </div>
+      </header>
+
+      <!-- 탭 네비게이션 -->
+      <nav class="chat-panel__tabs">
+        <button class="tab-btn tab-btn--active" id="tab-dashboard" onclick="switchTab('dashboard')">Dashboard</button>
+        <button class="tab-btn" id="tab-analytics" onclick="switchTab('analytics')">Analytics</button>
+        <button class="tab-btn" id="tab-team" onclick="switchTab('team')">Team</button>
+      </nav>
+
+      <!-- 탭 콘텐츠 영역 -->
+      <!-- Dashboard 탭 (기본: 채팅) -->
+      <section class="tab-content active" id="tabContent-dashboard">
+        <section class="messages-area" id="messagesArea"></section>
+      </section>
+
+      <!-- Analytics 탭 -->
+      <section class="tab-content hidden" id="tabContent-analytics">
+        <div class="analytics-tab-body">
+          <h3 class="analytics-title">📊 에이전트별 활동 통계</h3>
+          <p class="analytics-sub">포털 대시보드의 상세 그래프를 확인하세요.</p>
+          <button class="analytics-portal-btn" onclick="location.href='index.html'">포털 대시보드 열기 →</button>
+          <div class="analytics-quick-stats" id="analyticsQuickStats">
+            <div class="quick-stat-card">
+              <span class="quick-stat-num" id="qs-total-tasks">—</span>
+              <span class="quick-stat-lbl">전체 태스크</span>
+            </div>
+            <div class="quick-stat-card">
+              <span class="quick-stat-num" id="qs-done-tasks">—</span>
+              <span class="quick-stat-lbl">완료 태스크</span>
+            </div>
+            <div class="quick-stat-card">
+              <span class="quick-stat-num" id="qs-log-count">—</span>
+              <span class="quick-stat-lbl">실행 로그 수</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Team 탭 -->
+      <section class="tab-content hidden" id="tabContent-team">
+        <div class="team-tab-body">
+          <h3 class="analytics-title">🧑‍💼 팀 멤버 선택</h3>
+          <p class="analytics-sub">대화할 에이전트를 선택하세요.</p>
+          <div class="team-tab-grid">
+            <button class="team-tab-card" onclick="switchTab('dashboard');selectAgent('aegis')">
+              <img src="aegis_avatar.jpg" alt="Aegis">
+              <strong>Aegis (이지스)</strong><span>Master Coordinator</span>
+            </button>
+            <button class="team-tab-card" onclick="switchTab('dashboard');selectAgent('nova')">
+              <img src="nova_avatar.jpg" alt="Nova">
+              <strong>Nova (노바)</strong><span>Service Planner</span>
+            </button>
+            <button class="team-tab-card" onclick="switchTab('dashboard');selectAgent('vivid')">
+              <img src="vivid_avatar.jpg" alt="Vivid">
+              <strong>Vivid (비비드)</strong><span>UI/UX Designer</span>
+            </button>
+            <button class="team-tab-card" onclick="switchTab('dashboard');selectAgent('bitz')">
+              <img src="bitz_avatar.jpg" alt="Bitz">
+              <strong>Bitz (비츠)</strong><span>Lead Developer</span>
+            </button>
+            <button class="team-tab-card" onclick="switchTab('dashboard');selectAgent('echo')">
+              <img src="echo_avatar.jpg" alt="Echo">
+              <strong>Echo (에코)</strong><span>Growth Marketer</span>
+            </button>
+            <button class="team-tab-card" onclick="switchTab('dashboard');selectAgent('carey')">
+              <img src="carey_avatar.jpg" alt="Carey">
+              <strong>Carey (케리)</strong><span>Customer Success</span>
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- 입력 바 -->
+      <footer class="chat-input-bar">
+        <!-- 파일 첨부 (텍스트 삽입으로 대체) -->
+        <button class="input-icon-btn" aria-label="파일 첨부" title="파일 내용을 텍스트로 첨부" onclick="attachFileText()">
+          <svg width="18" height="18" fill="none" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="2"/><path d="M12 8v8M8 12h8" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+        </button>
+        <input type="text" id="chatInput" placeholder="Command the agents..." autocomplete="off">
+        <!-- 음성 입력 (SpeechRecognition API) -->
+        <button class="input-icon-btn" aria-label="음성 입력" title="음성 인식 입력" id="voiceBtn" onclick="startVoiceInput()">
+          <svg width="18" height="18" fill="none" viewBox="0 0 24 24"><rect x="9" y="2" width="6" height="12" rx="3" stroke="currentColor" stroke-width="2"/><path d="M5 10a7 7 0 0014 0M12 19v3" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+        </button>
+        <button class="send-btn" id="sendBtn" aria-label="전송">
+          <svg width="18" height="18" fill="none" viewBox="0 0 24 24"><path d="M22 2L11 13M22 2L15 22l-4-9-9-4 20-7z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+      </footer>
+    </main>
+
+    <!-- ③ 우측 에이전트 상태 패널 -->
+    <aside class="agent-panel" aria-label="에이전트 상태 패널">
+
+      <div class="panel-card panel-card--network">
+        <h2 class="panel-section-title">Network Status</h2>
+        <div class="network-status" id="networkStatus">
+          <span class="network-dot network-dot--green"></span>
+          <span class="network-label" id="networkLabel">Optimal Performance</span>
+        </div>
+      </div>
+
+      <div class="panel-card panel-card--agents">
+        <h3 class="panel-section-sub">Active Agents</h3>
+        <ul class="agent-list" id="agentList">
+          <li class="agent-item" data-agent="aegis" id="panel-aegis">
+            <button class="agent-item__btn" data-agent="aegis">
+              <img class="agent-item__avatar" src="aegis_avatar.jpg" alt="Aegis">
+              <div class="agent-item__info">
+                <span class="agent-item__name">Aegis</span>
+                <span class="agent-item__status agent-status--monitoring" id="status-aegis">Monitoring</span>
+              </div>
+              <div class="agent-item__talking-bar hidden" id="bar-aegis"></div>
+            </button>
+          </li>
+          <li class="agent-item" data-agent="nova" id="panel-nova">
+            <button class="agent-item__btn" data-agent="nova">
+              <img class="agent-item__avatar" src="nova_avatar.jpg" alt="Nova">
+              <div class="agent-item__info">
+                <span class="agent-item__name">Nova</span>
+                <span class="agent-item__status agent-status--idle" id="status-nova">Idle</span>
+              </div>
+              <div class="agent-item__talking-bar hidden" id="bar-nova"></div>
+            </button>
+          </li>
+          <li class="agent-item" data-agent="vivid" id="panel-vivid">
+            <button class="agent-item__btn" data-agent="vivid">
+              <img class="agent-item__avatar" src="vivid_avatar.jpg" alt="Vivid">
+              <div class="agent-item__info">
+                <span class="agent-item__name">Vivid</span>
+                <span class="agent-item__status agent-status--idle" id="status-vivid">Idle</span>
+              </div>
+              <div class="agent-item__talking-bar hidden" id="bar-vivid"></div>
+            </button>
+          </li>
+          <li class="agent-item" data-agent="bitz" id="panel-bitz">
+            <button class="agent-item__btn" data-agent="bitz">
+              <img class="agent-item__avatar" src="bitz_avatar.jpg" alt="Bitz">
+              <div class="agent-item__info">
+                <span class="agent-item__name">Bitz</span>
+                <span class="agent-item__status agent-status--idle" id="status-bitz">Idle</span>
+              </div>
+              <div class="agent-item__talking-bar hidden" id="bar-bitz"></div>
+            </button>
+          </li>
+          <li class="agent-item" data-agent="echo" id="panel-echo">
+            <button class="agent-item__btn" data-agent="echo">
+              <img class="agent-item__avatar" src="echo_avatar.jpg" alt="Echo">
+              <div class="agent-item__info">
+                <span class="agent-item__name">Echo</span>
+                <span class="agent-item__status agent-status--idle" id="status-echo">Idle</span>
+              </div>
+              <div class="agent-item__talking-bar hidden" id="bar-echo"></div>
+            </button>
+          </li>
+          <li class="agent-item" data-agent="carey" id="panel-carey">
+            <button class="agent-item__btn" data-agent="carey">
+              <img class="agent-item__avatar" src="carey_avatar.jpg" alt="Carey">
+              <div class="agent-item__info">
+                <span class="agent-item__name">Carey</span>
+                <span class="agent-item__status agent-status--idle" id="status-carey">Idle</span>
+              </div>
+              <div class="agent-item__talking-bar hidden" id="bar-carey"></div>
+            </button>
+          </li>
+        </ul>
+      </div>
+
+      <div class="panel-card panel-card--macro">
+        <div class="macro-icon">⚡</div>
+        <h3 class="macro-title">Group Meeting</h3>
+        <p class="macro-desc">Run a 6-agent collaboration chain across all active nodes.</p>
+        <button class="macro-btn" id="groupRoomBtn" data-agent="group">Start Session</button>
+      </div>
+
+    </aside>
+
+  </div><!-- /.app-shell -->
+
+  <script src="chat.js"></script>
+</body>
+</html>
