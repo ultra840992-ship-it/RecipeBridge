@@ -796,87 +796,158 @@ function exportChat() {
   a.click();
 }
 // ══════════════════════════════════════════════════════════
-//  세컨브레인 위키 검색 모달 로직
+//  세컨브레인 드로어 로직
 // ══════════════════════════════════════════════════════════
 let wikiSearchTimeout = null;
+let wikiAllFiles = [];
+let wikiDrawerOpen = false;
 
-function openWikiModal() {
-  document.getElementById("wikiSearchModal").classList.remove("hidden");
-  document.getElementById("wikiSearchInput").focus();
+function openWikiDrawer() {
+  const drawer = document.getElementById('wikiDrawer');
+  const backdrop = document.getElementById('wikiDrawerBackdrop');
+  if (!drawer) return;
+  drawer.classList.add('open');
+  backdrop.classList.add('active');
+  wikiDrawerOpen = true;
+  const inp = document.getElementById('wikiSearchInput');
+  if (inp) inp.focus();
+  if (wikiAllFiles.length === 0) loadWikiFileList();
 }
 
-function closeWikiModal() {
-  document.getElementById("wikiSearchModal").classList.add("hidden");
+function closeWikiDrawer() {
+  const drawer = document.getElementById('wikiDrawer');
+  const backdrop = document.getElementById('wikiDrawerBackdrop');
+  if (drawer) drawer.classList.remove('open');
+  if (backdrop) backdrop.classList.remove('active');
+  wikiDrawerOpen = false;
+}
+
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape' && wikiDrawerOpen) closeWikiDrawer();
+});
+
+async function loadWikiFileList() {
+  const listEl = document.getElementById('wikiFileList');
+  if (!listEl) return;
+  listEl.innerHTML = `<div class="wiki-loading"><div class="wiki-loading-spinner"></div><span>문서 목록 불러오는 중...</span></div>`;
+  try {
+    const res = await fetch(`${BACKEND_URL}/api/search_wiki?q=`);
+    if (!res.ok) throw new Error();
+    const data = await res.json();
+    wikiAllFiles = data.results || [];
+    renderWikiFileList(wikiAllFiles);
+  } catch {
+    listEl.innerHTML = `<div class="wiki-no-result">⚠️ API 서버에 연결할 수 없습니다</div>`;
+  }
+}
+
+function renderWikiFileList(files) {
+  const listEl = document.getElementById('wikiFileList');
+  if (!listEl) return;
+  if (!files.length) {
+    listEl.innerHTML = `<div class="wiki-no-result">문서가 없습니다</div>`;
+    return;
+  }
+  const groups = {};
+  files.forEach(f => {
+    const parts = f.path.replace(/\\/g, '/').split('/');
+    const folder = parts.length > 2 ? parts[parts.length - 2] : '기타';
+    if (!groups[folder]) groups[folder] = [];
+    groups[folder].push(f);
+  });
+  const docSVG = `<svg width="14" height="14" fill="none" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><polyline points="14 2 14 8 20 8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
+  const folderSVG = `<svg width="12" height="12" fill="none" viewBox="0 0 24 24"><path d="M22 19a2 2 0 01-2 2H4a2 2 0 01-2-2V5a2 2 0 012-2h5l2 3h9a2 2 0 012 2z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
+  listEl.innerHTML = Object.entries(groups).map(([folder, items]) => `
+    <div class="wiki-folder-group">
+      <div class="wiki-folder-label">${folderSVG} ${folder}</div>
+      ${items.map(f => `
+        <div class="wiki-file-item" onclick="selectWikiFile('${f.path.replace(/\\/g, '/')}', this)">
+          ${docSVG}<span>${f.title}</span>
+        </div>
+      `).join('')}
+    </div>
+  `).join('');
 }
 
 function debounceWikiSearch() {
+  const val = document.getElementById('wikiSearchInput').value;
+  const clearBtn = document.getElementById('wikiSearchClear');
+  if (clearBtn) clearBtn.classList.toggle('visible', val.length > 0);
   clearTimeout(wikiSearchTimeout);
-  wikiSearchTimeout = setTimeout(() => {
-    performWikiSearch();
-  }, 300);
+  wikiSearchTimeout = setTimeout(performWikiSearch, 280);
+}
+
+function clearWikiSearch() {
+  const inp = document.getElementById('wikiSearchInput');
+  if (inp) inp.value = '';
+  const clearBtn = document.getElementById('wikiSearchClear');
+  if (clearBtn) clearBtn.classList.remove('visible');
+  renderWikiFileList(wikiAllFiles);
+  if (inp) inp.focus();
 }
 
 async function performWikiSearch() {
-  const query = document.getElementById("wikiSearchInput").value.trim();
-  const resultsContainer = document.getElementById("wikiSearchResults");
-  if (!query) {
-    resultsContainer.innerHTML = "";
-    return;
-  }
+  const inp = document.getElementById('wikiSearchInput');
+  const listEl = document.getElementById('wikiFileList');
+  if (!inp || !listEl) return;
+  const query = inp.value.trim();
+  if (!query) { renderWikiFileList(wikiAllFiles); return; }
 
-  resultsContainer.innerHTML = "<li style='text-align:center;color:var(--ink-tertiary);'>검색 중...</li>";
-  
+  listEl.innerHTML = `<div class="wiki-loading"><div class="wiki-loading-spinner"></div><span>검색 중...</span></div>`;
   try {
     const res = await fetch(`${BACKEND_URL}/api/search_wiki?q=${encodeURIComponent(query)}`);
     if (!res.ok) throw new Error();
     const data = await res.json();
-    
-    if (data.results && data.results.length === 0) {
-      resultsContainer.innerHTML = "<li style='text-align:center;color:var(--ink-tertiary);'>검색 결과가 없습니다.</li>";
-      return;
+    if (!data.results || !data.results.length) {
+      listEl.innerHTML = `<div class="wiki-no-result">검색 결과가 없습니다</div>`; return;
     }
-
-    resultsContainer.innerHTML = data.results.map(r => `
-      <li onclick="loadWikiFile('${r.path.replace(/\\/g, '/')}', this)">
+    listEl.innerHTML = data.results.map(r => `
+      <div class="wiki-search-result-item" onclick="selectWikiFile('${r.path.replace(/\\/g, '/')}', this)">
         <strong>${r.title}</strong>
         <span>${r.snippet}</span>
-      </li>
-    `).join("");
-  } catch (err) {
-    resultsContainer.innerHTML = "<li style='text-align:center;color:var(--status-red);'>검색 중 오류 발생</li>";
+      </div>
+    `).join('');
+  } catch {
+    listEl.innerHTML = `<div class="wiki-no-result" style="color:var(--status-red)">검색 오류</div>`;
   }
 }
 
-async function loadWikiFile(path, liElement) {
-  const siblings = liElement.parentElement.children;
-  for (let s of siblings) s.classList.remove("selected");
-  liElement.classList.add("selected");
-
-  const pane = document.getElementById("wikiPreviewPane");
-  pane.innerHTML = "<div class='wiki-preview-placeholder'>문서를 불러오는 중...</div>";
-
+async function selectWikiFile(path, el) {
+  document.querySelectorAll('.wiki-file-item, .wiki-search-result-item').forEach(i => i.classList.remove('active'));
+  el.classList.add('active');
+  const pane = document.getElementById('wikiPreviewPane');
+  if (!pane) return;
+  pane.innerHTML = `<div class="wiki-preview-empty"><div class="wiki-loading-spinner"></div><p>불러오는 중...</p></div>`;
   try {
     const res = await fetch(`${BACKEND_URL}/${path}`);
     if (!res.ok) throw new Error();
-    const mdText = await res.text();
-    
-    let html = mdText
-      .replace(/^### (.*$)/gim, '<h3>$1</h3>')
-      .replace(/^## (.*$)/gim, '<h2>$1</h2>')
-      .replace(/^# (.*$)/gim, '<h1>$1</h1>')
-      .replace(/^\> (.*$)/gim, '<blockquote>$1</blockquote>')
-      .replace(/\*\*(.*)\*\*/gim, '<strong>$1</strong>')
-      .replace(/\*(.*)\*/gim, '<em>$1</em>')
-      .replace(/`([^`\n]+)`/gim, '<code>$1</code>')
-      .replace(/```([\s\S]*?)```/gim, '<pre><code>$1</code></pre>')
-      .replace(/\n\n/gim, '<br><br>');
-      
-    pane.innerHTML = html;
-  } catch (err) {
-    pane.innerHTML = "<div class='wiki-preview-placeholder' style='color:var(--status-red);'>문서를 불러오지 못했습니다.</div>";
+    const md = await res.text();
+    pane.innerHTML = renderMarkdown(md);
+  } catch {
+    pane.innerHTML = `<div class="wiki-preview-empty"><p style="color:var(--status-red)">문서를 불러오지 못했습니다</p></div>`;
   }
 }
+
+function renderMarkdown(md) {
+  return md
+    .replace(/```([\s\S]*?)```/gim, '<pre><code>$1</code></pre>')
+    .replace(/^---$/gim, '<hr>')
+    .replace(/^### (.*$)/gim, '<h3>$1</h3>')
+    .replace(/^## (.*$)/gim, '<h2>$1</h2>')
+    .replace(/^# (.*$)/gim, '<h1>$1</h1>')
+    .replace(/^\> (.*$)/gim, '<blockquote>$1</blockquote>')
+    .replace(/\*\*(.*?)\*\*/gim, '<strong>$1</strong>')
+    .replace(/\*(.*?)\*/gim, '<em>$1</em>')
+    .replace(/`([^`\n]+)`/gim, '<code>$1</code>')
+    .replace(/\n\n/gim, '<br><br>');
+}
+
+// 호환용 alias
+function openWikiModal() { openWikiDrawer(); }
+function closeWikiModal() { closeWikiDrawer(); }
+
 // ─ 음성 입력 ─
+
 function startVoiceInput() {
   const voiceBtn = document.getElementById('voiceBtn');
   if (!('webkitSpeechRecognition' in window) && !('SpeechRecognition' in window)) {
