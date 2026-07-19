@@ -1,0 +1,11 @@
+# 레포지토리 생성. 'my-dashboard'는 프로젝트 이름.
+npm create vite@latest my-dashboard -- --template react
+
+# 프로젝트 디렉토리로 이동
+cd my-dashboard
+
+# 의존성 설치
+npm install
+
+# 개발 서버 실행 (브라우저에서 확인)
+npm run dev
