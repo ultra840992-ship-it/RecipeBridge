@@ -36,3 +36,9 @@ YYYY-MM-DD HH:mm | command | summary | linked files
 2026-07-19 09:21 | task | [VIVID] 태스크 완료: 피그마를 활용한 RecipeBridge 메인 화면, 프로젝트 리스트, 레시피 스토어 와이어프레임 설계. | [[02_Wiki/design/RecipeBridge_Wireframe_Specification_V1.0.md -->]]
 2026-07-19 09:21 | task | [NOVA] 태스크 완료: **[Critical]** 나이/학벌 필드 자체가 없는 '블라인드 프로젝트 기여 인증 프로필 UI' 및 매칭 프로세스 기획. | 
 2026-07-19 09:21 | task | [AEGIS] 태스크 완료: **[Critical]** 프로젝트 코드의 정상 작동 및 빌드 여부를 동적으로 체크하여 경력 인증서 발급 승인 도장(Secret Chain Sign) 검수. | 
+2026-07-19 09:52 | task | [BITZ] 태스크 완료: 노션 API를 연동하여 스타트업 의뢰 과제 DB와 실시간 웹 뷰 동기화. | [[02_Wiki/dev-tasks/2024-XX-XX_notion-api-integration.md -->]]
+2026-07-19 09:52 | task | [AEGIS] 태스크 완료: 주간 마일스톤 진척도 모니터링 및 병목 해결. | [[02_Wiki/Weekly_Milestone_Report_Template.md -->]]
+2026-07-19 09:52 | task | [CAREY] 태스크 완료: 베타 테스터용 1:1 고객 설문 및 고통 점수(Pain Index 1~10) 자동 분류기 탑재. | [[02_Wiki/decisions/beta_tester_pain_index_survey_design.md -->]]
+2026-07-19 09:52 | task | [VIVID] 태스크 완료: 프리미엄 다크 모드 톤앤매너, 폰트(Outfit, Inter), HSL 기반 컬러 토큰 정의. | 
+2026-07-19 09:52 | task | [NOVA] 태스크 완료: **[Critical]** 스타트업들이 실제로 현업에서 골머리를 썩고 있는 1~2주용 단기 마이크로 프로젝트 과제 스펙 세부 기획 (예: SEO 최적화 패치, 이탈율 분석 모듈 등). | [[02_Wiki/projects/recipe_packs_micro_projects_v1.md -->]]
+2026-07-19 09:52 | task | [ECHO] 태스크 완료: AI 이미지를 결합한 SNS 카드뉴스 템플릿 설계 및 자동화 업로드 크론 연동. | 
