@@ -30,3 +30,9 @@ YYYY-MM-DD HH:mm | command | summary | linked files
 
 2026-07-19 10:56 | save | RecipeBridge AI 에이전트 6인 협업 및 리플렉션 회의록 옵시디언 자동 저장 완료 | [[03_Conversations/meeting_2026-07-19_10-07.md]]
 2026-07-19 17:56 | save | [Bitz] 대시보드 API 오프라인 버그(BACKEND_URL) 및 차트 렌더링 오타 패치, 스케줄러 특수문자 파일명 생성 에러 픽스 | [[02_Wiki/dev-tasks/dashboard_and_agent_sync_20260719]]
+2026-07-19 09:21 | task | [BITZ] 태스크 완료: Vite + React 기반 레포지토리 구성 및 UI 퍼블리싱. | [[02_Wiki/dev-tasks/2026-07-20_vite-react-setup-and-ui-publishing.md]]
+2026-07-19 09:21 | task | [ECHO] 태스크 완료: 플랫폼 런칭 사전 예약 신청용 SEO 랜딩 페이지 최적화. | [[02_Wiki/sources/platform_pre_registration_seo_strategy.md -->]]
+2026-07-19 09:21 | task | [CAREY] 태스크 완료: GA4(구글 애널리틱스) 이벤트 트래킹 태그 설계 (회원가입, 결제 클릭, 이탈율 분석). | [[02_Wiki/GA4_Event_Tracking_Design.md]]
+2026-07-19 09:21 | task | [VIVID] 태스크 완료: 피그마를 활용한 RecipeBridge 메인 화면, 프로젝트 리스트, 레시피 스토어 와이어프레임 설계. | [[02_Wiki/design/RecipeBridge_Wireframe_Specification_V1.0.md -->]]
+2026-07-19 09:21 | task | [NOVA] 태스크 완료: **[Critical]** 나이/학벌 필드 자체가 없는 '블라인드 프로젝트 기여 인증 프로필 UI' 및 매칭 프로세스 기획. | 
+2026-07-19 09:21 | task | [AEGIS] 태스크 완료: **[Critical]** 프로젝트 코드의 정상 작동 및 빌드 여부를 동적으로 체크하여 경력 인증서 발급 승인 도장(Secret Chain Sign) 검수. | 
