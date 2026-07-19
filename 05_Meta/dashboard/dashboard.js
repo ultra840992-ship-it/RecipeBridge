@@ -3,7 +3,7 @@
 //  간트차트, Aegis 보고 위젯, Chart.js, 실시간 로그 피드
 // ══════════════════════════════════════════════════════════
 
-const BACKEND_URL = "";
+const BACKEND_URL = "http://localhost:8000";
 
 // ── DOM Refs ──
 const serverStatusDot = document.getElementById("serverStatusDot");
@@ -379,7 +379,7 @@ async function fetchDashboardData() {
     if (serverStatusDot) { serverStatusDot.className = "offline-dot online"; serverStatusDot.title = "API Server Online"; }
 
     renderGantt(data.action_plan);
-    renderAgentProgress(data.action_plan);
+    renderProgressChart(data.action_plan);
     renderLogsDoughnut(data.log_stats);
     renderActivityFeed(data.logs);
     renderProjects(data.projects);
@@ -878,7 +878,7 @@ async function fetchDashboardData() {
     const data = await res.json();
     if (serverStatusDot) { serverStatusDot.className = "offline-dot online"; serverStatusDot.title = "API Server Online"; }
     renderGantt(data.action_plan);
-    renderAgentProgress(data.action_plan);
+    renderProgressChart(data.action_plan);
     renderLogsDoughnut(data.log_stats);
     renderActivityFeed(data.logs);
     renderProjects(data.projects);
