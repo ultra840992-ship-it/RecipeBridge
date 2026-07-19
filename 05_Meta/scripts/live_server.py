@@ -66,7 +66,9 @@ def parse_action_plan():
         "vivid": "vivid", "비비드": "vivid",
         "bitz": "bitz",   "비츠": "bitz",
         "echo": "echo",   "에코": "echo",
-        "carey": "carey", "케리": "carey"
+        "carey": "carey", "케리": "carey",
+        "insight": "insight", "인사이트": "insight",
+        "verity": "verity", "베리티": "verity"
     }
     try:
         with open(action_plan_path, "r", encoding="utf-8") as f:
@@ -103,15 +105,14 @@ def parse_logs():
     """log.md 파일을 파싱하여 최근 로그와 통계 추출"""
     log_path = os.path.join(os.path.dirname(__file__), "..", "..", "log.md")
     logs = []
-    types_count = {}
+    agent_counts = {}
     if not os.path.exists(log_path):
-        return logs, types_count
+        return logs, agent_counts
         
     try:
         with open(log_path, "r", encoding="utf-8") as f:
             for line in f:
                 line = line.strip()
-                # 헤더 및 잡다한 라인 스킵
                 if not line or line.startswith("#") or line.startswith("이 파일") or line.startswith("중요한") or line.startswith("형식") or line.startswith("```"):
                     continue
                 if "|" not in line:
@@ -130,12 +131,20 @@ def parse_logs():
                         "links": links
                     })
                     
-                    types_count[cmd_type] = types_count.get(cmd_type, 0) + 1
+                    import re
+                    match = re.search(r'\[([A-Za-z]+)\]', summary)
+                    if match:
+                        agent = match.group(1).lower()
+                        agent_counts[agent] = agent_counts.get(agent, 0) + 1
+                    else:
+                        # Fallback for old logs
+                        agent_counts["unknown"] = agent_counts.get("unknown", 0) + 1
+                        
     except Exception as e:
         print(f"[Error] Failed to parse log.md: {e}")
     
     logs.reverse()  # 최신순
-    return logs, types_count
+    return logs, agent_counts
 
 def update_index_file(filename, title):
     index_path = os.path.join(os.path.dirname(__file__), "..", "..", "index.md")
@@ -174,6 +183,8 @@ FALLBACK_SYSTEM_PROMPTS = {
   "bitz": "You are Bitz, the Developer. Speak in a cool, direct, computer geek tone in Korean.",
   "echo": "You are Echo, the Growth Marketer. Speak in an energetic, growth-obsessed marketer tone in Korean.",
   "carey": "You are Carey, the CS agent. Speak in a polite, customer-centric CS tone in Korean.",
+  "insight": "You are Insight, the R&D Agent. Speak in an analytical, sharp, trend-focused tone in Korean.",
+  "verity": "You are Verity, the Watchdog Agent. Speak in a strict, logical, fact-checker tone in Korean.",
   "group": "You are Aegis, moderating a group session of RecipeBridge team. Act as the host in Korean."
 }
 

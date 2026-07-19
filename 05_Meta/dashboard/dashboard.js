@@ -365,10 +365,10 @@ async function fetchDashboardData() {
   }
 }
 
-// ── 에이전트 프로그레스 바 ──
-function renderAgentProgress(actionPlan) {
-  const agents = ["aegis","nova","vivid","bitz","echo","carey"];
-  const data = [], labels = ["Aegis","Nova","Vivid","Bitz","Echo","Carey"];
+// ── 프로그레스 차트 (R&R) ──
+function renderProgressChart(actionPlan) {
+  const agents = ["aegis","nova","vivid","bitz","echo","carey","insight","verity"];
+  const data = [], labels = ["Aegis","Nova","Vivid","Bitz","Echo","Carey","Insight","Verity"];
   agents.forEach(a => {
     const p = actionPlan[a] || { total:0, completed:0 };
     const pct = p.total > 0 ? Math.round((p.completed/p.total)*100) : 0;
@@ -390,15 +390,29 @@ function renderAgentProgress(actionPlan) {
 
 // ── 로그 도넛 차트 ──
 function renderLogsDoughnut(logStats) {
+  const agentColors = {
+    aegis: "#d4af37",
+    nova: "#2a5d80",
+    vivid: "#6a3080",
+    bitz: "#1d6840",
+    echo: "#8a2800",
+    carey: "#2a3880",
+    insight: "#5c3a21",
+    verity: "#4a4a4a",
+    unknown: "#7f7663"
+  };
+  
   const labels = Object.keys(logStats).map(l => l.toUpperCase());
   const vals   = Object.values(logStats);
-  if (!labels.length) { labels.push("NO DATA"); vals.push(1); }
+  const colors = Object.keys(logStats).map(l => agentColors[l.toLowerCase()] || "#7f7663");
+
+  if (!labels.length) { labels.push("NO DATA"); vals.push(1); colors.push("#333"); }
   const ctx = document.getElementById("logsDoughnutChart")?.getContext("2d");
   if (!ctx) return;
-  if (logsDoughnutChart) { logsDoughnutChart.data.labels=labels; logsDoughnutChart.data.datasets[0].data=vals; logsDoughnutChart.update(); return; }
+  if (logsDoughnutChart) { logsDoughnutChart.data.labels=labels; logsDoughnutChart.data.datasets[0].data=vals; logsDoughnutChart.data.datasets[0].backgroundColor=colors; logsDoughnutChart.update(); return; }
   logsDoughnutChart = new Chart(ctx, {
     type:"doughnut",
-    data:{ labels, datasets:[{ data:vals, backgroundColor:["#d4af37","#4a7a96","#3f8c5b","#7f7663","#ba1a1a"], borderWidth:2, borderColor:"#ffffff" }] },
+    data:{ labels, datasets:[{ data:vals, backgroundColor:colors, borderWidth:2, borderColor:"#ffffff" }] },
     options:{ responsive:true, plugins:{ legend:{ position:"right", labels:{boxWidth:12,color:"#4d4635"} } } }
   });
 }
@@ -463,8 +477,10 @@ const ROOM_POSITIONS = {
   bitz:    { left: 72, top: 10 },
   echo:    { left: 6,  top: 74 },
   carey:   { left: 28, top: 74 },
+  insight: { left: 50, top: 74 },
+  verity:  { left: 72, top: 74 },
   meeting: { left: 46, top: 44 },
-  lounge:  { left: 76, top: 74 },
+  lounge:  { left: 88, top: 74 },
 };
 
 // Wander sub-positions within desk areas (slight offsets)
@@ -473,11 +489,11 @@ const WANDER_OFFSETS = [
   { dl: 0, dt: 4 }, { dl: 4, dt: 0 },
 ];
 
-const AGENTS = ['aegis', 'nova', 'vivid', 'bitz', 'echo', 'carey'];
+const AGENTS = ['aegis', 'nova', 'vivid', 'bitz', 'echo', 'carey', 'insight', 'verity'];
 
 // State: which room each agent is in
-const agentRooms   = { aegis: 'aegis', nova: 'nova', vivid: 'vivid', bitz: 'bitz', echo: 'echo', carey: 'carey' };
-const agentBubbles = { aegis: 'idle 🛡️', nova: 'idle 💡', vivid: 'idle 🎨', bitz: 'idle 💻', echo: 'idle 📢', carey: 'idle 🎧' };
+const agentRooms   = { aegis: 'aegis', nova: 'nova', vivid: 'vivid', bitz: 'bitz', echo: 'echo', carey: 'carey', insight: 'insight', verity: 'verity' };
+const agentBubbles = { aegis: 'idle 🛡️', nova: 'idle 💡', vivid: 'idle 🎨', bitz: 'idle 💻', echo: 'idle 📢', carey: 'idle 🎧', insight: 'idle 📈', verity: 'idle ✔️' };
 
 function placeToken(agent, roomKey, wanderIdx) {
   const token = document.getElementById(`token-${agent}`);
@@ -745,6 +761,39 @@ const AGENT_SPECS = {
       'read_url_content',
     ],
   },
+  insight: {
+    name: 'Insight (인사이트)',
+    role: 'Trend Analyst — 취업 시장 트렌드 모니터링 및 기회 포착',
+    avatar: 'https://ui-avatars.com/api/?name=Insight&background=random',
+    mcp: [
+      'notebooklm'
+    ],
+    api: [
+      'Gemini 2.5 Flash (AI Core)',
+      'LinkedIn API (트렌드 분석)',
+      'Reddit API (반응 모니터링)'
+    ],
+    tools: [
+      'search_web', 'browser_subagent', 'read_url_content',
+      'write_to_file', 'view_file'
+    ],
+  },
+  verity: {
+    name: 'Verity (베리티)',
+    role: 'QA & Auditor — 할루시네이션 및 오류 방지, 논리 검증',
+    avatar: 'https://ui-avatars.com/api/?name=Verity&background=random',
+    mcp: [
+      'notebooklm'
+    ],
+    api: [
+      'Gemini 2.5 Flash (AI Core)',
+      'FactCheck API'
+    ],
+    tools: [
+      'grep_search', 'view_file', 'invoke_subagent',
+      'read_url_content'
+    ],
+  }
 };
 
 function selectAgent(agentKey) {

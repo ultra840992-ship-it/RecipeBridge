@@ -14,6 +14,18 @@ PORT = 8000
 BACKEND_URL = f"http://localhost:{PORT}"
 MAX_HANDOFFS = 5
 
+def append_to_log_md(agent, cmd_type, summary, links=""):
+    """log.md에 실시간 피드 항목 추가"""
+    log_path = os.path.join(os.path.dirname(__file__), "..", "..", "log.md")
+    now = time.localtime()
+    date_str = time.strftime("%Y-%m-%d %H:%M", now)
+    entry = f"{date_str} | {cmd_type} | [{agent.upper()}] {summary} | {links}\n"
+    try:
+        with open(log_path, "a", encoding="utf-8") as f:
+            f.write(entry)
+    except Exception as e:
+        print(f"[Error] Failed to write to log.md: {e}")
+
 # ★ 일시정지(Pause) 중단 시그널 문자열 패턴
 _PAUSE_SIGNAL = "[System]"
 
@@ -135,6 +147,8 @@ def execute_daily_routine():
             elif "Bitz" in line: current_agent = "bitz"
             elif "Echo" in line: current_agent = "echo"
             elif "Carey" in line: current_agent = "carey"
+            elif "Insight" in line: current_agent = "insight"
+            elif "Verity" in line: current_agent = "verity"
         
         if line.strip().startswith("- [ ]") and current_agent:
             if current_agent not in agents_found:
@@ -190,6 +204,10 @@ def execute_daily_routine():
             
         lines[line_idx] = lines[line_idx].replace("- [ ]", "- [x]", 1)
         completed_reports.append(f"- {agent}: {task} (파일: {', '.join(agent_saved) if agent_saved else '없음'})")
+        
+        # log.md에 실시간 기록 추가
+        links = f"[[{agent_saved[0]}]]" if agent_saved else ""
+        append_to_log_md(agent, "task", f"태스크 완료: {task}", links)
         
     with open(plan_path, "w", encoding="utf-8") as f:
         f.writelines(lines)

@@ -247,6 +247,16 @@
                 <span class="room-label">🎧 Carey CS 부스</span>
                 <div class="desk-icon">🎙️</div>
               </div>
+              <!-- Insight 실 -->
+              <div class="office-room room-insight" data-room="insight">
+                <span class="room-label">🔬 Insight R&D실</span>
+                <div class="desk-icon">📈</div>
+              </div>
+              <!-- Verity 실 -->
+              <div class="office-room room-verity" data-room="verity">
+                <span class="room-label">⚖️ Verity 감사실</span>
+                <div class="desk-icon">✔️</div>
+              </div>
               <!-- 라운지 -->
               <div class="office-room room-lounge" data-room="lounge">
                 <span class="room-label">☕ 사내 라운지</span>
@@ -283,6 +293,16 @@
                 <img src="carey_avatar.jpg" alt="Carey">
                 <div class="agent-token__bubble" id="bubble-carey"></div>
                 <span class="agent-token__name">Carey</span>
+              </div>
+              <div class="agent-token" id="token-insight" data-agent="insight" onclick="selectAgent('insight')">
+                <img src="https://ui-avatars.com/api/?name=Insight&background=random" alt="Insight">
+                <div class="agent-token__bubble" id="bubble-insight"></div>
+                <span class="agent-token__name">Insight</span>
+              </div>
+              <div class="agent-token" id="token-verity" data-agent="verity" onclick="selectAgent('verity')">
+                <img src="https://ui-avatars.com/api/?name=Verity&background=random" alt="Verity">
+                <div class="agent-token__bubble" id="bubble-verity"></div>
+                <span class="agent-token__name">Verity</span>
               </div>
             </div>
           </div>
@@ -327,6 +347,8 @@
                 <button class="spec-tab" onclick="selectAgent('bitz')">💻 Bitz</button>
                 <button class="spec-tab" onclick="selectAgent('echo')">📢 Echo</button>
                 <button class="spec-tab" onclick="selectAgent('carey')">🎧 Carey</button>
+                <button class="spec-tab" onclick="selectAgent('insight')">🔬 Insight</button>
+                <button class="spec-tab" onclick="selectAgent('verity')">⚖️ Verity</button>
               </div>
               <div class="spec-detail" id="specDetail">
                 <!-- JS로 렌더링 -->
@@ -358,7 +380,7 @@
 
           <div class="agents-grid-header">
             <h2 class="card-title">AI Staff 사원 정보</h2>
-            <span class="active-count-lbl">6 Members Active</span>
+            <span class="active-count-lbl">8 Members Active</span>
           </div>
           <div class="agents-card-grid">
             <!-- Aegis -->
@@ -451,6 +473,36 @@
               </div>
               <button class="agent-card__btn" onclick="location.href='chat.html?agent=carey'">1:1 대화</button>
             </div>
+            <!-- Insight -->
+            <div class="agent-card">
+              <div class="agent-card__header">
+                <img src="https://ui-avatars.com/api/?name=Insight&background=random" alt="Insight" class="agent-card__avatar">
+                <span class="agent-card__badge agent-card__badge--insight">R&D</span>
+              </div>
+              <h3 class="agent-card__name">Insight (인사이트)</h3>
+              <p class="agent-card__role">Trend Analyst</p>
+              <div class="agent-card__progress">
+                <span class="progress-label">R&R 진행률</span>
+                <div class="progress-bar-container"><div class="progress-bar" id="pb-insight"></div></div>
+                <span class="progress-pct" id="pt-insight">0%</span>
+              </div>
+              <button class="agent-card__btn" onclick="location.href='chat.html?agent=insight'">1:1 대화</button>
+            </div>
+            <!-- Verity -->
+            <div class="agent-card">
+              <div class="agent-card__header">
+                <img src="https://ui-avatars.com/api/?name=Verity&background=random" alt="Verity" class="agent-card__avatar">
+                <span class="agent-card__badge agent-card__badge--verity">Watchdog</span>
+              </div>
+              <h3 class="agent-card__name">Verity (베리티)</h3>
+              <p class="agent-card__role">QA & Auditor</p>
+              <div class="agent-card__progress">
+                <span class="progress-label">R&R 진행률</span>
+                <div class="progress-bar-container"><div class="progress-bar" id="pb-verity"></div></div>
+                <span class="progress-pct" id="pt-verity">0%</span>
+              </div>
+              <button class="agent-card__btn" onclick="location.href='chat.html?agent=verity'">1:1 대화</button>
+            </div>
           </div>
         </div>
 
@@ -463,7 +515,7 @@
               <canvas id="progressChart" height="150"></canvas>
             </div>
             <div class="chart-container" style="margin-top:24px">
-              <h3 class="chart-title">명령어 실행 통계 (log.md)</h3>
+              <h3 class="chart-title">에이전트별 업무 기여도 (Business Impact Metrics)</h3>
               <canvas id="logsDoughnutChart" height="140"></canvas>
             </div>
           </div>

@@ -397,6 +397,8 @@ ul, li { list-style: none; }
 .agent-card__badge--bitz    { background: #1d6840; }
 .agent-card__badge--echo    { background: #8a2800; }
 .agent-card__badge--carey   { background: #2a3880; }
+.agent-card__badge--insight { background: #5c3a21; }
+.agent-card__badge--verity  { background: #4a4a4a; }
 
 .agent-card__name {
   font-family: var(--font-head);
@@ -1142,7 +1144,9 @@ ul, li { list-style: none; }
 .room-bitz    { left: 68%; top: 2%;  width: 28%; height: 28%; }
 .room-echo    { left: 2%;  top: 68%; width: 20%; height: 28%; }
 .room-carey   { left: 24%; top: 68%; width: 20%; height: 28%; }
-.room-lounge  { left: 68%; top: 68%; width: 28%; height: 28%; background: rgba(61,143,95,0.05); border-color: rgba(61,143,95,0.25); }
+.room-insight { left: 46%; top: 68%; width: 20%; height: 28%; }
+.room-verity  { left: 68%; top: 68%; width: 14%; height: 28%; }
+.room-lounge  { left: 84%; top: 68%; width: 14%; height: 28%; background: rgba(61,143,95,0.05); border-color: rgba(61,143,95,0.25); }
 
 /* ── Agent Avatar Tokens ── */
 .agent-token {
