@@ -50,3 +50,5 @@ YYYY-MM-DD HH:mm | command | summary | linked files
 2026-07-19 10:22 | task | [CAREY] 태스크 완료: 의뢰 스타트업과 구직자 매칭 실패 시 불만율 피드백 수집 채널 개설. | 
 2026-07-19 10:53 | task | [NOVA] 태스크 완료: 구직자용 AI 레시피 스토어 판매용 '기본 웹 빌드 레시피 팩' 3종 프롬프트 구성. | 
 2026-07-19 11:23 | task | [NOVA] 태스크 완료: 마이크로 프로젝트 진행 및 결과물 경력 인증서(인증 체인) 프로세스 상세 설계. | 
+2026-07-19 21:04 | save | [Bitz] 대시보드 상단 장기(Lv1) 간트차트 시각화 및 에이전트 Advance(a-알파) 단계 실무 가동 시작 | [[05_Meta/dashboard/index.html]], [[05_Meta/dashboard/dashboard.js]], [[02_Wiki/projects/recipebridge_action_plan.md]]
+2026-07-19 21:13 | save | [Bitz] 대시보드 JS SyntaxError 버그 픽스로 에이전트 현황 불러오기 무한 대기 현상 해결 | [[05_Meta/dashboard/dashboard.js]], [[02_Wiki/dev-tasks/dashboard_longterm_gantt_20260719.md]]
