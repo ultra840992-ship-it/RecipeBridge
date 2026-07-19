@@ -20,6 +20,24 @@
       <ul id="chatSearchResults" class="chat-search-results"></ul>
     </div>
   </div>
+  <!-- 세컨브레인 검색 모달 -->
+  <div class="wiki-modal-overlay hidden" id="wikiSearchModal">
+    <div class="wiki-modal-box">
+      <div class="wiki-modal-header">
+        <h3>📚 세컨브레인 (Wiki) 문서 검색</h3>
+        <button onclick="closeWikiModal()">✕</button>
+      </div>
+      <div class="wiki-modal-body">
+        <div class="wiki-search-sidebar">
+          <input type="text" id="wikiSearchInput" placeholder="검색어를 입력하세요..." oninput="debounceWikiSearch()">
+          <ul id="wikiSearchResults"></ul>
+        </div>
+        <div class="wiki-preview-pane" id="wikiPreviewPane">
+          <div class="wiki-preview-placeholder">문서를 선택하면 내용을 확인할 수 있습니다.</div>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <!-- 더보기 메뉴 -->
   <div class="context-menu hidden" id="moreMenu">
@@ -110,6 +128,12 @@
         <li>
           <button class="icon-btn" aria-label="디자인 에셋" title="Stitch 디자인 에셋" onclick="window.open('https://stitch.withgoogle.com/projects/3948981696864625229','_blank')">
             <svg width="20" height="20" fill="none" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="2"/><path d="M12 8v8M8 12h8" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+          </button>
+        </li>
+        <!-- 세컨브레인 검색 -->
+        <li>
+          <button class="icon-btn" aria-label="위키 검색" title="세컨브레인(Wiki) 문서 검색" onclick="openWikiModal()">
+            <svg width="20" height="20" fill="none" viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 016.5 17H20" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
           </button>
         </li>
       </ul>

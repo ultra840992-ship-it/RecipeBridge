@@ -291,6 +291,58 @@ class LiveChatRequestHandler(BaseHTTPRequestHandler):
                 "settings": load_settings()
             }
             self.wfile.write(json.dumps(dashboard_data).encode("utf-8"))
+        elif self.path.startswith("/api/search_wiki"):
+            query = ""
+            if "?" in self.path:
+                qs = self.path.split("?", 1)[1]
+                from urllib.parse import parse_qs
+                parsed_qs = parse_qs(qs)
+                query = parsed_qs.get("q", [""])[0].lower()
+            
+            base_dir = os.path.join(os.path.dirname(__file__), "..", "..")
+            results = []
+            
+            if query:
+                search_dirs = ["02_Wiki", "03_Conversations"]
+                for s_dir in search_dirs:
+                    dir_path = os.path.join(base_dir, s_dir)
+                    if not os.path.exists(dir_path): continue
+                    for root, dirs, files in os.walk(dir_path):
+                        for file in files:
+                            if not file.endswith(".md"): continue
+                            file_path = os.path.join(root, file)
+                            rel_path = os.path.relpath(file_path, base_dir).replace("\\", "/")
+                            
+                            matched = False
+                            snippet = ""
+                            if query in file.lower():
+                                matched = True
+                            
+                            try:
+                                with open(file_path, "r", encoding="utf-8") as f:
+                                    content = f.read()
+                                    if query in content.lower():
+                                        matched = True
+                                        idx = content.lower().find(query)
+                                        start = max(0, idx - 40)
+                                        end = min(len(content), idx + 40)
+                                        snippet = content[start:end].replace("\n", " ")
+                                        snippet = "..." + snippet + "..."
+                            except Exception:
+                                pass
+                                
+                            if matched:
+                                results.append({
+                                    "title": file.replace(".md", ""),
+                                    "path": rel_path,
+                                    "snippet": snippet
+                                })
+            
+            self.send_response(200)
+            self.send_header("Content-Type", "application/json")
+            self.send_header("Access-Control-Allow-Origin", "*")
+            self.end_headers()
+            self.wfile.write(json.dumps({"results": results}).encode("utf-8"))
         else:
             # 정적 파일 서빙 (대시보드 UI)
             base_dir = os.path.join(os.path.dirname(__file__), "..", "..")
