@@ -1,0 +1,54 @@
+<!-- filepath: 02_Wiki/sources/sns_cardnews_automation_plan.md -->
+# 📢 마이크로 프로젝트 결과 검증 도장 SNS 카드뉴스 템플릿 및 자동화 기획 (v1.0)
+
+## 1. 프로젝트 개요
+*   **목표**: '마이크로 프로젝트 결과 검증 도장' 서비스의 인지도를 높이고, 타겟 고객(취업 준비생, 경력 전환 희망자)의 유입 트래픽을 극대화하여 서비스 가입 및 이용률 증대.
+*   **핵심 메시지**: "나이, 스펙 걱정 끝! 당신의 프로젝트를 데이터로 증명하고, 취업 성공률을 압도적으로 높이세요!"
+*   **타겟 채널**: 인스타그램, 페이스북, 링크드인 (향후 네이버 블로그/카페, 유튜브 커뮤니티 확장 고려)
+
+## 2. SNS 카드뉴스 템플릿 설계 (AI 이미지 결합)
+
+### 2.1. 컨셉: '도약'과 '증명'
+*   **시각적 컨셉**: 역동적이고 희망찬 분위기, 데이터 시각화를 통한 신뢰감, '검증 도장' 아이덴티티 강조.
+*   **AI 이미지 활용**: Midjourney 또는 DALL-E API 연동을 통해 각 카드 내용에 맞는 맞춤형 이미지 자동 생성. (예: 자신감 있는 취준생, 데이터 성장 그래프, 합격 통보 장면 등)
+
+### 2.2. 카드뉴스 구성 (5장 캐러셀 예시)
+
+**[카드 1: 후킹 & 문제 제기]**
+*   **헤드라인**: "나이, 스펙, 이제 걱정 마세요! 🚀 당신의 프로젝트, 확실하게 증명해 드립니다!"
+*   **본문**: "취업 시장의 높은 벽, 마이크로 프로젝트 결과 검증 도장으로 돌파하세요! '진짜' 실력은 데이터로 말합니다."
+*   **AI 이미지 프롬프트**: `A determined young professional confidently leaping over a high wall labeled "Job Market Barriers," with a glowing "Verified" stamp icon in the background. Dynamic, hopeful, digital art style.`
+
+**[카드 2: 솔루션 제시 & 가치 제안]**
+*   **헤드라인**: "막막한 취준? 포트폴리오에 '진짜' 임팩트를! ✨"
+*   **본문**: "수많은 프로젝트 중 당신의 노력이 빛나지 못했다면? '검증 도장'이 그 가치를 200% 끌어올립니다! 객관적인 증명으로 차별화를 만드세요."
+*   **AI 이미지 프롬프트**: `A side-by-side comparison. On the left, a frustrated person looking at a generic resume. On the right, a smiling person holding a portfolio with a prominent, glowing "Project Verified" stamp, surrounded by positive data charts. Bright, modern illustration.`
+
+**[카드 3: 프로세스 & 데이터 기반 신뢰]**
+*   **헤드라인**: "데이터로 증명하는 당신의 실력! 📊 검증 도장 프로세스 공개!"
+*   **본문**: "간단한 3단계로 당신의 마이크로 프로젝트를 검증받고, 기업이 원하는 '데이터 기반 인재'로 거듭나세요. 합격률 UP!"
+*   **AI 이미지 프롬프트**: `A clean, infographic-style image showing a 3-step process: 1. Submit Project (icon of a laptop), 2. Data Verification (icon of a magnifying glass over data), 3. Receive Stamp (icon of a certificate with a stamp). Each step connected by an upward trending arrow. Minimalist, professional.`
+
+**[카드 4: 소셜 프루프 & 긴급성]**
+*   **헤드라인**: "이미 수많은 취준생이 경험한 성공! 🏆 당신도 주인공이 될 수 있습니다!"
+*   **본문**: "지금 바로 '마이크로 프로젝트 결과 검증 도장'을 신청하고, 꿈의 기업에 한 발 더 다가가세요! (프로필 링크 클릭!)"
+*   **AI 이미지 프롬프트**: `A diverse group of young professionals, smiling and celebrating, with subtle "success" badges or "trophy" icons floating around them. One person is looking at a smartphone with a "Verified" notification. Energetic, inclusive.`
+
+**[카드 5: 콜 투 액션 (CTA) & 브랜드 강화]**
+*   **헤드라인**: "에코가 당신의 성장을 응원합니다! 💪 더 많은 취업 꿀팁은 프로필 링크에서!"
+*   **본문**: "검증 도장 외에도 다양한 취업 지원 프로그램이 준비되어 있습니다. 지금 바로 확인하고, 당신의 커리어를 한 단계 업그레이드하세요!"
+*   **AI 이미지 프롬프트**: `A vibrant, abstract background with the "Echo Soul" brand logo prominently displayed. Encouraging upward arrows and subtle digital data patterns. Modern, clean.`
+
+## 3. 자동화 업로드 크론 연동 기획
+
+### 3.1. 자동화 스택 구상
+*   **콘텐츠 관리**: 미리 작성된 카드뉴스 텍스트, AI 이미지 프롬프트, CTA 문구를 데이터베이스에 저장.
+*   **AI 이미지 생성 모듈**: Python 스크립트 기반으로 Midjourney/DALL-E API 연동, 프롬프트 자동 전송 및 생성된 이미지 수신/저장.
+*   **카드뉴스 조립 모듈**: Python 이미지 처리 라이브러리(Pillow 등)를 활용하여 텍스트 오버레이, 로고 삽입, 레이아웃 조정을 통해 최종 카드뉴스 이미지 생성 (JPEG/PNG).
+*   **SNS 업로드 모듈**: 각 SNS 플랫폼별 API (인스타그램 Graph API, 페이스북 API, 링크드인 API) 연동하여 생성된 카드뉴스 자동 업로드.
+*   **스케줄러**: `cron` 또는 클라우드 기반 스케줄러(AWS Lambda + EventBridge, GCP Cloud Scheduler)를 활용하여 주기적인 실행 설정.
+
+### 3.2. 크론 잡(Cron Job) 연동 계획
+*   **주기**: 주 3회 (월, 수, 금) 오전 10시 30분 자동 업로드. (최적의 반응률 데이터를 기반으로 주기 조정 예정)
+*   **실행 스크립트**:
+    
