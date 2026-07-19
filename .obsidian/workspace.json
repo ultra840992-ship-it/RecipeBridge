@@ -186,6 +186,8 @@
   },
   "active": "26dbb9bbb2f86c34",
   "lastOpenFiles": [
+    "fix_git_2.py",
+    "fix_git.py",
     "05_Meta/dashboard/verity_avatar.jpg",
     "05_Meta/dashboard/insight_avatar.jpg",
     "02_Wiki/dev-tasks/dashboard_and_agent_sync_20260719.md",
@@ -206,7 +208,6 @@
     "05_Meta/agents/insight/agent.md",
     "05_Meta/agents/insight/user.md",
     "05_Meta/agents/insight/soul.md",
-    "05_Meta/agents/insight",
     "_shared/orchestrator-rules.md",
     "05_Meta/agents/vivid/memory.md"
   ]
