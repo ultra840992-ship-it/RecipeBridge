@@ -113,6 +113,8 @@ def _extract_code_blocks(text):
         for line in content.split('\n')[:3]:
             if 'filepath:' in line.lower():
                 filepath = line.split('filepath:')[1].strip()
+                # Clean up markdown comment ends or asterisks
+                filepath = filepath.replace('-->', '').replace('*', '').strip()
                 break
         if not filepath:
             filepath = f"output_{len(blocks)}.txt"

@@ -59,6 +59,10 @@
 
 아직 등록된 error 문서가 없습니다.
 
+## Dev-Tasks
+
+- [[02_Wiki/dev-tasks/dashboard_and_agent_sync_20260719|대시보드 UI 및 에이전트 동기화 패치 내역 (2026-07-19)]]
+
 ## Employee Manuals
 
 - [[05_Meta/manuals/aegis_manual|Aegis (마스터) 매뉴얼]]

@@ -186,6 +186,7 @@
   },
   "active": "26dbb9bbb2f86c34",
   "lastOpenFiles": [
+    "02_Wiki/dev-tasks/dashboard_and_agent_sync_20260719.md",
     "prompts/code_verification_prompt.txt",
     "prompts",
     "output_2.txt",
@@ -205,7 +206,6 @@
     "05_Meta/agents/insight/soul.md",
     "05_Meta/agents/insight",
     "_shared/orchestrator-rules.md",
-    "대시보드열기.bat",
     "05_Meta/agents/vivid/memory.md"
   ]
 }
