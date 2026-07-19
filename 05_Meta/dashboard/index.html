@@ -170,7 +170,35 @@
         </div>
       </section>
 
-      <!-- ③ 간트차트 — 최우선 섹션 -->
+      <!-- ③-A 장기 간트차트 (Lv1) -->
+      <section class="gantt-section" id="ganttLongTermSection">
+        <div class="section-header">
+          <h2 class="section-title">🚀 장기 로드맵 (Lv1) — 8월 a-알파 런칭 및 수익화 타겟</h2>
+          <div class="gantt-legend">
+            <span class="legend-dot" style="background:#d4af37"></span><span>비즈니스</span>
+            <span class="legend-dot" style="background:#1d6840"></span><span>프로덕트</span>
+            <span class="legend-dot today-line-legend"></span><span>현재</span>
+          </div>
+        </div>
+        <div class="gantt-wrapper dashboard-card">
+          <div class="gantt-header-row">
+            <div class="gantt-agent-col">구분</div>
+            <div class="gantt-weeks">
+              <div class="gantt-week" data-week="1">7월 3주차 <span>MVP 검증</span></div>
+              <div class="gantt-week" data-week="2">7월 4주차 <span>매칭 테스트</span></div>
+              <div class="gantt-week" data-week="3">8월 1주차 <span>a-알파 배포</span></div>
+              <div class="gantt-week" data-week="4">8월 2주차 <span>수익화 연동</span></div>
+            </div>
+          </div>
+          <div class="gantt-body" id="ganttLongTermBody">
+            <!-- JS로 동적 렌더링 -->
+          </div>
+          <!-- 장기 오늘 기준선 -->
+          <div class="gantt-today-line" id="ganttLongTermTodayLine"></div>
+        </div>
+      </section>
+
+      <!-- ③-B 단기 간트차트 — 최우선 섹션 -->
       <section class="gantt-section" id="ganttSection">
         <div class="section-header">
           <h2 class="section-title">📅 MVP 4일 단축 스프린트 — 에이전트별 업무 일정 & 진도율</h2>

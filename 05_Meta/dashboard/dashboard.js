@@ -173,9 +173,32 @@ const GANTT_DATA = [
   }
 ];
 
+const LONG_TERM_GANTT_DATA = [
+  {
+    agent: "비즈니스 기획",
+    key: "business",
+    color: "#d4af37",
+    tasks: [
+      { label: "중고 신입 - 스타트업 매칭 모델 확립", start: 1, end: 2 },
+      { label: "블라인드 실무 과제 DB 확보 (100건)", start: 3, end: 4 }
+    ]
+  },
+  {
+    agent: "프로덕트 구축",
+    key: "product",
+    color: "#1d6840",
+    tasks: [
+      { label: "MVP 기능 배포 (레시피/DB 동기화)", start: 1, end: 2 },
+      { label: "a-알파 수익화(결제 모듈) 연동 및 오픈", start: 3, end: 4 }
+    ]
+  }
+];
+
 // 오늘 날짜 기준 진도 계산
 const PROJECT_START = new Date("2026-07-19");
 const PROJECT_END   = new Date("2026-07-22");
+const LT_PROJECT_START = new Date("2026-07-15");
+const LT_PROJECT_END   = new Date("2026-08-11");
 const TODAY         = new Date();
 
 function calcWeekProgress() {
@@ -188,6 +211,13 @@ function todayWeekFraction() {
   // 오늘이 전체 4일 중 몇 %인지
   const startMs = PROJECT_START.getTime();
   const endMs   = PROJECT_END.getTime();
+  const todayMs = TODAY.getTime();
+  return Math.max(0, Math.min(1, (todayMs - startMs) / (endMs - startMs)));
+}
+
+function ltTodayWeekFraction() {
+  const startMs = LT_PROJECT_START.getTime();
+  const endMs   = LT_PROJECT_END.getTime();
   const todayMs = TODAY.getTime();
   return Math.max(0, Math.min(1, (todayMs - startMs) / (endMs - startMs)));
 }
@@ -296,6 +326,68 @@ function renderGantt(actionPlan) {
   }
 }
 
+function renderLongTermGantt() {
+  const body = document.getElementById("ganttLongTermBody");
+  if (!body) return;
+  body.innerHTML = "";
+
+  LONG_TERM_GANTT_DATA.forEach(row => {
+    const rowEl = document.createElement("div");
+    rowEl.className = "gantt-row";
+
+    const labelEl = document.createElement("div");
+    labelEl.className = "gantt-agent-label";
+    labelEl.innerHTML = `
+      <span class="gantt-agent-dot" style="background:${row.color}"></span>
+      <span class="gantt-agent-name">${row.agent}</span>
+    `;
+
+    const timelineEl = document.createElement("div");
+    timelineEl.className = "gantt-timeline";
+
+    for (let w = 1; w <= 4; w++) {
+      const bg = document.createElement("div");
+      bg.className = \`gantt-week-bg \${w % 2 === 0 ? "gantt-week-bg--alt" : ""}\`;
+      timelineEl.appendChild(bg);
+    }
+
+    row.tasks.forEach((task, idx) => {
+      const barEl = document.createElement("div");
+      const leftPct  = ((task.start - 1) / 4) * 100;
+      const widthPct = ((task.end - task.start + 1) / 4) * 100;
+
+      const weekFrac = ltTodayWeekFraction();
+      const isDone = weekFrac > (task.end / 4);
+
+      barEl.className = \`gantt-bar \${isDone ? "gantt-bar--done" : ""}\`;
+      barEl.style.cssText = \`
+        left: \${leftPct}%;
+        width: calc(\${widthPct}% - 6px);
+        background: \${isDone ? "#3d8f5f" : row.color};
+        top: \${8 + idx * 28}px;
+      \`;
+      const barLabel = document.createElement("span");
+      barLabel.className = "gantt-bar-label";
+      barLabel.textContent = task.label;
+      barEl.appendChild(barLabel);
+      timelineEl.appendChild(barEl);
+    });
+
+    rowEl.appendChild(labelEl);
+    rowEl.appendChild(timelineEl);
+    rowEl.style.minHeight = \`\${Math.max(48, row.tasks.length * 28 + 16)}px\`;
+    body.appendChild(rowEl);
+  });
+
+  const line = document.getElementById("ganttLongTermTodayLine");
+  if (line) {
+    const frac = ltTodayWeekFraction();
+    line.style.left = \`calc(160px + (100% - 160px) * \${frac})\`;
+    line.style.display = frac >= 0 && frac <= 1 ? "block" : "none";
+    line.title = \`오늘 (\${TODAY.toLocaleDateString("ko-KR")})\`;
+  }
+}
+
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 //  Aegis 업무 보고 요청
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -378,6 +470,7 @@ async function fetchDashboardData() {
     const data = await res.json();
     if (serverStatusDot) { serverStatusDot.className = "offline-dot online"; serverStatusDot.title = "API Server Online"; }
 
+    renderLongTermGantt();
     renderGantt(data.action_plan);
     renderProgressChart(data.action_plan);
     renderLogsDoughnut(data.log_stats);
@@ -389,6 +482,7 @@ async function fetchDashboardData() {
     if (activityFeed) activityFeed.innerHTML = `<li class="loading-item" style="color:#ba1a1a">⚠️ API 서버 오프라인 — run_dashboard.bat 재실행 필요</li>`;
     if (projectWikiList) projectWikiList.innerHTML = `<li class="loading-item">프로젝트 정보를 가져올 수 없습니다.</li>`;
     // 오프라인이어도 간트차트는 정적 데이터로 렌더링
+    renderLongTermGantt();
     renderGantt({});
   }
 }
