@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>세컨브레인 — 문서 검색</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #fcf9f4;
+      --surface: #ffffff;
+      --surface-low: #f5f0e8;
+      --surface-high: #e8e0d0;
+      --ink: #1a1208;
+      --ink-secondary: #4a3f2a;
+      --ink-tertiary: #9a8c74;
+      --gold: #d4af37;
+      --gold-dark: #a07800;
+      --gold-soft: #faf3d8;
+      --gold-border: #d4af37;
+      --status-red: #ba1a1a;
+      --radius: 10px;
+    }
+
+    html, body {
+      height: 100%;
+      font-family: 'DM Sans', sans-serif;
+      background: var(--bg);
+      color: var(--ink);
+    }
+
+    .app {
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+    }
+
+    /* ── Header ── */
+    .header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 0 20px;
+      height: 52px;
+      background: var(--surface);
+      border-bottom: 1px solid var(--surface-high);
+      flex-shrink: 0;
+    }
+    .header-icon { color: var(--gold-dark); }
+    .header-title {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--ink);
+    }
+    .header-count {
+      margin-left: auto;
+      font-size: 12px;
+      color: var(--ink-tertiary);
+      background: var(--surface-low);
+      padding: 3px 10px;
+      border-radius: 20px;
+    }
+
+    /* ── Search bar ── */
+    .searchbar {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 12px 20px;
+      background: var(--surface);
+      border-bottom: 1px solid var(--surface-high);
+      flex-shrink: 0;
+    }
+    .searchbar svg { color: var(--ink-tertiary); flex-shrink: 0; }
+    .searchbar input {
+      flex: 1;
+      border: none;
+      background: none;
+      font-size: 14px;
+      color: var(--ink);
+      font-family: inherit;
+      outline: none;
+    }
+    .searchbar input::placeholder { color: var(--ink-tertiary); }
+    .clear-btn {
+      display: none;
+      background: none;
+      border: none;
+      color: var(--ink-tertiary);
+      font-size: 18px;
+      cursor: pointer;
+      line-height: 1;
+      padding: 0 4px;
+      transition: color 0.15s;
+    }
+    .clear-btn.visible { display: block; }
+    .clear-btn:hover { color: var(--ink); }
+
+    /* ── Body: file list + preview ── */
+    .body {
+      display: flex;
+      flex: 1;
+      overflow: hidden;
+    }
+
+    /* Left: file list */
+    .file-list {
+      width: 260px;
+      min-width: 200px;
+      border-right: 1px solid var(--surface-high);
+      overflow-y: auto;
+      background: var(--surface-low);
+      flex-shrink: 0;
+    }
+    .file-list::-webkit-scrollbar { width: 4px; }
+    .file-list::-webkit-scrollbar-thumb { background: var(--surface-high); border-radius: 4px; }
+
+    .folder-label {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 10px 16px 6px;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--ink-tertiary);
+      position: sticky;
+      top: 0;
+      background: var(--surface-low);
+      border-bottom: 1px solid var(--surface-high);
+      z-index: 1;
+    }
+    .file-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 9px 16px;
+      cursor: pointer;
+      border-bottom: 1px solid rgba(0,0,0,0.04);
+      transition: background 0.12s;
+      font-size: 13px;
+      color: var(--ink-secondary);
+    }
+    .file-item:hover { background: var(--surface); color: var(--ink); }
+    .file-item.active {
+      background: var(--gold-soft);
+      color: var(--gold-dark);
+      border-left: 3px solid var(--gold);
+      font-weight: 600;
+    }
+    .file-item svg { flex-shrink: 0; color: var(--ink-tertiary); }
+    .file-item.active svg { color: var(--gold-dark); }
+    .file-item span {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    /* search results */
+    .search-result-item {
+      padding: 10px 16px;
+      cursor: pointer;
+      border-bottom: 1px solid rgba(0,0,0,0.04);
+      transition: background 0.12s;
+    }
+    .search-result-item:hover { background: var(--surface); }
+    .search-result-item.active { background: var(--gold-soft); border-left: 3px solid var(--gold); }
+    .search-result-item strong {
+      display: block;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--ink);
+      margin-bottom: 3px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    .search-result-item span {
+      font-size: 11px;
+      color: var(--ink-tertiary);
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    /* Loading / empty */
+    .state-msg {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 40px 20px;
+      color: var(--ink-tertiary);
+      font-size: 12px;
+      text-align: center;
+    }
+    .spinner {
+      width: 18px; height: 18px;
+      border: 2px solid var(--surface-high);
+      border-top-color: var(--gold);
+      border-radius: 50%;
+      animation: spin 0.7s linear infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* Right: preview */
+    .preview {
+      flex: 1;
+      overflow-y: auto;
+      padding: 28px 36px;
+      background: var(--surface);
+      font-size: 14px;
+      line-height: 1.75;
+      color: var(--ink-secondary);
+    }
+    .preview::-webkit-scrollbar { width: 4px; }
+    .preview::-webkit-scrollbar-thumb { background: var(--surface-high); border-radius: 4px; }
+
+    .preview-empty {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100%;
+      gap: 16px;
+      color: var(--ink-tertiary);
+      text-align: center;
+    }
+    .preview-empty p { font-size: 13px; }
+
+    /* Markdown styles */
+    .preview h1 {
+      font-size: 22px; font-weight: 800; color: var(--ink);
+      margin: 0 0 18px; padding-bottom: 12px;
+      border-bottom: 2px solid var(--gold-soft);
+    }
+    .preview h2 { font-size: 17px; font-weight: 700; color: var(--ink); margin: 24px 0 10px; }
+    .preview h3 { font-size: 14px; font-weight: 700; color: var(--ink); margin: 18px 0 8px; }
+    .preview p { margin-bottom: 12px; }
+    .preview pre {
+      background: var(--surface-low); padding: 14px 18px;
+      border-radius: 8px; overflow-x: auto;
+      border: 1px solid var(--surface-high); margin-bottom: 14px; font-size: 12px;
+    }
+    .preview code {
+      background: var(--surface-low); padding: 2px 6px;
+      border-radius: 4px; font-size: 12px;
+      font-family: 'JetBrains Mono', 'Fira Code', monospace;
+      color: var(--gold-dark);
+    }
+    .preview blockquote {
+      border-left: 3px solid var(--gold-border);
+      margin: 0 0 14px; padding: 10px 16px;
+      background: var(--gold-soft); border-radius: 0 8px 8px 0;
+    }
+    .preview ul, .preview ol { margin-bottom: 12px; padding-left: 22px; }
+    .preview li { margin-bottom: 4px; }
+    .preview strong { color: var(--ink); font-weight: 700; }
+    .preview hr { border: none; border-top: 1px solid var(--surface-high); margin: 20px 0; }
+  </style>
+</head>
+<body>
+<div class="app">
+  <div class="header">
+    <svg class="header-icon" width="18" height="18" fill="none" viewBox="0 0 24 24">
+      <path d="M4 19.5A2.5 2.5 0 016.5 17H20" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+    <span class="header-title">세컨브레인 — 문서 검색</span>
+    <span class="header-count" id="docCount">–</span>
+  </div>
+
+  <div class="searchbar">
+    <svg width="16" height="16" fill="none" viewBox="0 0 24 24">
+      <circle cx="11" cy="11" r="8" stroke="currentColor" stroke-width="2"/>
+      <path d="M21 21l-4.35-4.35" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+    </svg>
+    <input type="text" id="searchInput" placeholder="제목 또는 내용으로 검색..." autocomplete="off" autofocus>
+    <button class="clear-btn" id="clearBtn" onclick="clearSearch()">×</button>
+  </div>
+
+  <div class="body">
+    <div class="file-list" id="fileList">
+      <div class="state-msg">
+        <div class="spinner"></div>
+        <span>문서 목록 불러오는 중...</span>
+      </div>
+    </div>
+    <div class="preview" id="preview">
+      <div class="preview-empty">
+        <svg width="48" height="48" fill="none" viewBox="0 0 24 24" opacity=".2">
+          <path d="M4 19.5A2.5 2.5 0 016.5 17H20" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+          <path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+        </svg>
+        <p>좌측에서 문서를 선택하거나<br>검색어를 입력하세요</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+const BACKEND_URL = '';
+let allFiles = [];
+let searchTimer = null;
+
+const docSVG = `<svg width="14" height="14" fill="none" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><polyline points="14 2 14 8 20 8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
+const folderSVG = `<svg width="12" height="12" fill="none" viewBox="0 0 24 24"><path d="M22 19a2 2 0 01-2 2H4a2 2 0 01-2-2V5a2 2 0 012-2h5l2 3h9a2 2 0 012 2z" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>`;
+
+async function loadAllFiles() {
+  try {
+    const res = await fetch(`${BACKEND_URL}/api/search_wiki?q=`);
+    if (!res.ok) throw new Error();
+    const data = await res.json();
+    allFiles = data.results || [];
+    document.getElementById('docCount').textContent = `${allFiles.length}개 문서`;
+    renderFileList(allFiles);
+  } catch {
+    document.getElementById('fileList').innerHTML =
+      `<div class="state-msg" style="color:var(--status-red)">⚠️ 서버에 연결할 수 없습니다</div>`;
+  }
+}
+
+function renderFileList(files) {
+  const el = document.getElementById('fileList');
+  if (!files.length) {
+    el.innerHTML = `<div class="state-msg">검색 결과가 없습니다</div>`;
+    return;
+  }
+  const groups = {};
+  files.forEach(f => {
+    const parts = f.path.replace(/\\/g, '/').split('/');
+    const folder = parts.length > 2 ? parts[parts.length - 2] : '기타';
+    (groups[folder] = groups[folder] || []).push(f);
+  });
+  el.innerHTML = Object.entries(groups).map(([folder, items]) => `
+    <div>
+      <div class="folder-label">${folderSVG} ${folder}</div>
+      ${items.map(f => `
+        <div class="file-item" onclick="loadFile('${f.path.replace(/\\/g, '/')}', this)">
+          ${docSVG}<span>${f.title}</span>
+        </div>
+      `).join('')}
+    </div>
+  `).join('');
+}
+
+function renderSearchResults(results) {
+  const el = document.getElementById('fileList');
+  if (!results.length) {
+    el.innerHTML = `<div class="state-msg">검색 결과가 없습니다</div>`;
+    return;
+  }
+  el.innerHTML = results.map(r => `
+    <div class="search-result-item" onclick="loadFile('${r.path.replace(/\\/g, '/')}', this)">
+      <strong>${r.title}</strong>
+      <span>${r.snippet}</span>
+    </div>
+  `).join('');
+}
+
+document.getElementById('searchInput').addEventListener('input', function() {
+  const val = this.value;
+  document.getElementById('clearBtn').classList.toggle('visible', val.length > 0);
+  clearTimeout(searchTimer);
+  searchTimer = setTimeout(async () => {
+    if (!val.trim()) { renderFileList(allFiles); return; }
+    const el = document.getElementById('fileList');
+    el.innerHTML = `<div class="state-msg"><div class="spinner"></div><span>검색 중...</span></div>`;
+    try {
+      const res = await fetch(`${BACKEND_URL}/api/search_wiki?q=${encodeURIComponent(val)}`);
+      if (!res.ok) throw new Error();
+      const data = await res.json();
+      renderSearchResults(data.results || []);
+    } catch {
+      el.innerHTML = `<div class="state-msg" style="color:var(--status-red)">검색 오류</div>`;
+    }
+  }, 280);
+});
+
+function clearSearch() {
+  document.getElementById('searchInput').value = '';
+  document.getElementById('clearBtn').classList.remove('visible');
+  renderFileList(allFiles);
+  document.getElementById('searchInput').focus();
+}
+
+async function loadFile(path, el) {
+  document.querySelectorAll('.file-item, .search-result-item').forEach(i => i.classList.remove('active'));
+  el.classList.add('active');
+  const pane = document.getElementById('preview');
+  pane.innerHTML = `<div class="preview-empty"><div class="spinner"></div><p>불러오는 중...</p></div>`;
+  try {
+    const res = await fetch(`${BACKEND_URL}/${path}`);
+    if (!res.ok) throw new Error();
+    const md = await res.text();
+    pane.innerHTML = renderMarkdown(md);
+  } catch {
+    pane.innerHTML = `<div class="preview-empty"><p style="color:var(--status-red)">문서를 불러오지 못했습니다</p></div>`;
+  }
+}
+
+function renderMarkdown(md) {
+  return md
+    .replace(/```([\s\S]*?)```/gim, '<pre><code>$1</code></pre>')
+    .replace(/^---$/gim, '<hr>')
+    .replace(/^### (.*$)/gim, '<h3>$1</h3>')
+    .replace(/^## (.*$)/gim, '<h2>$1</h2>')
+    .replace(/^# (.*$)/gim, '<h1>$1</h1>')
+    .replace(/^\> (.*$)/gim, '<blockquote>$1</blockquote>')
+    .replace(/^\- (.*$)/gim, '<li>$1</li>')
+    .replace(/\*\*(.*?)\*\*/gim, '<strong>$1</strong>')
+    .replace(/\*(.*?)\*/gim, '<em>$1</em>')
+    .replace(/`([^`\n]+)`/gim, '<code>$1</code>')
+    .replace(/<li>(.*?)<\/li>/gs, (m) => `<ul>${m}</ul>`)
+    .replace(/<\/ul><ul>/g, '')
+    .replace(/\n\n/gim, '<br><br>');
+}
+
+loadAllFiles();
+</script>
+</body>
+</html>

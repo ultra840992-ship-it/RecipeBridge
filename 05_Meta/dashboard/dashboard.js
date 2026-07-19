@@ -319,11 +319,47 @@ function renderGantt(actionPlan) {
   const line = document.getElementById("ganttTodayLine");
   if (line) {
     const frac = todayWeekFraction();
-    // 에이전트 레이블 컬럼 너비를 제외한 위치 (레이블은 약 160px)
     line.style.left = `calc(160px + (100% - 160px) * ${frac})`;
     line.style.display = frac >= 0 && frac <= 1 ? "block" : "none";
     line.title = `오늘 (${TODAY.toLocaleDateString("ko-KR")})`;
   }
+
+  // ── 자동 스프린트 전환 감지 ──────────────────────────────
+  checkAutoAdvanceSprint(actionPlan);
+}
+
+// 모든 에이전트가 100% 완료되면 다음 스프린트로 전환 알림 및 자동 업데이트
+let _sprintAdvancedThisSession = false;
+
+function checkAutoAdvanceSprint(actionPlan) {
+  if (_sprintAdvancedThisSession) return;
+  const keys = Object.keys(actionPlan);
+  if (!keys.length) return;
+
+  const allDone = keys.every(k => {
+    const d = actionPlan[k];
+    return d.total > 0 && d.completed >= d.total;
+  });
+
+  if (!allDone) return;
+  _sprintAdvancedThisSession = true;
+
+  // 배너 표시
+  const banner = document.getElementById("sprintAdvanceBanner");
+  if (banner) {
+    banner.classList.remove("hidden");
+    setTimeout(() => banner.classList.add("banner-visible"), 50);
+  }
+
+  // 간트 태스크 레이블 "Lv1 → Lv2"로 업데이트 (다음 스프린트 진입 표시)
+  GANTT_DATA.forEach(row => {
+    row.tasks.forEach(task => {
+      task.label = task.label.replace("[Lv1]", "[Lv2]");
+      if (task.details) {
+        task.status = "planned";
+      }
+    });
+  });
 }
 
 function renderLongTermGantt() {

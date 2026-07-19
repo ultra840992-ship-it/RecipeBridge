@@ -35,40 +35,9 @@
     </div>
   </div>
 
-  <!-- 세컨브레인 드로어 패널 -->
-  <div class="wiki-drawer-backdrop" id="wikiDrawerBackdrop" onclick="closeWikiDrawer()"></div>
-  <aside class="wiki-drawer" id="wikiDrawer">
-    <div class="wiki-drawer__header">
-      <div class="wiki-drawer__title">
-        <svg width="18" height="18" fill="none" viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 016.5 17H20" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        <span>세컨브레인</span>
-      </div>
-      <button class="wiki-drawer__close" onclick="closeWikiDrawer()" title="닫기">
-        <svg width="16" height="16" fill="none" viewBox="0 0 24 24"><path d="M18 6L6 18M6 6l12 12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
-      </button>
-    </div>
-    <div class="wiki-drawer__search">
-      <svg class="wiki-search-icon" width="16" height="16" fill="none" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8" stroke="currentColor" stroke-width="2"/><path d="M21 21l-4.35-4.35" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
-      <input type="text" id="wikiSearchInput" placeholder="문서 검색..." oninput="debounceWikiSearch()" autocomplete="off">
-      <button class="wiki-search-clear" id="wikiSearchClear" onclick="clearWikiSearch()" title="지우기">×</button>
-    </div>
-    <div class="wiki-drawer__body">
-      <div class="wiki-file-list" id="wikiFileList">
-        <div class="wiki-loading">
-          <div class="wiki-loading-spinner"></div>
-          <span>문서 목록 수집 중...</span>
-        </div>
-      </div>
-      <div class="wiki-drawer__preview" id="wikiPreviewPane">
-        <div class="wiki-preview-empty">
-          <svg width="40" height="40" fill="none" viewBox="0 0 24 24" opacity=".3"><path d="M4 19.5A2.5 2.5 0 016.5 17H20" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
-          <p>좌측에서 문서를 선택하세요</p>
-        </div>
-      </div>
-    </div>
-  </aside>
 
   <!-- 태스크 상세 모달 (Lv2 Breakdown) -->
+
   <div class="modal-overlay hidden" id="taskDetailModal">
     <div class="modal-box">
       <div class="modal-header">
@@ -118,7 +87,7 @@
         </li>
       </ul>
       <div class="icon-nav__bottom">
-        <button class="icon-btn" aria-label="위키 검색" title="세컨브레인(Wiki) 문서 검색" onclick="openWikiModal()">
+        <button class="icon-btn" aria-label="세컨브레인" title="세컨브레인 문서 검색" onclick="window.open('wiki_search.html','wiki_search','width=900,height=680,resizable=yes')">
           <svg width="20" height="20" fill="none" viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 016.5 17H20" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </button>
         <button class="icon-btn" title="시스템 설정" onclick="openModal('settingsModal')">
@@ -236,6 +205,16 @@
           </div>
           <!-- 오늘 기준선 -->
           <div class="gantt-today-line" id="ganttTodayLine"></div>
+        </div>
+
+        <!-- 스프린트 전환 배너 (전 에이전트 100% 완료 시 표시) -->
+        <div class="sprint-advance-banner hidden" id="sprintAdvanceBanner">
+          <span class="sprint-banner-icon">🚀</span>
+          <div>
+            <strong>전 에이전트 스프린트 완료!</strong>
+            <span>모든 태스크 100% 달성 — 다음 단계(Lv2)로 자동 전환되었습니다.</span>
+          </div>
+          <button onclick="this.closest('.sprint-advance-banner').classList.add('hidden')">✕</button>
         </div>
       </section>
 

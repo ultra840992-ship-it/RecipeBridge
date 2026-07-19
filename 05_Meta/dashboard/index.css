@@ -1305,3 +1305,47 @@ img { display: block; }
   border: none; border-top: 1px solid var(--surface-high);
   margin: 20px 0;
 }
+
+/* ══════════════════════════════════════════════════════════
+   스프린트 자동 전환 배너
+   ══════════════════════════════════════════════════════════ */
+.sprint-advance-banner {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin: 14px 0 2px;
+  padding: 14px 20px;
+  background: linear-gradient(135deg, #1d6840 0%, #2d9460 100%);
+  color: #ffffff;
+  border-radius: 12px;
+  font-size: 13px;
+  opacity: 0;
+  transform: translateY(-8px);
+  transition: opacity 0.4s ease, transform 0.4s ease;
+}
+.sprint-advance-banner.banner-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+.sprint-advance-banner strong {
+  display: block;
+  font-size: 14px;
+  font-weight: 700;
+  color: #fff;
+  margin-bottom: 2px;
+}
+.sprint-advance-banner span { opacity: 0.88; font-size: 12px; }
+.sprint-banner-icon { font-size: 26px; flex-shrink: 0; }
+.sprint-advance-banner button {
+  margin-left: auto;
+  background: rgba(255,255,255,0.2);
+  border: none;
+  color: #fff;
+  width: 26px; height: 26px;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 14px;
+  flex-shrink: 0;
+  transition: background 0.15s;
+}
+.sprint-advance-banner button:hover { background: rgba(255,255,255,0.35); }
