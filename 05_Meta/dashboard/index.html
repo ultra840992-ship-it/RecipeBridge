@@ -35,21 +35,21 @@
     </div>
   </div>
 
-  <!-- 검색 모달 -->
-  <div class="modal-overlay hidden" id="searchModal">
-    <div class="modal-box">
-      <div class="modal-header">
-        <h3 class="modal-title">🔍 위키 검색</h3>
-        <button class="modal-close" onclick="closeModal('searchModal')">✕</button>
+  <!-- 세컨브레인 검색 모달 -->
+  <div class="wiki-modal-overlay hidden" id="wikiSearchModal">
+    <div class="wiki-modal-box">
+      <div class="wiki-modal-header">
+        <h3>📚 세컨브레인 (Wiki) 문서 검색</h3>
+        <button onclick="closeWikiModal()">✕</button>
       </div>
-      <div class="modal-body">
-        <input type="text" id="wikiSearchInput" placeholder="프로젝트, 개념, 에이전트 이름 검색..." class="modal-input">
-        <ul class="search-results" id="searchResults">
-          <li class="search-result-item" onclick="closeModal('searchModal');location.href='../../02_Wiki/projects/micro_project_recipe_platform.md'">📄 AI 레시피 기반 마이크로 프로젝트 기획서</li>
-          <li class="search-result-item" onclick="closeModal('searchModal');location.href='../../02_Wiki/projects/recipebridge_action_plan.md'">📄 RecipeBridge MVP Action List & 4주 로드맵</li>
-          <li class="search-result-item" onclick="closeModal('searchModal');location.href='../../02_Wiki/projects/recipebridge_multi_agent_setup.md'">📄 RecipeBridge 멀티 에이전트 운영 설계도</li>
-          <li class="search-result-item" onclick="closeModal('searchModal');location.href='chat.html'">💬 AI 에이전트 협업방 열기</li>
-        </ul>
+      <div class="wiki-modal-body">
+        <div class="wiki-search-sidebar">
+          <input type="text" id="wikiSearchInput" placeholder="검색어를 입력하세요..." oninput="debounceWikiSearch()">
+          <ul id="wikiSearchResults"></ul>
+        </div>
+        <div class="wiki-preview-pane" id="wikiPreviewPane">
+          <div class="wiki-preview-placeholder">문서를 선택하면 내용을 확인할 수 있습니다.</div>
+        </div>
       </div>
     </div>
   </div>
@@ -102,13 +102,11 @@
             <svg width="20" height="20" fill="none" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="2"/><path d="M12 8v8M8 12h8" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
           </button>
         </li>
-        <li>
-          <button class="icon-btn" title="위키 검색" onclick="openModal('searchModal')">
-            <svg width="20" height="20" fill="none" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8" stroke="currentColor" stroke-width="2"/><path d="M21 21l-4.35-4.35" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
-          </button>
-        </li>
       </ul>
       <div class="icon-nav__bottom">
+        <button class="icon-btn" aria-label="위키 검색" title="세컨브레인(Wiki) 문서 검색" onclick="openWikiModal()">
+          <svg width="20" height="20" fill="none" viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 016.5 17H20" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
         <button class="icon-btn" title="시스템 설정" onclick="openModal('settingsModal')">
           <svg width="20" height="20" fill="none" viewBox="0 0 24 24"><path d="M12 15a3 3 0 100-6 3 3 0 000 6z" stroke="currentColor" stroke-width="2"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z" stroke="currentColor" stroke-width="2"/></svg>
         </button>

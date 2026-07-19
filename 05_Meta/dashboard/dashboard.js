@@ -987,3 +987,85 @@ async function fetchDashboardData() {
     renderPauseStatus({ paused: false });
   }
 }
+
+// ══════════════════════════════════════════════════════════
+//  세컨브레인 위키 검색 모달 로직
+// ══════════════════════════════════════════════════════════
+let wikiSearchTimeout = null;
+
+function openWikiModal() {
+  document.getElementById("wikiSearchModal").classList.remove("hidden");
+  document.getElementById("wikiSearchInput").focus();
+}
+
+function closeWikiModal() {
+  document.getElementById("wikiSearchModal").classList.add("hidden");
+}
+
+function debounceWikiSearch() {
+  clearTimeout(wikiSearchTimeout);
+  wikiSearchTimeout = setTimeout(() => {
+    performWikiSearch();
+  }, 300);
+}
+
+async function performWikiSearch() {
+  const query = document.getElementById("wikiSearchInput").value.trim();
+  const resultsContainer = document.getElementById("wikiSearchResults");
+  if (!query) {
+    resultsContainer.innerHTML = "";
+    return;
+  }
+
+  resultsContainer.innerHTML = "<li style='text-align:center;color:var(--ink-tertiary);'>검색 중...</li>";
+  
+  try {
+    const res = await fetch(`${BACKEND_URL}/api/search_wiki?q=${encodeURIComponent(query)}`);
+    if (!res.ok) throw new Error();
+    const data = await res.json();
+    
+    if (data.results && data.results.length === 0) {
+      resultsContainer.innerHTML = "<li style='text-align:center;color:var(--ink-tertiary);'>검색 결과가 없습니다.</li>";
+      return;
+    }
+
+    resultsContainer.innerHTML = data.results.map(r => `
+      <li onclick="loadWikiFile('${r.path.replace(/\\/g, '/')}', this)">
+        <strong>${r.title}</strong>
+        <span>${r.snippet}</span>
+      </li>
+    `).join("");
+  } catch (err) {
+    resultsContainer.innerHTML = "<li style='text-align:center;color:var(--status-red);'>검색 중 오류 발생</li>";
+  }
+}
+
+async function loadWikiFile(path, liElement) {
+  const siblings = liElement.parentElement.children;
+  for (let s of siblings) s.classList.remove("selected");
+  liElement.classList.add("selected");
+
+  const pane = document.getElementById("wikiPreviewPane");
+  pane.innerHTML = "<div class='wiki-preview-placeholder'>문서를 불러오는 중...</div>";
+
+  try {
+    const res = await fetch(`${BACKEND_URL}/${path}`);
+    if (!res.ok) throw new Error();
+    const mdText = await res.text();
+    
+    let html = mdText
+      .replace(/^### (.*$)/gim, '<h3>$1</h3>')
+      .replace(/^## (.*$)/gim, '<h2>$1</h2>')
+      .replace(/^# (.*$)/gim, '<h1>$1</h1>')
+      .replace(/^\> (.*$)/gim, '<blockquote>$1</blockquote>')
+      .replace(/\*\*(.*)\*\*/gim, '<strong>$1</strong>')
+      .replace(/\*(.*)\*/gim, '<em>$1</em>')
+      .replace(/`([^`\n]+)`/gim, '<code>$1</code>')
+      .replace(/```([\s\S]*?)```/gim, '<pre><code>$1</code></pre>')
+      .replace(/\n\n/gim, '<br><br>');
+      
+    pane.innerHTML = html;
+  } catch (err) {
+    pane.innerHTML = "<div class='wiki-preview-placeholder' style='color:var(--status-red);'>문서를 불러오지 못했습니다.</div>";
+  }
+}
