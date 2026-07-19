@@ -252,7 +252,7 @@ def main():
     # 24시간 백그라운드 주기 실행
     try:
         while True:
-            time.sleep(1800)  # 30분 주기로 단축
+            time.sleep(10800)  # 3시간 주기로 연장 (토큰 최적화)
             execute_daily_routine()
     except KeyboardInterrupt:
         print("\n[Scheduler Stopped] 자발적 스케줄러가 종료되었습니다.")

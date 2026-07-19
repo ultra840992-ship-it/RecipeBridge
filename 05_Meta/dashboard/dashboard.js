@@ -792,7 +792,7 @@ const AGENT_SPECS = {
   insight: {
     name: 'Insight (인사이트)',
     role: 'Trend Analyst — 취업 시장 트렌드 모니터링 및 기회 포착',
-    avatar: 'https://ui-avatars.com/api/?name=Insight&background=random',
+    avatar: 'insight_avatar.jpg',
     mcp: [
       'notebooklm'
     ],
@@ -809,7 +809,7 @@ const AGENT_SPECS = {
   verity: {
     name: 'Verity (베리티)',
     role: 'QA & Auditor — 할루시네이션 및 오류 방지, 논리 검증',
-    avatar: 'https://ui-avatars.com/api/?name=Verity&background=random',
+    avatar: 'verity_avatar.jpg',
     mcp: [
       'notebooklm'
     ],
