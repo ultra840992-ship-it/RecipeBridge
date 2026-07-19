@@ -17,7 +17,7 @@ let progressChart     = null;
 let logsDoughnutChart = null;
 
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-//  간트차트 정적 데이터 (action_plan.md 4주 로드맵 기반)
+//  간트차트 정적 데이터 (action_plan.md 4일 스프린트 로드맵 기반)
 //  startWeek/endWeek: 1~4, ownerColor: CSS 변수에서 가져온 색상
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 const GANTT_DATA = [
@@ -142,6 +142,34 @@ const GANTT_DATA = [
         ]
       }
     ]
+  },
+  {
+    agent: "Insight (인사이트)",
+    key: "insight",
+    color: "#5c3a21",
+    tasks: [
+      { 
+        label: "[Lv1] R&D 및 시장 조사", start: 1, end: 2, status: "planned",
+        details: [
+          { name: "취업 커뮤니티 트렌드 분석 및 리포팅", target: 1 },
+          { name: "경쟁사 플랫폼 기능 비교 분석", target: 2 }
+        ]
+      }
+    ]
+  },
+  {
+    agent: "Verity (베리티)",
+    key: "verity",
+    color: "#4a4a4a",
+    tasks: [
+      { 
+        label: "[Lv1] 산출물 팩트체크", start: 3, end: 4, status: "planned",
+        details: [
+          { name: "기획서 논리 및 모순점 검증", target: 3 },
+          { name: "시스템 할루시네이션 방지 모니터링 세팅", target: 4 }
+        ]
+      }
+    ]
   }
 ];
 
@@ -157,7 +185,7 @@ function calcWeekProgress() {
 }
 
 function todayWeekFraction() {
-  // 오늘이 전체 4주 중 몇 %인지
+  // 오늘이 전체 4일 중 몇 %인지
   const startMs = PROJECT_START.getTime();
   const endMs   = PROJECT_END.getTime();
   const todayMs = TODAY.getTime();
@@ -194,7 +222,7 @@ function renderGantt(actionPlan) {
     const timelineEl = document.createElement("div");
     timelineEl.className = "gantt-timeline";
 
-    // 4주 배경 구분선
+    // 4일 배경 구분선
     for (let w = 1; w <= 4; w++) {
       const bg = document.createElement("div");
       bg.className = `gantt-week-bg ${w % 2 === 0 ? "gantt-week-bg--alt" : ""}`;

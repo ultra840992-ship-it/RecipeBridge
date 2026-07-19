@@ -11,10 +11,14 @@
             "id": "26dbb9bbb2f86c34",
             "type": "leaf",
             "state": {
-              "type": "graph",
-              "state": {},
-              "icon": "lucide-git-fork",
-              "title": "그래프 뷰"
+              "type": "markdown",
+              "state": {
+                "file": "03_Conversations/meeting_2026-07-19_10-07.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "meeting_2026-07-19_10-07"
             }
           }
         ]
@@ -90,6 +94,7 @@
             "state": {
               "type": "backlink",
               "state": {
+                "file": "03_Conversations/meeting_2026-07-19_10-07.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -99,7 +104,7 @@
                 "unlinkedCollapsed": true
               },
               "icon": "links-coming-in",
-              "title": "백링크"
+              "title": "meeting_2026-07-19_10-07 의 백링크"
             }
           },
           {
@@ -108,11 +113,12 @@
             "state": {
               "type": "outgoing-link",
               "state": {
+                "file": "03_Conversations/meeting_2026-07-19_10-07.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               },
               "icon": "links-going-out",
-              "title": "나가는 링크"
+              "title": "meeting_2026-07-19_10-07 의 나가는 링크"
             }
           },
           {
@@ -150,12 +156,13 @@
             "state": {
               "type": "outline",
               "state": {
+                "file": "03_Conversations/meeting_2026-07-19_10-07.md",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
               },
               "icon": "lucide-list",
-              "title": "개요"
+              "title": "meeting_2026-07-19_10-07 의 개요"
             }
           }
         ]
@@ -179,6 +186,25 @@
   },
   "active": "26dbb9bbb2f86c34",
   "lastOpenFiles": [
+    "prompts/code_verification_prompt.txt",
+    "prompts",
+    "output_2.txt",
+    "output_1.txt",
+    "my-dashboard-app/src/main.jsx",
+    "my-dashboard-app/src/App.jsx",
+    "my-dashboard-app/src",
+    "my-dashboard-app",
+    "05_Meta/agents/verity/memory.md",
+    "05_Meta/agents/verity/agent.md",
+    "05_Meta/agents/verity/user.md",
+    "05_Meta/agents/verity/soul.md",
+    "05_Meta/agents/verity",
+    "05_Meta/agents/insight/memory.md",
+    "05_Meta/agents/insight/agent.md",
+    "05_Meta/agents/insight/user.md",
+    "05_Meta/agents/insight/soul.md",
+    "05_Meta/agents/insight",
+    "_shared/orchestrator-rules.md",
     "대시보드열기.bat",
     "05_Meta/agents/vivid/memory.md"
   ]
