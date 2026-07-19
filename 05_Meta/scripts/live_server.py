@@ -411,10 +411,12 @@ class LiveChatRequestHandler(BaseHTTPRequestHandler):
                 title = data.get("title", "6인 에이전트 리플렉션 회의록")
                 content = data.get("content", "")
                 
-                now = datetime.datetime.now()
+                from datetime import datetime, timezone, timedelta
+                KST = timezone(timedelta(hours=9))
+                now = datetime.now(KST)
                 date_str = now.strftime("%Y-%m-%d")
                 time_str = now.strftime("%H:%M")
-                file_time_str = now.strftime("%H-%m")
+                file_time_str = now.strftime("%H-%M")
                 
                 # 파일명 생성
                 filename = f"meeting_{date_str}_{file_time_str}.md"

@@ -17,8 +17,12 @@ MAX_HANDOFFS = 5
 def append_to_log_md(agent, cmd_type, summary, links=""):
     """log.md에 실시간 피드 항목 추가"""
     log_path = os.path.join(os.path.dirname(__file__), "..", "..", "log.md")
-    now = time.localtime()
-    date_str = time.strftime("%Y-%m-%d %H:%M", now)
+    
+    from datetime import datetime, timezone, timedelta
+    KST = timezone(timedelta(hours=9))
+    now = datetime.now(KST)
+    date_str = now.strftime("%Y-%m-%d %H:%M")
+    
     entry = f"{date_str} | {cmd_type} | [{agent.upper()}] {summary} | {links}\n"
     try:
         with open(log_path, "a", encoding="utf-8") as f:
@@ -117,7 +121,9 @@ def _extract_code_blocks(text):
                 filepath = filepath.replace('-->', '').replace('*', '').strip()
                 break
         if not filepath:
-            filepath = f"output_{len(blocks)}.txt"
+            from datetime import datetime, timezone, timedelta
+            now_kst = datetime.now(timezone(timedelta(hours=9))).strftime("%Y%m%d_%H%M%S")
+            filepath = f"02_Wiki/dev-tasks/task_result_{now_kst}_{len(blocks)}.md"
         blocks.append((filepath, content))
     return blocks
 
@@ -169,8 +175,9 @@ def execute_daily_routine():
     def worker(agent, task, line_idx):
         prompt = (
             f"당신의 이번 실무 태스크입니다: {task}\n\n"
-            "작업을 수행하고 결과물은 반드시 ```확장자\\n...``` 형식의 코드 블록으로 감싸주세요. "
-            "파일에 저장될 내용입니다. 코드 블록 첫 줄에 반드시 주석으로 파일명(예: // filepath: src/App.jsx 또는 <!-- filepath: 02_Wiki/design.md -->)을 명시해 주세요."
+            "작업을 수행하고 결과물은 반드시 ```확장자\\n...``` 형식의 코드 블록으로 감싸서 출력하세요. "
+            "코드 블록의 첫 줄에 반드시 주석으로 옵시디언 파일명(예: // filepath: 02_Wiki/dev-tasks/my_result.md)을 명시해야만 "
+            "동료 에이전트와 인수인계 및 정보 공유가 가능합니다."
         )
         reply = call_agent_api(agent, prompt)
         return agent, task, line_idx, reply
