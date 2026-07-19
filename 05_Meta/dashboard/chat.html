@@ -61,6 +61,14 @@
           <img src="carey_avatar.jpg" alt="Carey">
           <div><strong>Carey</strong><span>Customer Success</span></div>
         </div>
+        <div class="team-member" onclick="selectAgentAndClose('insight')">
+          <img src="insight_avatar.jpg" alt="Insight">
+          <div><strong>Insight</strong><span>Data Analyst</span></div>
+        </div>
+        <div class="team-member" onclick="selectAgentAndClose('verity')">
+          <img src="verity_avatar.jpg" alt="Verity">
+          <div><strong>Verity</strong><span>QA Tester</span></div>
+        </div>
       </div>
     </div>
   </div>
@@ -220,6 +228,14 @@
               <img src="carey_avatar.jpg" alt="Carey">
               <strong>Carey (케리)</strong><span>Customer Success</span>
             </button>
+            <button class="team-tab-card" onclick="switchTab('dashboard');selectAgent('insight')">
+              <img src="insight_avatar.jpg" alt="Insight">
+              <strong>Insight (인사이트)</strong><span>Data Analyst</span>
+            </button>
+            <button class="team-tab-card" onclick="switchTab('dashboard');selectAgent('verity')">
+              <img src="verity_avatar.jpg" alt="Verity">
+              <strong>Verity (베리티)</strong><span>QA Tester</span>
+            </button>
           </div>
         </div>
       </section>
@@ -313,6 +329,26 @@
                 <span class="agent-item__status agent-status--idle" id="status-carey">Idle</span>
               </div>
               <div class="agent-item__talking-bar hidden" id="bar-carey"></div>
+            </button>
+          </li>
+          <li class="agent-item" data-agent="insight" id="panel-insight">
+            <button class="agent-item__btn" data-agent="insight">
+              <img class="agent-item__avatar" src="insight_avatar.jpg" alt="Insight">
+              <div class="agent-item__info">
+                <span class="agent-item__name">Insight</span>
+                <span class="agent-item__status agent-status--idle" id="status-insight">Idle</span>
+              </div>
+              <div class="agent-item__talking-bar hidden" id="bar-insight"></div>
+            </button>
+          </li>
+          <li class="agent-item" data-agent="verity" id="panel-verity">
+            <button class="agent-item__btn" data-agent="verity">
+              <img class="agent-item__avatar" src="verity_avatar.jpg" alt="Verity">
+              <div class="agent-item__info">
+                <span class="agent-item__name">Verity</span>
+                <span class="agent-item__status agent-status--idle" id="status-verity">Idle</span>
+              </div>
+              <div class="agent-item__talking-bar hidden" id="bar-verity"></div>
             </button>
           </li>
         </ul>

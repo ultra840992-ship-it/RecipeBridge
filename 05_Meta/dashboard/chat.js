@@ -45,10 +45,22 @@ const AGENTS = {
     role: "6-Agent Collaboration Chain",
     avatar: null,
     welcome: "[Aegis] 사장님 입장하셨습니다. 금일 마일스톤 회의 및 MIT Reflection 루프 가동을 위해 각 부서 현황 공유하겠습니다."
+  },
+  insight: {
+    name: "Insight (인사이트)",
+    role: "Data Analyst",
+    avatar: "insight_avatar.jpg",
+    welcome: "데이터 분석가 Insight입니다. 현재 서비스의 핵심 지표들을 확인해드릴까요?"
+  },
+  verity: {
+    name: "Verity (베리티)",
+    role: "QA Tester",
+    avatar: "verity_avatar.jpg",
+    welcome: "QA 담당 Verity입니다. 시스템 정합성과 사용성 테스트 결과를 보고해드리겠습니다."
   }
 };
 
-const BACKEND_URL = "http://localhost:8000";
+const BACKEND_URL = "";
 
 // ── DOM Refs ──
 const activeAgentPic  = document.getElementById("activeAgentPic");
@@ -698,7 +710,7 @@ async function loadAnalyticsQuickStats() {
     const data = await res.json();
     let total = 0, done = 0;
     Object.values(data.action_plan || {}).forEach(v => { total += v.total||0; done += v.completed||0; });
-    const logCount = Object.values(data.log_stats || {}).reduce((a,b)=>a+b, 0);
+    const logCount = (data.log_stats && data.log_stats.total_logs) || 0;
     const elTotal = document.getElementById('qs-total-tasks');
     const elDone  = document.getElementById('qs-done-tasks');
     const elLog   = document.getElementById('qs-log-count');
