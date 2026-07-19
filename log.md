@@ -52,3 +52,15 @@ YYYY-MM-DD HH:mm | command | summary | linked files
 2026-07-19 11:23 | task | [NOVA] 태스크 완료: 마이크로 프로젝트 진행 및 결과물 경력 인증서(인증 체인) 프로세스 상세 설계. | 
 2026-07-19 21:04 | save | [Bitz] 대시보드 상단 장기(Lv1) 간트차트 시각화 및 에이전트 Advance(a-알파) 단계 실무 가동 시작 | [[05_Meta/dashboard/index.html]], [[05_Meta/dashboard/dashboard.js]], [[02_Wiki/projects/recipebridge_action_plan.md]]
 2026-07-19 21:13 | save | [Bitz] 대시보드 JS SyntaxError 버그 픽스로 에이전트 현황 불러오기 무한 대기 현상 해결 | [[05_Meta/dashboard/dashboard.js]], [[02_Wiki/dev-tasks/dashboard_longterm_gantt_20260719.md]]
+2026-07-19 22:13 | task | [ECHO] 태스크 완료: **[Advance]** a-알파 런칭 대비 주요 취업 커뮤니티 타겟 바이럴 마케팅 메시지(콜드메일/쪽지) 템플릿 3종 기획. | [[02_Wiki/sources/viral_marketing_templates_a-alpha.md]]
+2026-07-19 22:13 | task | [BITZ] 태스크 완료: **[Advance]** 결제 모듈 연동 기초 API 뼈대 구축 및 블라인드 매칭 프로세스 서버사이드 라우팅 스크립트 작성. | [[02_Wiki/dev-tasks/20240722_payment_matching_api.md]]
+2026-07-19 22:13 | task | [NOVA] 태스크 완료: **[Advance]** 중고 신입-스타트업 블라인드 매칭 수수료 과금 모델(BM) 기획 명세서 및 결제 시나리오 초안 작성. | 
+2026-07-19 22:13 | task | [CAREY] 태스크 완료: **[Advance]** a-알파 진입 유저들의 초기 문의(FAQ) 대응용 챗봇 프롬프트 뼈대 및 이탈 방지 대응 매뉴얼 작성. | [[02_Wiki/decisions/a-alpha_chatbot_and_churn_manual.md]]
+2026-07-19 22:13 | task | [AEGIS] 태스크 완료: **[Advance]** a-알파 런칭을 위한 전체 과제 DB 정합성 최종 검수 및 스타트업 승인 프로세스 마스터 정책 수립. | 
+2026-07-19 22:13 | task | [VIVID] 태스크 완료: **[Advance]** a-알파 타겟 수익화 결제/매칭 완료 페이지 웹 퍼블리싱용 와이어프레임 및 토큰 가이드 작성. | [[02_Wiki/design/a-alpha_payment_completion_wireframe_tokens.md]]
+2026-07-19 22:13 | task | [ECHO] 태스크 완료: **[Advance]** a-알파 런칭 대비 주요 취업 커뮤니티 타겟 바이럴 마케팅 메시지(콜드메일/쪽지) 템플릿 3종 기획. | [[02_Wiki/sources/viral_marketing_messages_a_alpha_launch.md]]
+2026-07-19 22:13 | task | [AEGIS] 태스크 완료: **[Advance]** a-알파 런칭을 위한 전체 과제 DB 정합성 최종 검수 및 스타트업 승인 프로세스 마스터 정책 수립. | [[02_Wiki/policies/a-alpha_launch_master_policy.md]]
+2026-07-19 22:13 | task | [VIVID] 태스크 완료: **[Advance]** a-알파 타겟 수익화 결제/매칭 완료 페이지 웹 퍼블리싱용 와이어프레임 및 토큰 가이드 작성. | 
+2026-07-19 22:13 | task | [BITZ] 태스크 완료: **[Advance]** 결제 모듈 연동 기초 API 뼈대 구축 및 블라인드 매칭 프로세스 서버사이드 라우팅 스크립트 작성. | 
+2026-07-19 22:13 | task | [CAREY] 태스크 완료: **[Advance]** a-알파 진입 유저들의 초기 문의(FAQ) 대응용 챗봇 프롬프트 뼈대 및 이탈 방지 대응 매뉴얼 작성. | [[02_Wiki/decisions/alpha_chatbot_manual.md]]
+2026-07-19 22:13 | task | [NOVA] 태스크 완료: **[Advance]** 중고 신입-스타트업 블라인드 매칭 수수료 과금 모델(BM) 기획 명세서 및 결제 시나리오 초안 작성. | 
