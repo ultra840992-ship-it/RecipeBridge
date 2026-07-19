@@ -347,7 +347,7 @@ function renderLongTermGantt() {
 
     for (let w = 1; w <= 4; w++) {
       const bg = document.createElement("div");
-      bg.className = \`gantt-week-bg \${w % 2 === 0 ? "gantt-week-bg--alt" : ""}\`;
+      bg.className = `gantt-week-bg ${w % 2 === 0 ? "gantt-week-bg--alt" : ""}`;
       timelineEl.appendChild(bg);
     }
 
@@ -359,13 +359,13 @@ function renderLongTermGantt() {
       const weekFrac = ltTodayWeekFraction();
       const isDone = weekFrac > (task.end / 4);
 
-      barEl.className = \`gantt-bar \${isDone ? "gantt-bar--done" : ""}\`;
-      barEl.style.cssText = \`
-        left: \${leftPct}%;
-        width: calc(\${widthPct}% - 6px);
-        background: \${isDone ? "#3d8f5f" : row.color};
-        top: \${8 + idx * 28}px;
-      \`;
+      barEl.className = `gantt-bar ${isDone ? "gantt-bar--done" : ""}`;
+      barEl.style.cssText = `
+        left: ${leftPct}%;
+        width: calc(${widthPct}% - 6px);
+        background: ${isDone ? "#3d8f5f" : row.color};
+        top: ${8 + idx * 28}px;
+      `;
       const barLabel = document.createElement("span");
       barLabel.className = "gantt-bar-label";
       barLabel.textContent = task.label;
@@ -375,16 +375,16 @@ function renderLongTermGantt() {
 
     rowEl.appendChild(labelEl);
     rowEl.appendChild(timelineEl);
-    rowEl.style.minHeight = \`\${Math.max(48, row.tasks.length * 28 + 16)}px\`;
+    rowEl.style.minHeight = `${Math.max(48, row.tasks.length * 28 + 16)}px`;
     body.appendChild(rowEl);
   });
 
   const line = document.getElementById("ganttLongTermTodayLine");
   if (line) {
     const frac = ltTodayWeekFraction();
-    line.style.left = \`calc(160px + (100% - 160px) * \${frac})\`;
+    line.style.left = `calc(160px + (100% - 160px) * ${frac})`;
     line.style.display = frac >= 0 && frac <= 1 ? "block" : "none";
-    line.title = \`오늘 (\${TODAY.toLocaleDateString("ko-KR")})\`;
+    line.title = `오늘 (${TODAY.toLocaleDateString("ko-KR")})`;
   }
 }
 
@@ -971,6 +971,7 @@ async function fetchDashboardData() {
     if (!res.ok) throw new Error("offline");
     const data = await res.json();
     if (serverStatusDot) { serverStatusDot.className = "offline-dot online"; serverStatusDot.title = "API Server Online"; }
+    renderLongTermGantt();
     renderGantt(data.action_plan);
     renderProgressChart(data.action_plan);
     renderLogsDoughnut(data.log_stats);
@@ -981,6 +982,7 @@ async function fetchDashboardData() {
     if (serverStatusDot) { serverStatusDot.className = "offline-dot"; serverStatusDot.title = "API Server Offline"; }
     if (activityFeed) activityFeed.innerHTML = `<li class="loading-item" style="color:#ba1a1a">⚠️ API 서버 오프라인 — run_dashboard.bat 재실행 필요</li>`;
     if (projectWikiList) projectWikiList.innerHTML = `<li class="loading-item">프로젝트 정보를 가져올 수 없습니다.</li>`;
+    renderLongTermGantt();
     renderGantt({});
     renderPauseStatus({ paused: false });
   }
