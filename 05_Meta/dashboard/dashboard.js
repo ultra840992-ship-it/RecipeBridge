@@ -3,7 +3,7 @@
 //  간트차트, Aegis 보고 위젯, Chart.js, 실시간 로그 피드
 // ══════════════════════════════════════════════════════════
 
-const BACKEND_URL = "http://localhost:8000";
+const BACKEND_URL = "";
 
 // ── DOM Refs ──
 const serverStatusDot = document.getElementById("serverStatusDot");
