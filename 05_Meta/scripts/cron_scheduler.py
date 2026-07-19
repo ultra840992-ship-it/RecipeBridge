@@ -90,11 +90,15 @@ def call_agent_api(agent_key, prompt):
         return f"[Error] API 호출 실패: {e}"
 
 def execute_daily_routine():
-    """24시간 상시 자동 연쇄 실무 (MIT Reflection Loop 탑재)"""
-    print("\n" + "="*60)
-    print("  [Cron Routine] RecipeBridge AI 에이전트 자발적 일과 연쇄 시작")
-    print("  (MIT Reflection 기반 상호 비판 루프 적용)")
+    """6인 에이전트 연쇄 업무 자동화 (MIT Reflection 포함) 및 양방향 Git 동기화"""
     print("="*60)
+    print("  [Cron Routine] RecipeBridge AI 에이전트 자발적 일과 연쇄 시작")
+    print("  (MIT Reflection 기반 상호 비판 루프 및 Git 동기화 적용)")
+    print("="*60)
+    
+    # ── [Git Pull] 사장님의 로컬 작성본(위키)을 당겨와 최신화 ──
+    print("\n[Git Sync] 클라우드 뇌(Brain) 최신화 중 (git pull)...")
+    os.system("git pull origin main --rebase || echo 'Git pull failed or skipped'")
     
     handoff_count = 0
     work_log = []
@@ -205,6 +209,12 @@ def execute_daily_routine():
     
     send_telegram_message(creds["telegram_token"], creds["telegram_chat_id"], telegram_text)
     
+    # ── [Git Push] 에이전트들의 작업 결과를 GitHub에 동기화 ──
+    print("\n[Git Sync] 에이전트 작업 결과를 클라우드 뇌(Brain)에 저장 중 (git push)...")
+    os.system("git add .")
+    os.system('git commit -m "Auto-sync: Agents daily routine and reflection results"')
+    os.system("git push origin main || echo 'Git push failed or nothing to push'")
+
     print("\n========================================================")
     print("  [SUCCESS] 리플렉션 루프를 거친 연쇄 업무 및 사장님 알림 발송 완료!")
     print("========================================================\n")
