@@ -1,0 +1,26 @@
+<!-- filepath: 02_Wiki/dev-tasks/2024-07-20_vite-react-ui-setup.md -->
+# DEV_TASK_20240720_001: Vite + React UI 레포 구성 및 퍼블리싱
+
+## 개요
+Vite + React 환경의 프론트엔드 레포지토리를 초기 구성하고, 기본 UI 퍼블리싱을 진행한다. 이는 실시간 대시보드 및 가상 에이전트 인터페이스 개발의 기반이 된다.
+
+## 목표
+- Vite를 사용하여 React 프로젝트 초기화 및 필수 의존성 설치.
+- "Hello, Bitz!" 메시지를 포함한 기본 `App.jsx` 컴포넌트 구성 및 렌더링 확인.
+
+## 예상 산출물
+- `package.json`, `vite.config.js` 등 초기 프로젝트 설정 파일.
+- `src/App.jsx` (기본 UI 컴포넌트), `src/main.jsx` (React 렌더링 엔트리 포인트), `src/index.css`, `src/App.css`.
+
+## 작업 단계
+1.  `npm create vite@latest` 명령어로 React 템플릿 프로젝트 생성.
+2.  생성된 프로젝트 디렉토리로 이동 후 `npm install` 실행.
+3.  기본 `App.jsx` 및 CSS 파일 수정하여 "Hello, Bitz!" 메시지 출력 및 스타일 적용.
+4.  `npm run dev`로 개발 서버 구동 확인.
+
+## 검증
+- 웹 브라우저에서 `localhost:5173` (기본 포트) 접속 시 "Hello, Bitz!" 메시지와 함께 기본 UI 확인.
+- `npm run lint` 실행 시 에러/경고 없음 확인 (추후 Linter 설정 강화 예정).
+
+## 비고
+향후 대시보드 컴포넌트 및 에이전트 CLI 연동 UI 개발을 위해 확장될 예정이다.

@@ -28,4 +28,15 @@ YYYY-MM-DD HH:mm | command | summary | linked files
 2026-07-18 14:09 | optimize | Obsidian 폴더 트리 구조 최적화 및 5단계 일련번호 폴더 시스템 도입 | [[CLAUDE.md]], [[AGENTS.md]], [[index.md]], [[05_Meta/scripts/validate-template.sh]]
 
 
-2026-07-19 10:56 | save | RecipeBridge AI 에이전트 6인 협업 및 리플렉션 회의록 옵시디언 자동 저장 완료 | [[03_Conversations/meeting_2026-07-19_10-07.md]]
+2026-07-19 10:56 | save | RecipeBridge AI 에이전트 6인 협업 및 리플렉션 회의록 옵시디언 자동 저장 완료 | [[03_Conversations/meeting_2026-07-19_10-07.md]]2026-07-19 08:13 | task | [VIVID] 태스크 완료: 피그마를 활용한 RecipeBridge 메인 화면, 프로젝트 리스트, 레시피 스토어 와이어프레임 설계. | 
+2026-07-19 08:13 | task | [BITZ] 태스크 완료: Vite + React 기반 레포지토리 구성 및 UI 퍼블리싱. | [[02_Wiki/dev-tasks/20240719_vite_react_setup.md -->]]
+2026-07-19 08:13 | task | [NOVA] 태스크 완료: **[Critical]** 나이/학벌 필드 자체가 없는 '블라인드 프로젝트 기여 인증 프로필 UI' 및 매칭 프로세스 기획. | [[02_Wiki/projects/blind_profile_matching_plan.md -->]]
+2026-07-19 08:13 | task | [ECHO] 태스크 완료: 플랫폼 런칭 사전 예약 신청용 SEO 랜딩 페이지 최적화. | [[02_Wiki/sources/20240726_플랫폼런칭_사전예약_SEO_최적화_기획안.md -->]]
+2026-07-19 08:13 | task | [AEGIS] 태스크 완료: **[Critical]** 프로젝트 코드의 정상 작동 및 빌드 여부를 동적으로 체크하여 경력 인증서 발급 승인 도장(Secret Chain Sign) 검수. | [[02_Wiki/Task_Verification_Report_20240722.md -->]]
+2026-07-19 08:13 | task | [CAREY] 태스크 완료: GA4(구글 애널리틱스) 이벤트 트래킹 태그 설계 (회원가입, 결제 클릭, 이탈율 분석). | 
+2026-07-19 08:13 | task | [ECHO] 태스크 완료: 플랫폼 런칭 사전 예약 신청용 SEO 랜딩 페이지 최적화. | [[02_Wiki/sources/2026-07-19_플랫폼_사전예약_SEO_랜딩페이지_최적화_전략.md -->]]
+2026-07-19 08:13 | task | [CAREY] 태스크 완료: GA4(구글 애널리틱스) 이벤트 트래킹 태그 설계 (회원가입, 결제 클릭, 이탈율 분석). | [[02_Wiki/specifications/ga4_event_tracking_design.md]]
+2026-07-19 08:13 | task | [VIVID] 태스크 완료: 피그마를 활용한 RecipeBridge 메인 화면, 프로젝트 리스트, 레시피 스토어 와이어프레임 설계. | [[02_Wiki/design/RecipeBridge_Wireframe_V1.0_20240719.md -->]]
+2026-07-19 08:13 | task | [BITZ] 태스크 완료: Vite + React 기반 레포지토리 구성 및 UI 퍼블리싱. | [[02_Wiki/dev-tasks/2024-07-20_vite-react-ui-setup.md -->]]
+2026-07-19 08:13 | task | [NOVA] 태스크 완료: **[Critical]** 나이/학벌 필드 자체가 없는 '블라인드 프로젝트 기여 인증 프로필 UI' 및 매칭 프로세스 기획. | 
+2026-07-19 08:13 | task | [AEGIS] 태스크 완료: **[Critical]** 프로젝트 코드의 정상 작동 및 빌드 여부를 동적으로 체크하여 경력 인증서 발급 승인 도장(Secret Chain Sign) 검수. | 
