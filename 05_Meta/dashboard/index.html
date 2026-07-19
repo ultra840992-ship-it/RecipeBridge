@@ -54,6 +54,21 @@
     </div>
   </div>
 
+  <!-- 태스크 상세 모달 (Lv2 Breakdown) -->
+  <div class="modal-overlay hidden" id="taskDetailModal">
+    <div class="modal-box">
+      <div class="modal-header">
+        <h3 class="modal-title" id="taskModalTitle">태스크 상세</h3>
+        <button class="modal-close" onclick="closeModal('taskDetailModal')">✕</button>
+      </div>
+      <div class="modal-body">
+        <ul class="search-results" id="taskModalBody" style="margin-top:0">
+          <!-- JS로 동적 렌더링 -->
+        </ul>
+      </div>
+    </div>
+  </div>
+
   <div class="dashboard-shell">
 
     <!-- 좌측 글로벌 아이콘 내비바 -->
@@ -170,10 +185,10 @@
           <div class="gantt-header-row">
             <div class="gantt-agent-col">담당자</div>
             <div class="gantt-weeks">
-              <div class="gantt-week" data-week="1">Week 1 <span>07/19–07/25</span></div>
-              <div class="gantt-week" data-week="2">Week 2 <span>07/26–08/01</span></div>
-              <div class="gantt-week" data-week="3">Week 3 <span>08/02–08/08</span></div>
-              <div class="gantt-week" data-week="4">Week 4 <span>08/09–08/15</span></div>
+              <div class="gantt-week" data-week="1">Day 1 <span>기획/디자인</span></div>
+              <div class="gantt-week" data-week="2">Day 2 <span>핵심 개발</span></div>
+              <div class="gantt-week" data-week="3">Day 3 <span>인프라/마케팅</span></div>
+              <div class="gantt-week" data-week="4">Day 4 <span>QA/오픈</span></div>
             </div>
           </div>
           <div class="gantt-body" id="ganttBody">

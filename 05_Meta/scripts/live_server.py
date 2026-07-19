@@ -278,8 +278,52 @@ class LiveChatRequestHandler(BaseHTTPRequestHandler):
             }
             self.wfile.write(json.dumps(dashboard_data).encode("utf-8"))
         else:
-            self.send_response(404)
-            self.end_headers()
+            # 정적 파일 서빙 (대시보드 UI)
+            base_dir = os.path.join(os.path.dirname(__file__), "..", "..")
+            
+            if self.path == "/" or self.path == "/index.html":
+                filepath = os.path.join(base_dir, "05_Meta", "dashboard", "index.html")
+            else:
+                # 기본적으로 05_Meta/dashboard 에서 찾음
+                filepath = os.path.join(base_dir, "05_Meta", "dashboard", self.path.lstrip("/"))
+                if not os.path.exists(filepath):
+                    # 없으면 프로젝트 루트에서 찾음 (아바타 이미지 등)
+                    filepath = os.path.join(base_dir, self.path.lstrip("/"))
+            
+            filepath = os.path.abspath(filepath)
+            
+            # 보안: base_dir을 벗어나지 않도록 검증
+            if not filepath.startswith(os.path.abspath(base_dir)):
+                self.send_response(403)
+                self.end_headers()
+                return
+                
+            if os.path.exists(filepath) and os.path.isfile(filepath):
+                self.send_response(200)
+                if filepath.endswith(".html"):
+                    self.send_header("Content-Type", "text/html; charset=utf-8")
+                elif filepath.endswith(".css"):
+                    self.send_header("Content-Type", "text/css; charset=utf-8")
+                elif filepath.endswith(".js"):
+                    self.send_header("Content-Type", "application/javascript; charset=utf-8")
+                elif filepath.endswith(".png"):
+                    self.send_header("Content-Type", "image/png")
+                elif filepath.endswith(".jpg") or filepath.endswith(".jpeg"):
+                    self.send_header("Content-Type", "image/jpeg")
+                elif filepath.endswith(".json"):
+                    self.send_header("Content-Type", "application/json; charset=utf-8")
+                else:
+                    self.send_header("Content-Type", "application/octet-stream")
+                self.end_headers()
+                
+                try:
+                    with open(filepath, "rb") as f:
+                        self.wfile.write(f.read())
+                except BrokenPipeError:
+                    pass # 클라이언트 연결 끊어짐
+            else:
+                self.send_response(404)
+                self.end_headers()
 
     def do_POST(self):
         if self.path == "/api/settings":

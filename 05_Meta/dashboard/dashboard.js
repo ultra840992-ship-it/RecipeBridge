@@ -3,7 +3,7 @@
 //  간트차트, Aegis 보고 위젯, Chart.js, 실시간 로그 피드
 // ══════════════════════════════════════════════════════════
 
-const BACKEND_URL = "http://localhost:8000";
+const BACKEND_URL = "";
 
 // ── DOM Refs ──
 const serverStatusDot = document.getElementById("serverStatusDot");
@@ -26,10 +26,27 @@ const GANTT_DATA = [
     key: "aegis",
     color: "#735c00",
     tasks: [
-      { label: "기획·디자인 산출물 검수 및 승인", start: 1, end: 1, status: "planned" },
-      { label: "포트폴리오 AI 검증 프롬프트 설계", start: 1, end: 2, status: "planned" },
-      { label: "Bitz PR 코드 검수 및 배포 승인", start: 2, end: 3, status: "planned" },
-      { label: "전체 시스템 QA 검수 및 최종 승인", start: 4, end: 4, status: "planned" }
+      { 
+        label: "[Lv1] 기획·디자인 산출물 검수", start: 1, end: 1, status: "planned",
+        details: [
+          { name: "Day 1 기획/디자인 산출물 직접 파일 검수 및 승인", target: 1 }
+        ]
+      },
+      { 
+        label: "[Lv1] AI 마스터 검증 로직 설계", start: 2, end: 3, status: "planned",
+        details: [
+          { name: "구직자 코드 표절률 및 AI 대필 검증 프롬프트 설계", target: 2 },
+          { name: "코드 동적 체크를 통한 인증서 발급 승인 로직", target: 3 },
+          { name: "백업/복원 스크립트 고도화 (Bitz 협업)", target: 3 }
+        ]
+      },
+      { 
+        label: "[Lv1] 전체 시스템 최종 QA 승인", start: 4, end: 4, status: "planned",
+        details: [
+          { name: "전체 src/ 소스 코드 QA 점검 및 승인", target: 4 },
+          { name: "개발팀 Bitz의 완성된 PR 코드 배포 승인", target: 4 }
+        ]
+      }
     ]
   },
   {
@@ -37,9 +54,21 @@ const GANTT_DATA = [
     key: "nova",
     color: "#2a5d80",
     tasks: [
-      { label: "블라인드 프로젝트 기여 인증 프로필 UI 기획", start: 1, end: 1, status: "planned" },
-      { label: "스타트업 과제 스펙 세부 기획 (마이크로 프로젝트)", start: 1, end: 2, status: "planned" },
-      { label: "레시피 팩 3종 프롬프트 패키징 완료", start: 2, end: 2, status: "planned" }
+      { 
+        label: "[Lv1] 블라인드 매칭 기획", start: 1, end: 1, status: "planned",
+        details: [
+          { name: "블라인드 프로젝트 인증 프로필 UI/프로세스 기획", target: 1 },
+          { name: "스타트업 과제 스펙 세부 기획", target: 1 },
+          { name: "단기 과제 모집 양식 템플릿 기획", target: 1 }
+        ]
+      },
+      { 
+        label: "[Lv1] 레시피 팩 설계", start: 2, end: 2, status: "planned",
+        details: [
+          { name: "기본 웹 빌드 레시피 팩 3종 프롬프트 구성", target: 2 },
+          { name: "마이크로 프로젝트 진행 인증 체인 상세 설계", target: 2 }
+        ]
+      }
     ]
   },
   {
@@ -47,9 +76,14 @@ const GANTT_DATA = [
     key: "vivid",
     color: "#6a3080",
     tasks: [
-      { label: "피그마 와이어프레임 완성", start: 1, end: 1, status: "planned" },
-      { label: "HSL 컬러 & 타이포 CSS 변수 배포", start: 1, end: 1, status: "planned" },
-      { label: "반응형 레이아웃 & UX 가이드라인 공급", start: 2, end: 2, status: "planned" }
+      { 
+        label: "[Lv1] UI/UX 테마 및 가이드", start: 1, end: 1, status: "planned",
+        details: [
+          { name: "피그마 와이어프레임 설계 (메인/프로젝트/스토어)", target: 1 },
+          { name: "프리미엄 다크 모드 톤앤매너, 컬러 토큰(HSL) 정의", target: 1 },
+          { name: "반응형 레이아웃 및 UX 애니메이션 가이드라인 공급", target: 1 }
+        ]
+      }
     ]
   },
   {
@@ -57,10 +91,21 @@ const GANTT_DATA = [
     key: "bitz",
     color: "#1d6840",
     tasks: [
-      { label: "Vite + React 레포 구성 및 UI 퍼블리싱", start: 2, end: 2, status: "planned" },
-      { label: "Notion API 연동 (과제 DB 실시간 뷰)", start: 2, end: 2, status: "planned" },
-      { label: "AI 레시피 샌드박스 렌더러 구현", start: 2, end: 3, status: "planned" },
-      { label: "VPS 백업·복원 스크립트 및 텔레그램 봇", start: 3, end: 3, status: "planned" }
+      { 
+        label: "[Lv1] 핵심 앱 프론트 개발", start: 2, end: 2, status: "planned",
+        details: [
+          { name: "Vite + React 기반 레포 구성 및 UI 퍼블리싱", target: 2 },
+          { name: "노션 API 연동: 의뢰 과제 DB 동기화", target: 2 }
+        ]
+      },
+      { 
+        label: "[Lv1] API 연동 및 인프라", start: 2, end: 3, status: "planned",
+        details: [
+          { name: "AI 레시피 샌드박스 렌더러 구현", target: 2 },
+          { name: "VPS 상시 가동 셋팅 및 백업 스크립트 작성", target: 3 },
+          { name: "텔레그램 연동 봇 백그라운드 안정화", target: 3 }
+        ]
+      }
     ]
   },
   {
@@ -68,9 +113,14 @@ const GANTT_DATA = [
     key: "echo",
     color: "#8a2800",
     tasks: [
-      { label: "SEO 랜딩 페이지 최적화", start: 3, end: 3, status: "planned" },
-      { label: "SNS 카드뉴스 자동화 크론 연동", start: 3, end: 3, status: "planned" },
-      { label: "구글 서치 콘솔 색인 등록 루틴 테스트", start: 3, end: 4, status: "planned" }
+      { 
+        label: "[Lv1] 마케팅 파이프라인 구축", start: 3, end: 3, status: "planned",
+        details: [
+          { name: "사전 예약 신청용 SEO 랜딩 페이지 최적화", target: 3 },
+          { name: "SNS 카드뉴스 자동화 크론 연동", target: 3 },
+          { name: "구글 서치 콘솔 연동 및 색인 등록 테스트", target: 3 }
+        ]
+      }
     ]
   },
   {
@@ -78,16 +128,26 @@ const GANTT_DATA = [
     key: "carey",
     color: "#2a3880",
     tasks: [
-      { label: "GA4 이벤트 트래킹 태그 설계", start: 2, end: 2, status: "planned" },
-      { label: "베타 테스터 설문 및 Pain Index 분류기", start: 4, end: 4, status: "planned" },
-      { label: "고객 불만 피드백 채널 개설", start: 4, end: 4, status: "planned" }
+      { 
+        label: "[Lv1] 유저 데이터 트래킹 설계", start: 2, end: 2, status: "planned",
+        details: [
+          { name: "GA4 이벤트 트래킹 설계 (가입, 결제 클릭, 이탈율 분석)", target: 2 }
+        ]
+      },
+      { 
+        label: "[Lv1] 베타 서비스 피드백 채널", start: 4, end: 4, status: "planned",
+        details: [
+          { name: "베타 테스터 설문 및 고통 점수 분류기 탑재", target: 4 },
+          { name: "불만율 피드백 수집 채널 개설", target: 4 }
+        ]
+      }
     ]
   }
 ];
 
 // 오늘 날짜 기준 진도 계산
 const PROJECT_START = new Date("2026-07-19");
-const PROJECT_END   = new Date("2026-08-15");
+const PROJECT_END   = new Date("2026-07-22");
 const TODAY         = new Date();
 
 function calcWeekProgress() {
@@ -159,8 +219,28 @@ function renderGantt(actionPlan) {
         width: calc(${widthPct}% - 6px);
         background: ${isDone ? "#3d8f5f" : isDelayed ? "#ba1a1a" : agentRow.color};
         top: ${8 + idx * 28}px;
+        cursor: pointer;
       `;
-      barEl.title = task.label;
+      barEl.title = task.label + " (클릭하여 세부 액션리스트 보기)";
+      barEl.onclick = () => {
+        const titleEl = document.getElementById("taskModalTitle");
+        const bodyEl = document.getElementById("taskModalBody");
+        if(titleEl) titleEl.textContent = task.label;
+        if(bodyEl) {
+          bodyEl.innerHTML = "";
+          if (task.details && task.details.length > 0) {
+            task.details.forEach(detail => {
+              const li = document.createElement("li");
+              li.className = "search-result-item";
+              li.innerHTML = `<strong>${detail.name}</strong> <span style="float:right; font-size:11px; color:var(--ink-tertiary)">목표일정: Day ${detail.target}</span>`;
+              bodyEl.appendChild(li);
+            });
+          } else {
+            bodyEl.innerHTML = `<li class="search-result-item">세부 액션리스트가 없습니다.</li>`;
+          }
+        }
+        openModal("taskDetailModal");
+      };
 
       const barLabel = document.createElement("span");
       barLabel.className = "gantt-bar-label";
