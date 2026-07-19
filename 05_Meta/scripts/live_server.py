@@ -496,8 +496,18 @@ title: "{title}"
         # 4대 제어 문서(soul/user/agent/memory) 동적 로드 및 병합
         system_instruction = load_agent_multi_profile(agent_key)
         
+        # ★ 단기 기억(Context) 주입: 최근 cron 스케줄러가 보고한 내용이 있다면 프롬프트에 포함하여 맥락 유지
+        recent_context = ""
+        context_path = os.path.join(os.path.dirname(__file__), "..", "..", "_shared", "recent_context.md")
+        if os.path.exists(context_path):
+            try:
+                with open(context_path, "r", encoding="utf-8") as f:
+                    recent_context = f"\n\n[최근 시스템/보고 맥락 (참고용)]\n{f.read().strip()}"
+            except Exception as e:
+                print(f"[Context Load Error] {e}")
+
         # API 호환성을 극대화하기 위해 시스템 프롬프트를 메시지 본문에 결합
-        full_prompt = f"{system_instruction}\n\nUser 지시사항:\n{message}"
+        full_prompt = f"{system_instruction}{recent_context}\n\nUser 지시사항:\n{message}"
         
         url = f"https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key={api_key}"
         payload = {

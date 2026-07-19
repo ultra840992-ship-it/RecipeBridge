@@ -198,7 +198,7 @@ def execute_daily_routine():
     aegis_reply = call_agent_api("aegis", aegis_prompt)
     print(f" -> Aegis 최종 검수 완료.")
     
-    # 텔레그램 사장 보고
+    # 텔레그램 사장 보고 및 단기 기억(Context) 저장
     creds = load_credentials()
     telegram_text = (
         f"🔔 *[RecipeBridge AI 에이전트 자발적 일과 보고]*\n\n"
@@ -207,6 +207,15 @@ def execute_daily_routine():
         f"📥 *사장님의 Confirm(승인) 또는 추가 지시를 대기합니다.*"
     )
     
+    # live_server.py가 텔레그램 대화 시 참고할 수 있도록 최신 보고 내용을 파일로 저장
+    context_path = os.path.join(os.path.dirname(__file__), "..", "..", "_shared", "recent_context.md")
+    try:
+        os.makedirs(os.path.dirname(context_path), exist_ok=True)
+        with open(context_path, "w", encoding="utf-8") as f:
+            f.write(telegram_text)
+    except Exception as e:
+        print(f"[Context Save Error] {e}")
+
     send_telegram_message(creds["telegram_token"], creds["telegram_chat_id"], telegram_text)
     
     # ── [Git Push] 에이전트들의 작업 결과를 GitHub에 동기화 ──
