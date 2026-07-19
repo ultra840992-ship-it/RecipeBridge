@@ -4,6 +4,7 @@ import os
 import time
 import urllib.request
 import urllib.parse
+import concurrent.futures
 
 # ──────────────────────────────────────────────────────────────
 #  RecipeBridge 자발적 일과(Cron) 연쌍 자동화 스케줄러 (Reflection Loop Integrated)
@@ -107,9 +108,9 @@ def _extract_code_blocks(text):
     return blocks
 
 def execute_daily_routine():
-    """Real Business Mode: Reads tasks from Action Plan and executes them by saving files."""
+    """Real Business Mode: Parallel execution for all agents."""
     print("="*60)
-    print("  [Cron Routine] RecipeBridge Real Business Mode 가동")
+    print("  [Cron Routine] RecipeBridge Real Business Mode (Parallel)")
     print("="*60)
     
     os.system("git pull origin main --rebase || echo 'Git pull failed or skipped'")
@@ -123,9 +124,8 @@ def execute_daily_routine():
         lines = f.readlines()
         
     current_agent = None
-    target_task = None
-    target_agent = None
-    target_line_idx = -1
+    tasks_to_run = []
+    agents_found = set()
     
     for i, line in enumerate(lines):
         if line.startswith("### 👤"):
@@ -137,73 +137,88 @@ def execute_daily_routine():
             elif "Carey" in line: current_agent = "carey"
         
         if line.strip().startswith("- [ ]") and current_agent:
-            target_task = line.strip().replace("- [ ]", "").strip()
-            target_agent = current_agent
-            target_line_idx = i
-            break
+            if current_agent not in agents_found:
+                target_task = line.strip().replace("- [ ]", "").strip()
+                tasks_to_run.append((current_agent, target_task, i))
+                agents_found.add(current_agent)
             
-    if not target_task:
+    if not tasks_to_run:
         print("모든 태스크가 완료되었습니다! (No pending tasks found)")
         return
         
-    print(f"\n[Task Found] {target_agent}에게 다음 태스크를 할당합니다: {target_task}")
-    
-    prompt = (
-        f"당신의 이번 실무 태스크입니다: {target_task}\n\n"
-        "작업을 수행하고 결과물은 반드시 ```확장자\\n...``` 형식의 코드 블록으로 감싸주세요. "
-        "파일에 저장될 내용입니다. 코드 블록 첫 줄에 반드시 주석으로 파일명(예: // filepath: src/App.jsx 또는 <!-- filepath: 02_Wiki/design.md -->)을 명시해 주세요."
-    )
-    
-    reply = call_agent_api(target_agent, prompt)
-    if _is_paused_reply(reply):
-        print("\n[토큰 제한 중] Pause 신호 감지. 중단합니다.")
-        return
+    print(f"\n[Parallel Tasks Found] 총 {len(tasks_to_run)}명의 에이전트가 동시에 작업을 시작합니다.")
+    for agent, task, _ in tasks_to_run:
+        print(f" - {agent}: {task}")
         
-    print(f" -> {target_agent} 작업 완료 (응답 크기: {len(reply)} 자)")
+    def worker(agent, task, line_idx):
+        prompt = (
+            f"당신의 이번 실무 태스크입니다: {task}\n\n"
+            "작업을 수행하고 결과물은 반드시 ```확장자\\n...``` 형식의 코드 블록으로 감싸주세요. "
+            "파일에 저장될 내용입니다. 코드 블록 첫 줄에 반드시 주석으로 파일명(예: // filepath: src/App.jsx 또는 <!-- filepath: 02_Wiki/design.md -->)을 명시해 주세요."
+        )
+        reply = call_agent_api(agent, prompt)
+        return agent, task, line_idx, reply
+
+    results = []
+    with concurrent.futures.ThreadPoolExecutor(max_workers=len(tasks_to_run)) as executor:
+        futures = [executor.submit(worker, a, t, idx) for a, t, idx in tasks_to_run]
+        for future in concurrent.futures.as_completed(futures):
+            results.append(future.result())
+
+    all_saved_files = []
+    completed_reports = []
     
-    # Extract blocks and write files
-    blocks = _extract_code_blocks(reply)
-    saved_files = []
     base_dir = os.path.join(os.path.dirname(__file__), "..", "..")
-    for filepath, content in blocks:
-        # Sanitize filepath
-        clean_path = filepath.strip()
-        if clean_path.startswith('/'): clean_path = clean_path[1:]
-        full_path = os.path.normpath(os.path.join(base_dir, clean_path))
+    for agent, task, line_idx, reply in results:
+        if _is_paused_reply(reply):
+            print(f"[{agent}] 토큰 제한 중단 (Pause). 작업 스킵.")
+            continue
+            
+        print(f" -> {agent} 작업 완료 (응답 크기: {len(reply)} 자)")
+        blocks = _extract_code_blocks(reply)
+        agent_saved = []
+        for filepath, content in blocks:
+            clean_path = filepath.strip()
+            if clean_path.startswith('/'): clean_path = clean_path[1:]
+            full_path = os.path.normpath(os.path.join(base_dir, clean_path))
+            os.makedirs(os.path.dirname(full_path), exist_ok=True)
+            with open(full_path, "w", encoding="utf-8") as f:
+                f.write(content)
+            agent_saved.append(clean_path)
+            all_saved_files.append(clean_path)
+            print(f"   └─ 파일 저장 성공: {clean_path}")
+            
+        lines[line_idx] = lines[line_idx].replace("- [ ]", "- [x]", 1)
+        completed_reports.append(f"- {agent}: {task} (파일: {', '.join(agent_saved) if agent_saved else '없음'})")
         
-        os.makedirs(os.path.dirname(full_path), exist_ok=True)
-        with open(full_path, "w", encoding="utf-8") as f:
-            f.write(content)
-        saved_files.append(clean_path)
-        print(f" -> 파일 저장 성공: {clean_path}")
-        
-    # Mark task as completed
-    lines[target_line_idx] = lines[target_line_idx].replace("- [ ]", "- [x]", 1)
     with open(plan_path, "w", encoding="utf-8") as f:
         f.writelines(lines)
         
-    # Aegis Report
+    if not completed_reports:
+        return
+        
+    # Aegis Report (모니터링 및 어드바이징 통합)
     aegis_prompt = (
-        f"{target_agent}가 다음 태스크를 수행했습니다: {target_task}\n"
-        f"저장된 파일: {', '.join(saved_files)}\n\n"
-        "사장님께 현재 진척도를 보고하는 짧고 명확한 텔레그램 브리핑 문구를 작성해 주세요."
+        "다음은 현재 주기에 완료된 각 에이전트들의 태스크 결과 요약입니다:\n" +
+        "\n".join(completed_reports) +
+        "\n\n마스터로서 나머지 에이전트들의 수행 결과를 모니터링하고, "
+        "전체 사업의 방향성에 어긋나지 않는지 어드바이징 하는 짧고 명확한 사장님 보고용(텔레그램) 브리핑 문구를 작성해 주세요."
     )
     aegis_reply = call_agent_api("aegis", aegis_prompt)
     
     creds = load_credentials()
     telegram_text = (
-        f"🔔 *[RecipeBridge 실무 모드 보고]*\n\n"
-        f"✅ *태스크 완료*: {target_task}\n"
-        f"📁 *생성/수정된 파일*: {', '.join(saved_files) if saved_files else '없음'}\n\n"
-        f"🛡️ *Aegis 보고*:\n{aegis_reply}"
+        f"🔔 *[RecipeBridge 실무 모드 병렬 처리 완료]*\n\n"
+        f"✅ *처리된 태스크 내역*:\n" + "\n".join(completed_reports) + "\n\n"
+        f"🛡️ *Aegis 총괄 브리핑*:\n{aegis_reply}"
     )
     send_telegram_message(creds["telegram_token"], creds["telegram_chat_id"], telegram_text)
     
     print("\n[Git Sync] 자동 저장 (git push)...")
     os.system("git add .")
-    os.system(f'git commit -m "Auto-sync: {target_agent} completed task"')
+    os.system('git commit -m "Auto-sync: Parallel agents completed tasks"')
     os.system("git push origin main || echo 'Git push failed'")
-    print("[SUCCESS] Real Business Mode 루틴 완료!\n")
+    print("[SUCCESS] Real Business Mode 병렬 루틴 완료!\n")
 
 def main():
     print("="*60)
@@ -217,7 +232,7 @@ def main():
     # 24시간 백그라운드 주기 실행
     try:
         while True:
-            time.sleep(3600)
+            time.sleep(1800)  # 30분 주기로 단축
             execute_daily_routine()
     except KeyboardInterrupt:
         print("\n[Scheduler Stopped] 자발적 스케줄러가 종료되었습니다.")
