@@ -278,10 +278,21 @@ class LiveChatRequestHandler(BaseHTTPRequestHandler):
             action_plan_data = parse_action_plan()
             logs_list, log_stats = parse_logs()
             
+            # Wiki 및 Conversations 파일 개수 실시간 집계 (정합성)
+            wiki_count = 0
+            base_dir = os.path.normpath(os.path.join(os.path.dirname(__file__), "..", ".."))
+            for s_dir in ["02_Wiki", "03_Conversations"]:
+                dir_path = os.path.join(base_dir, s_dir)
+                if os.path.exists(dir_path):
+                    for root, _, files in os.walk(dir_path):
+                        for file in files:
+                            if file.endswith(".md"):
+                                wiki_count += 1
+            
             # 실제 프로젝트 정보
             projects = [
                 { "id": "micro_project_recipe_platform", "name": "AI 레시피 기반 마이크로 프로젝트 및 신입 경력 인증 플랫폼 사업 기획서", "status": "active" },
-                { "id": "recipebridge_multi_agent_setup", "name": "RecipeBridge 멀티 에이전트 운영 설계도 (AI 5인 부서 구축안)", "status": "active" },
+                { "id": "recipebridge_multi_agent_setup", "name": "RecipeBridge 멀티 에이전트 운영 설계도 (AI 8인 부서 구축안)", "status": "active" },
                 { "id": "recipebridge_action_plan", "name": "RecipeBridge MVP 런칭을 위한 에이전트별 Action List 및 4주 로드맵", "status": "active" }
             ]
             
@@ -291,9 +302,11 @@ class LiveChatRequestHandler(BaseHTTPRequestHandler):
                 "logs": logs_list,
                 "log_stats": log_stats,
                 "projects": projects,
+                "wiki_count": wiki_count,
                 "settings": load_settings()
             }
             self.wfile.write(json.dumps(dashboard_data).encode("utf-8"))
+
         elif self.path.startswith("/api/search_wiki"):
             query = ""
             if "?" in self.path:
@@ -305,22 +318,26 @@ class LiveChatRequestHandler(BaseHTTPRequestHandler):
             base_dir = os.path.join(os.path.dirname(__file__), "..", "..")
             results = []
             
-            if query:
-                search_dirs = ["02_Wiki", "03_Conversations"]
-                for s_dir in search_dirs:
-                    dir_path = os.path.join(base_dir, s_dir)
-                    if not os.path.exists(dir_path): continue
-                    for root, dirs, files in os.walk(dir_path):
-                        for file in files:
-                            if not file.endswith(".md"): continue
-                            file_path = os.path.join(root, file)
-                            rel_path = os.path.relpath(file_path, base_dir).replace("\\", "/")
-                            
-                            matched = False
-                            snippet = ""
+            search_dirs = ["02_Wiki", "03_Conversations"]
+            for s_dir in search_dirs:
+                dir_path = os.path.join(base_dir, s_dir)
+                if not os.path.exists(dir_path): continue
+                for root, dirs, files in os.walk(dir_path):
+                    for file in files:
+                        if not file.endswith(".md"): continue
+                        file_path = os.path.join(root, file)
+                        rel_path = os.path.relpath(file_path, base_dir).replace("\\", "/")
+                        
+                        mtime = os.path.getmtime(file_path)
+                        matched = False
+                        snippet = ""
+                        
+                        if not query:
+                            # 쿼리가 비어있는 경우 무조건 매칭 (전체 목록 수집)
+                            matched = True
+                        else:
                             if query in file.lower():
                                 matched = True
-                            
                             try:
                                 with open(file_path, "r", encoding="utf-8") as f:
                                     content = f.read()
@@ -334,12 +351,16 @@ class LiveChatRequestHandler(BaseHTTPRequestHandler):
                             except Exception:
                                 pass
                                 
-                            if matched:
-                                results.append({
-                                    "title": file.replace(".md", ""),
-                                    "path": rel_path,
-                                    "snippet": snippet
-                                })
+                        if matched:
+                            results.append({
+                                "title": file.replace(".md", ""),
+                                "path": rel_path,
+                                "snippet": snippet,
+                                "mtime": mtime
+                            })
+                            
+            # mtime(최신 수정 일자) 기준 내림차순 정렬
+            results.sort(key=lambda x: x["mtime"], reverse=True)
             
             self.send_response(200)
             self.send_header("Content-Type", "application/json")
@@ -369,6 +390,7 @@ class LiveChatRequestHandler(BaseHTTPRequestHandler):
                 
             if os.path.exists(filepath) and os.path.isfile(filepath):
                 self.send_response(200)
+                self.send_header("Cache-Control", "no-store, no-cache, must-revalidate, max-age=0")
                 if filepath.endswith(".html"):
                     self.send_header("Content-Type", "text/html; charset=utf-8")
                 elif filepath.endswith(".css"):
@@ -384,6 +406,7 @@ class LiveChatRequestHandler(BaseHTTPRequestHandler):
                 else:
                     self.send_header("Content-Type", "application/octet-stream")
                 self.end_headers()
+
                 
                 try:
                     with open(filepath, "rb") as f:

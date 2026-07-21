@@ -463,8 +463,10 @@ async function fetchDashboardData() {
     renderLongTermGantt();
     renderGantt(data.action_plan);
     renderProgressChart(data.action_plan);
-    renderLogsDoughnut(data.log_stats);
+    renderBusinessKPIs(data.action_plan, data.wiki_count);
     renderActivityFeed(data.logs);
+
+
     renderProjects(data.projects);
 
   } catch {
@@ -500,34 +502,53 @@ function renderProgressChart(actionPlan) {
   });
 }
 
-// ── 로그 도넛 차트 ──
-function renderLogsDoughnut(logStats) {
-  const agentColors = {
-    aegis: "#d4af37",
-    nova: "#2a5d80",
-    vivid: "#6a3080",
-    bitz: "#1d6840",
-    echo: "#8a2800",
-    carey: "#2a3880",
-    insight: "#5c3a21",
-    verity: "#4a4a4a",
-    unknown: "#7f7663"
-  };
-  
-  const labels = Object.keys(logStats).map(l => l.toUpperCase());
-  const vals   = Object.values(logStats);
-  const colors = Object.keys(logStats).map(l => agentColors[l.toLowerCase()] || "#7f7663");
-
-  if (!labels.length) { labels.push("NO DATA"); vals.push(1); colors.push("#333"); }
-  const ctx = document.getElementById("logsDoughnutChart")?.getContext("2d");
-  if (!ctx) return;
-  if (logsDoughnutChart) { logsDoughnutChart.data.labels=labels; logsDoughnutChart.data.datasets[0].data=vals; logsDoughnutChart.data.datasets[0].backgroundColor=colors; logsDoughnutChart.update(); return; }
-  logsDoughnutChart = new Chart(ctx, {
-    type:"doughnut",
-    data:{ labels, datasets:[{ data:vals, backgroundColor:colors, borderWidth:2, borderColor:"#ffffff" }] },
-    options:{ responsive:true, plugins:{ legend:{ position:"right", labels:{boxWidth:12,color:"#4d4635"} } } }
+// ── 실질 사업 KPI 렌더러 ──
+function renderBusinessKPIs(actionPlan, wikiCount = 0) {
+  let totalTasks = 0;
+  let completedTasks = 0;
+  Object.values(actionPlan).forEach(p => {
+    totalTasks += p.total || 0;
+    completedTasks += p.completed || 0;
   });
+  const globalProgress = totalTasks > 0 ? (completedTasks / totalTasks) : 0;
+  const pct = Math.round(globalProgress * 100);
+
+  // 1. R&R 마일스톤 전체 완료율
+  updateKPIDom("startups", pct, 100, "%");
+  
+  // 2. 누적 완료 태스크 수
+  updateKPIDom("users", completedTasks, totalTasks || 40, "개");
+  
+  // 3. 미완성 잔여 태스크 수
+  const pendingTasks = Math.max(0, totalTasks - completedTasks);
+  updateKPIDom("certs", pendingTasks, totalTasks || 40, "개");
+  
+  // 4. Wiki 마크다운 산출물 파일 수
+  updateKPIDom("matchings", wikiCount, 50, "개");
+  
+  // 5. 서버 가동 헬스 점수 (정상인 경우 100)
+  updateKPIDom("revenue", 100, 100, "점");
 }
+
+function updateKPIDom(id, val, target, suffix = "개") {
+  const textEl = document.getElementById(`kpi-${id}`);
+  const pbEl   = document.getElementById(`kpi-pb-${id}`);
+  if (textEl) {
+    if (suffix === "%") {
+      textEl.innerHTML = `<strong>${val}</strong>%`;
+    } else if (suffix === "점") {
+      textEl.innerHTML = `<strong>${val}</strong> / ${target}점`;
+    } else {
+      textEl.innerHTML = `<strong>${val}</strong> / ${target}개`;
+    }
+  }
+  if (pbEl) {
+    const pct = Math.min(100, Math.round((val / target) * 100));
+    pbEl.style.width = `${pct}%`;
+  }
+}
+
+
 
 // ── 로그 피드 ──
 function renderActivityFeed(logs) {
@@ -964,8 +985,10 @@ async function fetchDashboardData() {
     renderLongTermGantt();
     renderGantt(data.action_plan);
     renderProgressChart(data.action_plan);
-    renderLogsDoughnut(data.log_stats);
+    renderBusinessKPIs(data.action_plan, data.wiki_count);
     renderActivityFeed(data.logs);
+
+
     renderProjects(data.projects);
     if (data.settings) renderPauseStatus(data.settings);
   } catch {
