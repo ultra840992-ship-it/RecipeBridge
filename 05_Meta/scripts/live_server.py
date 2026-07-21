@@ -589,7 +589,7 @@ title: "{title}"
             if plan_stats:
                 live_project_context += "\n\n[실시간 프로젝트 진척 상황 (Live Action Plan Status)]\n"
                 for ag, data in plan_stats.items():
-                    pct = Math_pct = round((data["completed"] / data["total"]) * 100) if data["total"] > 0 else 0
+                    pct = round((data["completed"] / data["total"]) * 100) if data["total"] > 0 else 0
                     live_project_context += f"- {ag.upper()}: 완료 {data['completed']}/{data['total']}개 ({pct}%)\n"
             
             # 2. 최신 로그 12줄 주입
