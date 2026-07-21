@@ -64,3 +64,19 @@ YYYY-MM-DD HH:mm | command | summary | linked files
 2026-07-19 22:13 | task | [BITZ] 태스크 완료: **[Advance]** 결제 모듈 연동 기초 API 뼈대 구축 및 블라인드 매칭 프로세스 서버사이드 라우팅 스크립트 작성. | 
 2026-07-19 22:13 | task | [CAREY] 태스크 완료: **[Advance]** a-알파 진입 유저들의 초기 문의(FAQ) 대응용 챗봇 프롬프트 뼈대 및 이탈 방지 대응 매뉴얼 작성. | [[02_Wiki/decisions/alpha_chatbot_manual.md]]
 2026-07-19 22:13 | task | [NOVA] 태스크 완료: **[Advance]** 중고 신입-스타트업 블라인드 매칭 수수료 과금 모델(BM) 기획 명세서 및 결제 시나리오 초안 작성. | 
+2026-07-21 20:51 | task | [INSIGHT] 태스크 완료: [Lv2] 경쟁사(원티드 긱스 등)의 단기 매칭 BM 변화율 및 구인 스타트업의 최근 단기 프로젝트 예산 범위 트렌드 조사. | [[02_Wiki/dev-tasks/task_result_20260721_205114_0.md]]
+2026-07-21 20:51 | task | [VERITY] 태스크 완료: [Lv2] Bitz가 작성할 매칭/결제 라우팅 코드 구조의 SQL 인젝션 및 보안 취약점 사전 모의 해킹 분석 보고서 작성. | [[02_Wiki/errors/Verity_Task_Rejection_20260719.md]]
+2026-07-21 20:51 | task | [CAREY] 태스크 완료: [Lv2] 초기 챗봇 문의(FAQ) 대응 실패 시 이탈 방지 에스컬레이션 알림(슬랙/이메일 브리지) 시나리오 구현. | [[02_Wiki/dev-tasks/chatbot_escalation_scenario.md]]
+2026-07-21 20:51 | task | [BITZ] 태스크 완료: [Lv2] 실시간 매칭 상태 변경에 따른 백엔드 DB 연동 및 프론트엔드 모달 라우팅 연동 테스트. | [[02_Wiki/dev-tasks/lv2_realtime_matching_status_test.md]]
+2026-07-21 20:51 | task | [ECHO] 태스크 완료: [Lv2] 취업 커뮤니티(블라인드 등) 대상 바이럴 성과 측정을 위한 UTM 파라미터 태깅 및 성과 리포트 포맷 기획. | [[02_Wiki/sources/viral_performance_measurement_plan.md]]
+2026-07-21 20:51 | task | [VIVID] 태스크 완료: [Lv2] 실시간 매칭 진행 상태 대시보드(진행중/매칭완료/대기) 상세 컴포넌트 목업 및 모달 UI 디자인. | [[02_Wiki/design/realtime_matching_dashboard_ui.md]]
+2026-07-21 20:51 | task | [AEGIS] 태스크 완료: **[Critical]** [Lv2] 결제 및 매칭에 따른 구직자 기여도 인증서 스마트 계약/해시 서명 체계 검증 및 최종 보안 정책 수립. | 
+2026-07-21 20:51 | task | [NOVA] 태스크 완료: **[Critical]** [Lv2] 결제 모듈 도입에 따른 수수료 차등 모델 및 매칭 탈락 시 구직자 보상 환불 정책(시나리오) 확정. | [[02_Wiki/projects/payment_module_policy.md]]
+2026-07-21 20:51 | task | [INSIGHT] 태스크 완료: [Lv2] 경쟁사(원티드 긱스 등)의 단기 매칭 BM 변화율 및 구인 스타트업의 최근 단기 프로젝트 예산 범위 트렌드 조사. | [[02_Wiki/dev-tasks/task_result_20260721_205116_0.md]]
+2026-07-21 20:51 | task | [VERITY] 태스크 완료: [Lv2] Bitz가 작성할 매칭/결제 라우팅 코드 구조의 SQL 인젝션 및 보안 취약점 사전 모의 해킹 분석 보고서 작성. | [[02_Wiki/errors/task_rejection_verity.md]]
+2026-07-21 20:51 | task | [ECHO] 태스크 완료: [Lv2] 취업 커뮤니티(블라인드 등) 대상 바이럴 성과 측정을 위한 UTM 파라미터 태깅 및 성과 리포트 포맷 기획. | [[02_Wiki/sources/viral_utm_report_plan.md]]
+2026-07-21 20:51 | task | [CAREY] 태스크 완료: [Lv2] 초기 챗봇 문의(FAQ) 대응 실패 시 이탈 방지 에스컬레이션 알림(슬랙/이메일 브리지) 시나리오 구현. | [[02_Wiki/cs-scenarios/chatbot_escalation_scenario.md]]
+2026-07-21 20:51 | task | [AEGIS] 태스크 완료: **[Critical]** [Lv2] 결제 및 매칭에 따른 구직자 기여도 인증서 스마트 계약/해시 서명 체계 검증 및 최종 보안 정책 수립. | [[02_Wiki/dev-tasks/smart_contract_security_verification_plan.md]]
+2026-07-21 20:51 | task | [BITZ] 태스크 완료: [Lv2] 실시간 매칭 상태 변경에 따른 백엔드 DB 연동 및 프론트엔드 모달 라우팅 연동 테스트. | [[02_Wiki/dev-tasks/Lv2_realtime_matching_status_test.md]]
+2026-07-21 20:51 | task | [VIVID] 태스크 완료: [Lv2] 실시간 매칭 진행 상태 대시보드(진행중/매칭완료/대기) 상세 컴포넌트 목업 및 모달 UI 디자인. | 
+2026-07-21 20:51 | task | [NOVA] 태스크 완료: **[Critical]** [Lv2] 결제 모듈 도입에 따른 수수료 차등 모델 및 매칭 탈락 시 구직자 보상 환불 정책(시나리오) 확정. | 
