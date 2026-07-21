@@ -197,6 +197,20 @@ def execute_daily_routine():
             print(f"[{agent}] 토큰 제한 중단 (Pause). 작업 스킵.")
             continue
             
+        # 에러 응답 또는 깡통 응답 필터링 (Fail-Safe)
+        is_error = (
+            "api 에러" in reply.lower() or 
+            "호출 실패" in reply.lower() or 
+            "connection refused" in reply.lower() or 
+            "internal error" in reply.lower() or
+            "without response" in reply.lower() or
+            len(reply.strip()) < 120
+        )
+        
+        if is_error:
+            print(f" ❌ -> {agent} 작업 실패 (에러 응답 수신, 크기: {len(reply)} 자). 다음 주기에 재시도합니다.")
+            continue
+            
         print(f" -> {agent} 작업 완료 (응답 크기: {len(reply)} 자)")
         blocks = _extract_code_blocks(reply)
         agent_saved = []

@@ -5,12 +5,14 @@ import socketserver
 import urllib.request
 import urllib.parse
 import datetime
+import threading
 from http.server import HTTPServer, BaseHTTPRequestHandler
 
 # ──────────────────────────────────────────────────────────────
-#  글로벌 설정 파일 (토큰 제한/일시정지 Pause 컨트롤러)
+#  글로벌 설정 및 동시성 락
 # ──────────────────────────────────────────────────────────────
 _SETTINGS_PATH = os.path.join(os.path.dirname(__file__), "..", "..", "_shared", "settings.json")
+_cache_lock = threading.Lock()
 
 def load_settings():
     """_shared/settings.json 로드. 없으면 기본값 반환."""
@@ -579,6 +581,32 @@ title: "{title}"
                 "설정하고 서버를 재기동해 주셔야 합니다."
             )
             
+        # ── 실시간 프로젝트 진척도 및 로그 요약 컨텍스트 주입 ─────────────────
+        live_project_context = ""
+        try:
+            # 1. 액션플랜 파싱 정보 요약
+            plan_stats = parse_action_plan()
+            if plan_stats:
+                live_project_context += "\n\n[실시간 프로젝트 진척 상황 (Live Action Plan Status)]\n"
+                for ag, data in plan_stats.items():
+                    pct = Math_pct = round((data["completed"] / data["total"]) * 100) if data["total"] > 0 else 0
+                    live_project_context += f"- {ag.upper()}: 완료 {data['completed']}/{data['total']}개 ({pct}%)\n"
+            
+            # 2. 최신 로그 12줄 주입
+            log_path = os.path.normpath(os.path.join(os.path.dirname(__file__), "..", "..", "log.md"))
+            if os.path.exists(log_path):
+                with open(log_path, "r", encoding="utf-8") as f:
+                    log_lines = [line.strip() for line in f if line.strip()]
+                # 실질적인 로그 필터링
+                actual_logs = [l for l in log_lines if "|" in l]
+                if actual_logs:
+                    live_project_context += "\n[최근 에이전트 실무 활동 로그 (최신순 12개)]\n"
+                    # 최신순이므로 슬라이싱해서 최근 12개 추가
+                    for l in actual_logs[-12:]:
+                        live_project_context += f"  {l}\n"
+        except Exception as e:
+            print(f"[Live Context Injection Error] {e}")
+
         # 4대 제어 문서(soul/user/agent/memory) 동적 로드 및 병합
         system_instruction = load_agent_multi_profile(agent_key)
         
@@ -592,24 +620,25 @@ title: "{title}"
             except Exception as e:
                 print(f"[Context Load Error] {e}")
 
-        full_system_prompt = f"{system_instruction}{recent_context}"
+        full_system_prompt = f"{system_instruction}{recent_context}{live_project_context}"
         
         # ── Context Caching 적용 (최소 4000토큰/32k 제한 우회용 Fallback 포함) ──
         global CACHE_STORE
-        if 'CACHE_STORE' not in globals():
-            CACHE_STORE = {}
-            
-        import datetime
-        now = datetime.datetime.now()
-        cache_info = CACHE_STORE.get(agent_key)
-        cached_name = None
-        
-        if cache_info and cache_info.get("expiry") > now:
-            cached_name = cache_info["name"]
-        elif cache_info and cache_info.get("name") == "failed_too_short":
-            # 한 번 실패했던 에이전트는 당분간 시도 안함
+        with _cache_lock:
+            if 'CACHE_STORE' not in globals():
+                CACHE_STORE = {}
+                
+            import datetime
+            now = datetime.datetime.now()
+            cache_info = CACHE_STORE.get(agent_key)
             cached_name = None
-        else:
+            
+            if cache_info and cache_info.get("expiry") > now:
+                cached_name = cache_info["name"]
+            elif cache_info and cache_info.get("name") == "failed_too_short":
+                cached_name = None
+
+        if not cached_name and (not cache_info or cache_info.get("name") != "failed_too_short"):
             cache_url = f"https://generativelanguage.googleapis.com/v1beta/cachedContents?key={api_key}"
             cache_payload = {
                 "model": "models/gemini-1.5-flash-001",
@@ -621,11 +650,13 @@ title: "{title}"
                 with urllib.request.urlopen(cache_req, timeout=10) as c_res:
                     c_data = json.loads(c_res.read().decode("utf-8"))
                     cached_name = c_data.get("name")
-                    CACHE_STORE[agent_key] = {"name": cached_name, "expiry": now + datetime.timedelta(minutes=55)}
+                    with _cache_lock:
+                        CACHE_STORE[agent_key] = {"name": cached_name, "expiry": now + datetime.timedelta(minutes=55)}
                     print(f"[Context Caching] Agent {agent_key} 캐시 생성 성공: {cached_name}")
             except urllib.error.HTTPError as e:
                 # 400 Bad Request (토큰 수 미달) 방어
-                CACHE_STORE[agent_key] = {"name": "failed_too_short", "expiry": now + datetime.timedelta(minutes=55)}
+                with _cache_lock:
+                    CACHE_STORE[agent_key] = {"name": "failed_too_short", "expiry": now + datetime.timedelta(minutes=55)}
                 cached_name = None
             except Exception as e:
                 print(f"[Context Caching Error] {e}")
