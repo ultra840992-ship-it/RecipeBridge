@@ -27,24 +27,9 @@ const GANTT_DATA = [
     color: "#735c00",
     tasks: [
       { 
-        label: "[Lv1] 기획·디자인 산출물 검수", start: 1, end: 1, status: "planned",
+        label: "[Lv2] 스마트 계약 및 해시 서명 체계 검증", start: 1, end: 2, status: "planned",
         details: [
-          { name: "Day 1 기획/디자인 산출물 직접 파일 검수 및 승인", target: 1 }
-        ]
-      },
-      { 
-        label: "[Lv1] AI 마스터 검증 로직 설계", start: 2, end: 3, status: "planned",
-        details: [
-          { name: "구직자 코드 표절률 및 AI 대필 검증 프롬프트 설계", target: 2 },
-          { name: "코드 동적 체크를 통한 인증서 발급 승인 로직", target: 3 },
-          { name: "백업/복원 스크립트 고도화 (Bitz 협업)", target: 3 }
-        ]
-      },
-      { 
-        label: "[Lv1] 전체 시스템 최종 QA 승인", start: 4, end: 4, status: "planned",
-        details: [
-          { name: "전체 src/ 소스 코드 QA 점검 및 승인", target: 4 },
-          { name: "개발팀 Bitz의 완성된 PR 코드 배포 승인", target: 4 }
+          { name: "결제/매칭에 따른 구직자 기여도 인증서 스마트 계약/해시 서명 체계 검증 및 최종 보안 정책 수립", target: 2 }
         ]
       }
     ]
@@ -55,18 +40,9 @@ const GANTT_DATA = [
     color: "#2a5d80",
     tasks: [
       { 
-        label: "[Lv1] 블라인드 매칭 기획", start: 1, end: 1, status: "planned",
+        label: "[Lv2] 수수료 차등 및 환불 정책 확정", start: 1, end: 2, status: "planned",
         details: [
-          { name: "블라인드 프로젝트 인증 프로필 UI/프로세스 기획", target: 1 },
-          { name: "스타트업 과제 스펙 세부 기획", target: 1 },
-          { name: "단기 과제 모집 양식 템플릿 기획", target: 1 }
-        ]
-      },
-      { 
-        label: "[Lv1] 레시피 팩 설계", start: 2, end: 2, status: "planned",
-        details: [
-          { name: "기본 웹 빌드 레시피 팩 3종 프롬프트 구성", target: 2 },
-          { name: "마이크로 프로젝트 진행 인증 체인 상세 설계", target: 2 }
+          { name: "결제 모듈 도입에 따른 수수료 차등 모델 및 매칭 탈락 시 구직자 보상 환불 정책(시나리오) 확정", target: 2 }
         ]
       }
     ]
@@ -77,11 +53,9 @@ const GANTT_DATA = [
     color: "#6a3080",
     tasks: [
       { 
-        label: "[Lv1] UI/UX 테마 및 가이드", start: 1, end: 1, status: "planned",
+        label: "[Lv2] 실시간 매칭 상태 대시보드 UI/UX", start: 2, end: 3, status: "planned",
         details: [
-          { name: "피그마 와이어프레임 설계 (메인/프로젝트/스토어)", target: 1 },
-          { name: "프리미엄 다크 모드 톤앤매너, 컬러 토큰(HSL) 정의", target: 1 },
-          { name: "반응형 레이아웃 및 UX 애니메이션 가이드라인 공급", target: 1 }
+          { name: "실시간 매칭 진행 상태 대시보드(진행중/매칭완료/대기) 상세 컴포넌트 목업 및 모달 UI 디자인", target: 3 }
         ]
       }
     ]
@@ -92,18 +66,9 @@ const GANTT_DATA = [
     color: "#1d6840",
     tasks: [
       { 
-        label: "[Lv1] 핵심 앱 프론트 개발", start: 2, end: 2, status: "planned",
+        label: "[Lv2] 실시간 매칭 백엔드/프론트 연동", start: 2, end: 4, status: "planned",
         details: [
-          { name: "Vite + React 기반 레포 구성 및 UI 퍼블리싱", target: 2 },
-          { name: "노션 API 연동: 의뢰 과제 DB 동기화", target: 2 }
-        ]
-      },
-      { 
-        label: "[Lv1] API 연동 및 인프라", start: 2, end: 3, status: "planned",
-        details: [
-          { name: "AI 레시피 샌드박스 렌더러 구현", target: 2 },
-          { name: "VPS 상시 가동 셋팅 및 백업 스크립트 작성", target: 3 },
-          { name: "텔레그램 연동 봇 백그라운드 안정화", target: 3 }
+          { name: "실시간 매칭 상태 변경에 따른 백엔드 DB 연동 및 프론트엔드 모달 라우팅 연동 테스트", target: 4 }
         ]
       }
     ]
@@ -114,11 +79,9 @@ const GANTT_DATA = [
     color: "#8a2800",
     tasks: [
       { 
-        label: "[Lv1] 마케팅 파이프라인 구축", start: 3, end: 3, status: "planned",
+        label: "[Lv2] UTM 바이럴 성과 측정 및 카드뉴스 배포", start: 3, end: 4, status: "planned",
         details: [
-          { name: "사전 예약 신청용 SEO 랜딩 페이지 최적화", target: 3 },
-          { name: "SNS 카드뉴스 자동화 크론 연동", target: 3 },
-          { name: "구글 서치 콘솔 연동 및 색인 등록 테스트", target: 3 }
+          { name: "취업 커뮤니티(블라인드 등) 대상 바이럴 성과 측정을 위한 UTM 파라미터 태깅 및 성과 리포트 포맷 기획", target: 4 }
         ]
       }
     ]
@@ -129,16 +92,9 @@ const GANTT_DATA = [
     color: "#2a3880",
     tasks: [
       { 
-        label: "[Lv1] 유저 데이터 트래킹 설계", start: 2, end: 2, status: "planned",
+        label: "[Lv2] 가입 이탈 및 챗봇 FAQ 에스컬레이션", start: 2, end: 3, status: "planned",
         details: [
-          { name: "GA4 이벤트 트래킹 설계 (가입, 결제 클릭, 이탈율 분석)", target: 2 }
-        ]
-      },
-      { 
-        label: "[Lv1] 베타 서비스 피드백 채널", start: 4, end: 4, status: "planned",
-        details: [
-          { name: "베타 테스터 설문 및 고통 점수 분류기 탑재", target: 4 },
-          { name: "불만율 피드백 수집 채널 개설", target: 4 }
+          { name: "초기 챗봇 문의(FAQ) 대응 실패 시 이탈 방지 에스컬레이션 알림(슬랙/이메일 브리지) 시나리오 구현", target: 3 }
         ]
       }
     ]
@@ -149,10 +105,9 @@ const GANTT_DATA = [
     color: "#5c3a21",
     tasks: [
       { 
-        label: "[Lv1] R&D 및 시장 조사", start: 1, end: 2, status: "planned",
+        label: "[Lv2] 경쟁사 BM 변화 및 구인 예산 범위 조사", start: 1, end: 2, status: "planned",
         details: [
-          { name: "취업 커뮤니티 트렌드 분석 및 리포팅", target: 1 },
-          { name: "경쟁사 플랫폼 기능 비교 분석", target: 2 }
+          { name: "경쟁사(원티드 긱스 등)의 단기 매칭 BM 변화율 및 구인 스타트업의 최근 단기 프로젝트 예산 범위 트렌드 조사", target: 2 }
         ]
       }
     ]
@@ -163,10 +118,9 @@ const GANTT_DATA = [
     color: "#4a4a4a",
     tasks: [
       { 
-        label: "[Lv1] 산출물 팩트체크", start: 3, end: 4, status: "planned",
+        label: "[Lv2] 매칭/결제 라우팅 보안 및 코드 감사", start: 3, end: 4, status: "planned",
         details: [
-          { name: "기획서 논리 및 모순점 검증", target: 3 },
-          { name: "시스템 할루시네이션 방지 모니터링 세팅", target: 4 }
+          { name: "Bitz가 작성할 매칭/결제 라우팅 코드 구조의 SQL 인젝션 및 보안 취약점 사전 모의 해킹 분석 보고서 작성", target: 4 }
         ]
       }
     ]
@@ -195,8 +149,8 @@ const LONG_TERM_GANTT_DATA = [
 ];
 
 // 오늘 날짜 기준 진도 계산
-const PROJECT_START = new Date("2026-07-19");
-const PROJECT_END   = new Date("2026-07-22");
+const PROJECT_START = new Date("2026-07-21");
+const PROJECT_END   = new Date("2026-07-24");
 const LT_PROJECT_START = new Date("2026-07-15");
 const LT_PROJECT_END   = new Date("2026-08-11");
 const TODAY         = new Date();
