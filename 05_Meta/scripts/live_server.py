@@ -6,6 +6,7 @@ import urllib.request
 import urllib.parse
 import datetime
 import threading
+import re
 from http.server import HTTPServer, BaseHTTPRequestHandler
 
 # ──────────────────────────────────────────────────────────────
@@ -699,12 +700,57 @@ title: "{title}"
                 candidates = response.get("candidates", [])
                 if candidates:
                     reply_text = candidates[0].get("content", {}).get("parts", [{}])[0].get("text", "")
-                    return reply_text.strip()
+                    return resolve_view_file_calls(reply_text.strip())
                 else:
                     return f"[{agent_key.upper()}] 죄송합니다, AI 응답 생성에 실패했습니다."
                     
         except Exception as e:
             return f"[{agent_key.upper()} API 에러] Gemini 호출 실패: {str(e)}"
+
+def resolve_view_file_calls(text):
+    """에이전트가 답변에 포함한 agy.view_file(...) 호출 구문을 감지해 실제 파일 내용으로 치환"""
+    pattern = r'(?:agy\.)?view_file\([\'\"](.+?)[\'\"]\)'
+    if not re.search(pattern, text):
+        return text
+        
+    lines = text.split('\n')
+    new_lines = []
+    
+    for line in lines:
+        match = re.search(pattern, line)
+        if match:
+            filepath = match.group(1).strip()
+            # Clean path
+            base_dir = os.path.normpath(os.path.join(os.path.dirname(__file__), "..", ".."))
+            full_path = os.path.normpath(os.path.join(base_dir, filepath))
+            
+            # 보안: base_dir을 벗어나지 않도록 검증
+            if not full_path.startswith(base_dir):
+                content = "[접근 권한이 없는 파일 경로입니다]"
+            elif os.path.exists(full_path) and os.path.isfile(full_path):
+                try:
+                    with open(full_path, "r", encoding="utf-8") as f:
+                        content = f.read()
+                except Exception as e:
+                    content = f"[파일 읽기 실패: {e}]"
+            else:
+                content = f"[파일을 찾을 수 없습니다: {filepath}]"
+            
+            # 파이썬 코드 블록 껍데기가 이전 라인에 있었다면 제거 (예: ```python)
+            if new_lines and new_lines[-1].strip().lower() in ['python', '```python', '```']:
+                new_lines.pop()
+                
+            # 내용 인라인 치환
+            new_lines.append(f"\n📁 **[파일 내용: {filepath}]**\n---\n{content}\n---")
+            continue
+            
+        # 파일 내용을 인라인한 직후 닫는 백틱(```)이 오면 스킵 처리
+        if line.strip() == '```' and new_lines and new_lines[-1].startswith('\n📁 **[파일 내용:'):
+            continue
+            
+        new_lines.append(line)
+        
+    return '\n'.join(new_lines)
 
 def run():
     server_address = ("", PORT)
