@@ -365,27 +365,29 @@ function renderSearchResults(results) {
 }
 
 document.getElementById('searchInput').addEventListener('input', function() {
-  const val = this.value;
+  const val = this.value.trim().toLowerCase();
   document.getElementById('clearBtn').classList.toggle('visible', val.length > 0);
-  clearTimeout(searchTimer);
-  searchTimer = setTimeout(async () => {
-    if (!val.trim()) { renderFileList(allFiles); return; }
-    const el = document.getElementById('fileList');
-    el.innerHTML = `<div class="state-msg"><div class="spinner"></div><span>검색 중...</span></div>`;
-    try {
-      const res = await fetch(`${BACKEND_URL}/api/search_wiki?q=${encodeURIComponent(val)}`);
-      if (!res.ok) throw new Error();
-      const data = await res.json();
-      renderSearchResults(data.results || []);
-    } catch {
-      el.innerHTML = `<div class="state-msg" style="color:var(--status-red)">검색 오류</div>`;
-    }
-  }, 280);
+  
+  if (!val) {
+    document.getElementById('docCount').textContent = `${allFiles.length}개 문서`;
+    renderFileList(allFiles);
+    return;
+  }
+  
+  // 클라이언트 사이드 필터링 (제목 또는 경로 기준 매칭)
+  const filtered = allFiles.filter(f => 
+    f.title.toLowerCase().includes(val) || 
+    f.path.toLowerCase().includes(val)
+  );
+  
+  document.getElementById('docCount').textContent = `${filtered.length}개 문서`;
+  renderFileList(filtered);
 });
 
 function clearSearch() {
   document.getElementById('searchInput').value = '';
   document.getElementById('clearBtn').classList.remove('visible');
+  document.getElementById('docCount').textContent = `${allFiles.length}개 문서`;
   renderFileList(allFiles);
   document.getElementById('searchInput').focus();
 }

@@ -533,10 +533,47 @@
               <h3 class="chart-title">담당자별 태스크 완료 현황</h3>
               <canvas id="progressChart" height="150"></canvas>
             </div>
-            <div class="chart-container" style="margin-top:24px">
-              <h3 class="chart-title">에이전트별 업무 기여도 (Business Impact Metrics)</h3>
-              <canvas id="logsDoughnutChart" height="140"></canvas>
+            <div class="kpi-dashboard-container" style="margin-top:24px">
+              <h3 class="chart-title" style="margin:0 0 10px; font-size: 14px; font-weight: 600; color: var(--ink-secondary);">📈 RecipeBridge 실질 사업 KPI</h3>
+              <div class="kpi-list">
+                <div class="kpi-item">
+                  <div class="kpi-meta">
+                    <span class="kpi-name">구인 의뢰 스타트업 수</span>
+                    <span class="kpi-value"><strong id="kpi-startups">12</strong> / 100개</span>
+                  </div>
+                  <div class="kpi-progress-bar-container"><div class="kpi-progress-bar" id="kpi-pb-startups" style="width: 12%"></div></div>
+                </div>
+                <div class="kpi-item">
+                  <div class="kpi-meta">
+                    <span class="kpi-name">구직자 가입 수</span>
+                    <span class="kpi-value"><strong id="kpi-users">45</strong> / 500명</span>
+                  </div>
+                  <div class="kpi-progress-bar-container"><div class="kpi-progress-bar" id="kpi-pb-users" style="width: 9%"></div></div>
+                </div>
+                <div class="kpi-item">
+                  <div class="kpi-meta">
+                    <span class="kpi-name">기여도 인증서 발급</span>
+                    <span class="kpi-value"><strong id="kpi-certs">18</strong> / 200건</span>
+                  </div>
+                  <div class="kpi-progress-bar-container"><div class="kpi-progress-bar" id="kpi-pb-certs" style="width: 9%"></div></div>
+                </div>
+                <div class="kpi-item">
+                  <div class="kpi-meta">
+                    <span class="kpi-name">매칭 성공 건수</span>
+                    <span class="kpi-value"><strong id="kpi-matchings">8</strong> / 50건</span>
+                  </div>
+                  <div class="kpi-progress-bar-container"><div class="kpi-progress-bar" id="kpi-pb-matchings" style="width: 16%"></div></div>
+                </div>
+                <div class="kpi-item">
+                  <div class="kpi-meta">
+                    <span class="kpi-name">월 예상 플랫폼 매출</span>
+                    <span class="kpi-value"><strong id="kpi-revenue">180</strong> / 1,500만원</span>
+                  </div>
+                  <div class="kpi-progress-bar-container"><div class="kpi-progress-bar" id="kpi-pb-revenue" style="width: 12%"></div></div>
+                </div>
+              </div>
             </div>
+
           </div>
           <div class="dashboard-card feed-card">
             <div class="feed-header">
