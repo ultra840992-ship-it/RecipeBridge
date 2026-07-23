@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>RecipeBridge AI Agent OS — Portal Dashboard</title>
   <meta name="description" content="RecipeBridge 가상 AI 기업 오퍼레이팅 포털 대시보드">
-  <link rel="stylesheet" href="dashboard.css">
+  <link rel="stylesheet" href="dashboard.css?v=20260723_v6">
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
@@ -112,8 +112,8 @@
         <div class="hero-content">
           <img src="recipebridge_logo.jpg" alt="RecipeBridge Logo" class="hero-logo">
           <div class="hero-text">
-            <h1 class="hero-title">RecipeBridge AI Portal</h1>
-            <p class="hero-subtitle">6인의 AI 에이전트 조직망 · 마스터 크리틱 루프 · 블라인드 경력 인증 플랫폼</p>
+            <h1 class="hero-title">Recipe Bridge</h1>
+            <p class="hero-subtitle">8명의 에이전트 조직망 · 마스터 크리틱 루프 · 블라인드 경력 인증 플랫폼</p>
             <div class="hero-actions-container">
               <div class="hero-actions">
                 <button class="primary-portal-btn" onclick="location.href='chat.html'">💬 AI 협업 회의실 입장</button>
@@ -151,10 +151,10 @@
         </div>
       </section>
 
-      <!-- ③-A 장기 간트차트 (Lv1) -->
+      <!-- ③-A 장기 로드맵 간트차트 (Lv1) — 3주+ 장기 로드맵 -->
       <section class="gantt-section" id="ganttLongTermSection">
         <div class="section-header">
-          <h2 class="section-title">🚀 장기 로드맵 (Lv1) — 8월 a-알파 런칭 및 수익화 타겟</h2>
+          <h2 class="section-title">🚀 8인 에이전트 3주+ 장기 로드맵 (Lv1) — a-알파 런칭 및 글로벌 수익화</h2>
           <div class="gantt-legend">
             <span class="legend-dot" style="background:#d4af37"></span><span>비즈니스</span>
             <span class="legend-dot" style="background:#1d6840"></span><span>프로덕트</span>
@@ -163,12 +163,13 @@
         </div>
         <div class="gantt-wrapper dashboard-card">
           <div class="gantt-header-row">
-            <div class="gantt-agent-col">구분</div>
-            <div class="gantt-weeks">
-              <div class="gantt-week" data-week="1">7월 3주차 <span>MVP 검증</span></div>
-              <div class="gantt-week" data-week="2">7월 4주차 <span>매칭 테스트</span></div>
+            <div class="gantt-agent-col">에이전트</div>
+            <div class="gantt-weeks" style="grid-template-columns: repeat(5, 1fr);">
+              <div class="gantt-week" data-week="1">7월 3주차 <span>MVP 샌드박스</span></div>
+              <div class="gantt-week" data-week="2">7월 4주차 <span>매칭/인증 테스트</span></div>
               <div class="gantt-week" data-week="3">8월 1주차 <span>a-알파 배포</span></div>
               <div class="gantt-week" data-week="4">8월 2주차 <span>수익화 연동</span></div>
+              <div class="gantt-week" data-week="5">8월 3주차 <span>글로벌 확장</span></div>
             </div>
           </div>
           <div class="gantt-body" id="ganttLongTermBody">
@@ -599,6 +600,6 @@
     </main>
   </div>
 
-  <script src="dashboard.js"></script>
+  <script src="dashboard.js?v=20260723_v6"></script>
 </body>
 </html>
