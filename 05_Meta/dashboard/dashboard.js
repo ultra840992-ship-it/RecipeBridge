@@ -182,10 +182,8 @@ const LONG_TERM_GANTT_DATA = [
     key: "business",
     color: "#d4af37",
     tasks: [
-      { label: "Week 1: 에이전트 8인 조직망 & 매칭 모델 확립", start: 1, end: 1 },
-      { label: "Week 2: 실무 과제 DB 확보 & 기획서 검증", start: 2, end: 2 },
-      { label: "Week 3: B2B 채용 연계 & 베타 테스터 피드백", start: 3, end: 3 },
-      { label: "Week 4+: 비즈니스 모니터링 & 글로벌 채용 연계", start: 4, end: 4 }
+      { label: "중고 신입 - 스타트업 매칭 모델 확립", start: 1, end: 2 },
+      { label: "블라인드 실무 과제 DB 확보 (100건)", start: 3, end: 4 }
     ]
   },
   {
@@ -193,10 +191,8 @@ const LONG_TERM_GANTT_DATA = [
     key: "product",
     color: "#1d6840",
     tasks: [
-      { label: "Week 1: MVP 레시피 & DB 연동 샌드박스 배포", start: 1, end: 1 },
-      { label: "Week 2: 결제 API 연동 & 실시간 매칭 UI 구현", start: 2, end: 2 },
-      { label: "Week 3: 캐시 최적화 & Sentry 예외 처리 실서버 배포", start: 3, end: 3 },
-      { label: "Week 4+: AI 오작동 자동 롤백 & 보안 침투 테스트 감사", start: 4, end: 4 }
+      { label: "MVP 기능 배포 (레시피/DB 동기화)", start: 1, end: 2 },
+      { label: "a-알파 수익화(결제 모듈) 연동 및 오픈", start: 3, end: 4 }
     ]
   }
 ];
@@ -267,26 +263,23 @@ function renderGantt(actionPlan) {
     }
 
     // 태스크 바
-    let renderedIdx = 0;
-    agentRow.tasks.forEach((task) => {
-      const weekFrac = todayWeekFraction();
-      const taskMidFrac = ((task.start - 0.5) / 4);
-      const isDone = weekFrac >= taskMidFrac && pct > 0;
-
-      // 이미 끝난 일정은 대시보드에 보이지 않고(최소화) 미래의 계획 위주로 노출
-      if (isDone) return;
-
+    agentRow.tasks.forEach((task, idx) => {
       const barEl = document.createElement("div");
       const leftPct  = ((task.start - 1) / 4) * 100;
       const widthPct = ((task.end - task.start + 1) / 4) * 100;
-      const isDelayed = weekFrac > (task.end / 4);
 
-      barEl.className = `gantt-bar ${isDelayed ? "gantt-bar--delayed" : ""}`;
+      // 태스크가 완료된 주 이전이면 완료 처리
+      const weekFrac = todayWeekFraction();
+      const taskMidFrac = ((task.start - 0.5) / 4);
+      const isDone = weekFrac >= taskMidFrac && pct > 0;
+      const isDelayed = weekFrac > (task.end / 4) && !isDone;
+
+      barEl.className = `gantt-bar ${isDone ? "gantt-bar--done" : ""} ${isDelayed ? "gantt-bar--delayed" : ""}`;
       barEl.style.cssText = `
         left: ${leftPct}%;
         width: calc(${widthPct}% - 6px);
-        background: ${isDelayed ? "#ba1a1a" : agentRow.color};
-        top: ${8 + renderedIdx * 28}px;
+        background: ${isDone ? "#3d8f5f" : isDelayed ? "#ba1a1a" : agentRow.color};
+        top: ${8 + idx * 28}px;
         cursor: pointer;
       `;
       barEl.title = task.label + " (클릭하여 세부 액션리스트 보기)";
@@ -315,14 +308,13 @@ function renderGantt(actionPlan) {
       barLabel.textContent = task.label;
       barEl.appendChild(barLabel);
       timelineEl.appendChild(barEl);
-      renderedIdx++;
     });
 
     rowEl.appendChild(labelEl);
     rowEl.appendChild(timelineEl);
 
-    // 행 높이: 렌더링된 미래 태스크 개수에 비례
-    rowEl.style.minHeight = `${Math.max(48, renderedIdx * 28 + 16)}px`;
+    // 행 높이: 태스크 개수에 비례
+    rowEl.style.minHeight = `${Math.max(48, agentRow.tasks.length * 28 + 16)}px`;
     body.appendChild(rowEl);
   });
 
