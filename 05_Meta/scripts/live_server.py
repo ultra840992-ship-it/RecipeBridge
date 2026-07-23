@@ -256,20 +256,21 @@ class LiveChatRequestHandler(BaseHTTPRequestHandler):
         self.end_headers()
 
     def do_GET(self):
-        if self.path == "/api/status":
+        clean_path = self.path.split("?", 1)[0]
+        if clean_path == "/api/status":
             self.send_response(200)
             self.send_header("Content-Type", "application/json")
             self.send_header("Access-Control-Allow-Origin", "*")
             self.end_headers()
             settings = load_settings()
             self.wfile.write(json.dumps({"status": "connected", "paused": settings.get("paused", False)}).encode("utf-8"))
-        elif self.path == "/api/settings":
+        elif clean_path == "/api/settings":
             self.send_response(200)
             self.send_header("Content-Type", "application/json")
             self.send_header("Access-Control-Allow-Origin", "*")
             self.end_headers()
             self.wfile.write(json.dumps(load_settings()).encode("utf-8"))
-        elif self.path == "/api/dashboard":
+        elif clean_path == "/api/dashboard":
             self.send_response(200)
             self.send_header("Content-Type", "application/json")
             self.send_header("Access-Control-Allow-Origin", "*")
@@ -307,7 +308,7 @@ class LiveChatRequestHandler(BaseHTTPRequestHandler):
             }
             self.wfile.write(json.dumps(dashboard_data).encode("utf-8"))
 
-        elif self.path.startswith("/api/search_wiki"):
+        elif clean_path.startswith("/api/search_wiki"):
             query = ""
             if "?" in self.path:
                 qs = self.path.split("?", 1)[1]
@@ -371,14 +372,14 @@ class LiveChatRequestHandler(BaseHTTPRequestHandler):
             # 정적 파일 서빙 (대시보드 UI)
             base_dir = os.path.join(os.path.dirname(__file__), "..", "..")
             
-            if self.path == "/" or self.path == "/index.html":
+            if clean_path == "/" or clean_path == "/index.html":
                 filepath = os.path.join(base_dir, "05_Meta", "dashboard", "index.html")
             else:
                 # 기본적으로 05_Meta/dashboard 에서 찾음
-                filepath = os.path.join(base_dir, "05_Meta", "dashboard", self.path.lstrip("/"))
+                filepath = os.path.join(base_dir, "05_Meta", "dashboard", clean_path.lstrip("/"))
                 if not os.path.exists(filepath):
                     # 없으면 프로젝트 루트에서 찾음 (아바타 이미지 등)
-                    filepath = os.path.join(base_dir, self.path.lstrip("/"))
+                    filepath = os.path.join(base_dir, clean_path.lstrip("/"))
             
             filepath = os.path.abspath(filepath)
             
