@@ -1349,3 +1349,50 @@ img { display: block; }
   transition: background 0.15s;
 }
 .sprint-advance-banner button:hover { background: rgba(255,255,255,0.35); }
+
+/* ─── Business KPI Dashboard Styles ─── */
+.kpi-dashboard-container {
+  padding: 16px;
+  background: var(--surface-low);
+  border-radius: var(--r-md);
+  border: 1px solid var(--glass-border);
+}
+.kpi-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 14px;
+}
+.kpi-item {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.kpi-meta {
+  display: flex;
+  justify-content: space-between;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--ink-secondary);
+}
+.kpi-value {
+  color: var(--ink);
+}
+.kpi-value strong {
+  color: var(--gold-dark);
+  font-family: var(--font-head);
+  font-weight: 700;
+}
+.kpi-progress-bar-container {
+  height: 6px;
+  background: var(--surface-highest);
+  border-radius: var(--r-pill);
+  overflow: hidden;
+}
+.kpi-progress-bar {
+  height: 100%;
+  background: linear-gradient(90deg, var(--gold) 0%, var(--gold-dim) 100%);
+  border-radius: var(--r-pill);
+  transition: width 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+}
+

@@ -164,118 +164,8 @@ def execute_daily_routine():
                 tasks_to_run.append((current_agent, target_task, i))
                 agents_found.add(current_agent)
             
-def auto_plan_next_milestone(plan_path):
-    """
-    모든 에이전트의 이전 마일스톤이 조기 완료된 경우,
-    다음 단계 [Lv4] 마일스톤 계획을 자발적으로 수립하여 recipebridge_action_plan.md에 업데이트하고
-    텔레그램을 통해 8명 에이전트 각각 사장님께 개별 보고를 전송한다.
-    """
-    print("\n[Auto Milestone Engine] 8명 에이전트의 이전 일정이 조기 완료되었습니다!")
-    print("   자발적으로 다음 마일스톤 [Lv4] 계획을 수립하고 텔레그램 개별 보고를 진행합니다.\n")
-    
-    with open(plan_path, "r", encoding="utf-8") as f:
-        content = f.read()
-
-    # 8명 에이전트별 [Lv4] 신규 액션 태스크 정의
-    next_tasks = {
-        "aegis": "  - [ ] **[Critical]** [Lv4] 정식 런칭 후 실시간 트래픽 대응 비즈니스 모니터링 및 AI 오작동 롤백 시스템 최종 배포.",
-        "nova": "  - [ ] **[Critical]** [Lv4] 베타 테스터 50인 피드백 데이터 기반 2차 기획 및 B2B 채용 연계 마이크로 단기 과제 확장 기획서 수립.",
-        "vivid": "  - [ ] **[Critical]** [Lv4] 실사용자 UI 피드백 반영 모바일 반응형 세부 컴포넌트 마이크로 인터랙션 최적화 배포.",
-        "bitz": "  - [ ] **[Critical]** [Lv4] 결제/매칭 API 예외 처리 강화 및 실시간 에러 로그 센트리(Sentry) 연동 및 실서버 배포.",
-        "echo": "  - [ ] **[Critical]** [Lv4] 실 서비스 마케팅 퍼널 효율 분석(구글 서치콘솔, UTM 성과) 및 SNS 자동화 노출 지표 리포팅.",
-        "carey": "  - [ ] **[Critical]** [Lv4] 1:1 고객 피드백 수집 및 고통 지수 분석을 통한 이탈 고객 긴급 우회 대응 매뉴얼 CS 시스템 동기화.",
-        "insight": "  - [ ] **[Critical]** [Lv4] 초기 가입 유저 패턴 분석 및 플랫폼 체류 시간(Retention) 증대를 위한 시장 경쟁사 추가 비교 우위 보고서 작성.",
-        "verity": "  - [ ] **[Critical]** [Lv4] 실서버 배포 후 정밀 보안 침투 테스트(SQLi/XSS) 및 외부 API key 노출 여부 최종 보안 감사 보고서 배포."
-    }
-    
-    lines = content.splitlines(keepends=True)
-    new_lines = []
-    current_agent = None
-    
-    for line in lines:
-        new_lines.append(line)
-        if "### 👤" in line:
-            if "Aegis" in line: current_agent = "aegis"
-            elif "Nova" in line: current_agent = "nova"
-            elif "Vivid" in line: current_agent = "vivid"
-            elif "Bitz" in line: current_agent = "bitz"
-            elif "Echo" in line: current_agent = "echo"
-            elif "Carey" in line: current_agent = "carey"
-            elif "Insight" in line: current_agent = "insight"
-            elif "Verity" in line: current_agent = "verity"
-        
-        if current_agent and "[Lv3]" in line and current_agent in next_tasks:
-            new_lines.append(next_tasks[current_agent] + "\n")
-            del next_tasks[current_agent]
-            
-    with open(plan_path, "w", encoding="utf-8") as f:
-        f.writelines(new_lines)
-
-    creds = load_credentials()
-    telegram_token = creds.get("telegram_token")
-    telegram_chat_id = creds.get("telegram_chat_id")
-    
-    reports = [
-        ("Aegis 이지스", "[Lv3] 마일스톤 검수를 조기 완수하여, 정식 런칭 트래픽 대응 [Lv4] 모니터링 체계 배포 일정을 수립하고 자발적 수행에 착수합니다."),
-        ("Nova 노바", "[Lv3] 기획 검수가 조기 종료되어 [Lv4] B2B 채용 연계 마이크로 과제 확장 기획서 수립 일정을 자체 확정하고 실행합니다."),
-        ("Vivid 비비드", "[Lv3] Pretendard 폰트 최적화를 마치고 [Lv4] 모바일 반응형 UI 마이크로 인터랙션 최적화 일정을 수립하여 진행합니다."),
-        ("Bitz 비츠", "[Lv3] 프론트 최적화를 마치고 [Lv4] Sentry 에러 트래킹 연동 및 API 예외 처리 강화 개발 일정을 자체 수립하여 착수합니다."),
-        ("Echo 에코", "[Lv3] 마케팅 자동 배포 완수 후 [Lv4] 서치콘솔 및 UTM 퍼널 분석 리포팅 일정을 수립하여 자발적으로 수행합니다."),
-        ("Carey 케리", "[Lv3] 이탈 메일링 연동 완료 후 [Lv4] CS 피드백 티켓팅 시스템 동기화 일정을 수립하고 수행에 착수합니다."),
-        ("Insight 인사이트", "[Lv3] 비교 분석 완료 후 [Lv4] 유저 체류시간 증대 차별화 보고서 수립 일정을 수립하여 자발적 진행 중입니다."),
-        ("Verity 베리티", "[Lv3] QA 감사를 마치고 [Lv4] 실서버 배포 후 정밀 보안 침투 테스트(SQLi/XSS) 일정을 자체 수립하고 검수 작업을 시작합니다.")
-    ]
-    
-    if telegram_token and telegram_chat_id:
-        print("[Telegram Individual Reporting] 8명 에이전트 개별 보고 발송 시작...")
-        for agent_title, message in reports:
-            msg_text = f"📢 *[{agent_title}] 개별 업무 보고*\n\n대표님! {message}\n\n📅 *타겟 일정*: [Lv4] 마일스톤\n📊 *상태*: 대시보드 간트표 자동 반영 완료"
-            send_telegram_message(telegram_token, telegram_chat_id, msg_text)
-            time.sleep(1)
-            
-    append_to_log_md("system", "auto_plan", "8인 에이전트 일정 조기 완료에 따른 [Lv4] 마일스톤 자동 수립 및 텔레그램 개별 보고 완료", "[[02_Wiki/projects/recipebridge_action_plan.md]]")
-    print("[SUCCESS] [Lv4] 마일스톤 자동 수립 및 텔레그램 개별 보고가 완료되었습니다!")
-
-def execute_daily_routine():
-    """Real Business Mode: Parallel execution for all agents."""
-    print("="*60)
-    print("  [Cron Routine] RecipeBridge Real Business Mode (Parallel)")
-    print("="*60)
-    
-    os.system("git pull origin main --rebase || echo 'Git pull failed or skipped'")
-    
-    plan_path = os.path.join(os.path.dirname(__file__), "..", "..", "02_Wiki", "projects", "recipebridge_action_plan.md")
-    if not os.path.exists(plan_path):
-        print("Action plan not found.")
-        return
-        
-    with open(plan_path, "r", encoding="utf-8") as f:
-        lines = f.readlines()
-        
-    current_agent = None
-    tasks_to_run = []
-    agents_found = set()
-    
-    for i, line in enumerate(lines):
-        if line.startswith("### 👤"):
-            if "Aegis" in line: current_agent = "aegis"
-            elif "Nova" in line: current_agent = "nova"
-            elif "Vivid" in line: current_agent = "vivid"
-            elif "Bitz" in line: current_agent = "bitz"
-            elif "Echo" in line: current_agent = "echo"
-            elif "Carey" in line: current_agent = "carey"
-            elif "Insight" in line: current_agent = "insight"
-            elif "Verity" in line: current_agent = "verity"
-        
-        if line.strip().startswith("- [ ]") and current_agent:
-            if current_agent not in agents_found:
-                target_task = line.strip().replace("- [ ]", "").strip()
-                tasks_to_run.append((current_agent, target_task, i))
-                agents_found.add(current_agent)
-            
     if not tasks_to_run:
-        print("\n[NOTICE] 모든 이전 마일스톤 태스크가 조기 완료되었습니다! (No pending tasks found)")
-        auto_plan_next_milestone(plan_path)
+        print("모든 태스크가 완료되었습니다! (No pending tasks found)")
         return
         
     print(f"\n[Parallel Tasks Found] 총 {len(tasks_to_run)}명의 에이전트가 동시에 작업을 시작합니다.")
@@ -307,6 +197,7 @@ def execute_daily_routine():
             print(f"[{agent}] 토큰 제한 중단 (Pause). 작업 스킵.")
             continue
             
+        # 에러 응답 또는 깡통 응답 필터링 (Fail-Safe)
         is_error = (
             "api 에러" in reply.lower() or 
             "호출 실패" in reply.lower() or 
@@ -337,6 +228,7 @@ def execute_daily_routine():
         lines[line_idx] = lines[line_idx].replace("- [ ]", "- [x]", 1)
         completed_reports.append(f"- {agent}: {task} (파일: {', '.join(agent_saved) if agent_saved else '없음'})")
         
+        # log.md에 실시간 기록 추가
         links = f"[[{agent_saved[0]}]]" if agent_saved else ""
         append_to_log_md(agent, "task", f"태스크 완료: {task}", links)
         
@@ -346,6 +238,7 @@ def execute_daily_routine():
     if not completed_reports:
         return
         
+    # Aegis Report (모니터링 및 어드바이징 통합)
     aegis_prompt = (
         "다음은 현재 주기에 완료된 각 에이전트들의 태스크 결과 요약입니다:\n" +
         "\n".join(completed_reports) +
@@ -374,15 +267,16 @@ def main():
     print("  (백그라운드 루프가 가동되며 매 1시간마다 소스 감지 및 일과 진행)")
     print("="*60)
     
+    # 기동 즉시 최초 1회 연쇄 일과 실행
     execute_daily_routine()
     
+    # 24시간 백그라운드 주기 실행
     try:
         while True:
-            time.sleep(10800)
+            time.sleep(10800)  # 3시간 주기로 연장 (토큰 최적화)
             execute_daily_routine()
     except KeyboardInterrupt:
         print("\n[Scheduler Stopped] 자발적 스케줄러가 종료되었습니다.")
 
 if __name__ == "__main__":
     main()
-
