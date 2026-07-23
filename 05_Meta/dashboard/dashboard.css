@@ -924,7 +924,6 @@ ul, li { list-style: none; }
 .gantt-week-bg:nth-child(2) { left: 25%; }
 .gantt-week-bg:nth-child(3) { left: 50%; }
 .gantt-week-bg:nth-child(4) { left: 75%; }
-
 .gantt-week-bg--alt { background: rgba(0,0,0,0.02); }
 .gantt-bar {
   position: absolute;
@@ -1383,72 +1382,23 @@ ul, li { list-style: none; }
   .icon-nav__items { flex-direction: row; gap: 16px; flex: unset; }
   .icon-nav__bottom { padding-bottom: 0; margin-left: 16px; display: flex; align-items: center; }
 
-  .dashboard-main { padding: 12px 8px; }
+  .dashboard-main { padding: 16px; }
 
-  .hero-section { min-height: auto; padding: 0; margin-bottom: 20px; border-radius: 12px; }
-  .hero-content { flex-direction: column; padding: 20px 12px; gap: 14px; text-align: center; }
-  .hero-logo { width: 80px; height: 80px; margin: 0 auto; }
-  .hero-actions-container { flex-direction: column; align-items: stretch; margin-top: 14px; gap: 10px; }
+  .hero-section { min-height: auto; padding: 0; margin-bottom: 24px; border-radius: 12px; }
+  .hero-content { flex-direction: column; padding: 24px 16px; gap: 16px; text-align: center; }
+  .hero-logo { width: 100px; height: 100px; margin: 0 auto; }
+  .hero-actions-container { flex-direction: column; align-items: stretch; margin-top: 16px; gap: 12px; }
   .hero-actions { flex-direction: column; width: 100%; }
   .primary-portal-btn, .secondary-portal-btn, .ghost-portal-btn { width: 100%; text-align: center; }
 
-  .aegis-briefing-card { flex-direction: column; padding: 14px; align-items: center; text-align: center; gap: 14px; }
+  .aegis-briefing-card { flex-direction: column; padding: 16px; align-items: center; text-align: center; gap: 16px; }
   .aegis-briefing__header { justify-content: center; flex-wrap: wrap; }
   .aegis-request-btn { width: 100%; }
 
-  .dashboard-card { padding: 14px; margin-bottom: 20px; }
+  .dashboard-card { padding: 16px; margin-bottom: 24px; }
   .agents-card-grid { grid-template-columns: 1fr; }
-
-  /* KPI Grid & Progress Grid 스마트폰 반응형 1~2열 개편 */
-  .kpi-grid {
-    grid-template-columns: repeat(2, 1fr) !important;
-    gap: 10px !important;
-  }
-  .progress-grid {
-    grid-template-columns: 1fr !important;
-    gap: 12px !important;
-  }
-
-  /* 간트차트 스마트폰 터치 가로 스크롤 최적화 */
-  .gantt-section {
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
-    padding-bottom: 8px;
-  }
-  .gantt-wrapper {
-    min-width: 600px;
-  }
-  .gantt-agent-label, .gantt-agent-col {
-    width: 130px !important;
-    font-size: 11px !important;
-  }
-  .gantt-bar-label {
-    font-size: 9px !important;
-  }
-
-  /* 모달 스마트폰 터치 최적화 */
-  .modal-box {
-    width: 95vw !important;
-    padding: 20px 16px !important;
-    max-height: 88vh;
-    overflow-y: auto;
-  }
   
-  .office-map { min-height: 300px; }
+  .office-map { min-height: 320px; }
   .room-label { font-size: 8px; }
   .agent-token img { width: 32px; height: 32px; }
-  .metaverse-section { padding: 0 8px 20px; }
 }
-
-@media (max-width: 480px) {
-  .kpi-grid {
-    grid-template-columns: 1fr !important;
-  }
-  .gantt-wrapper {
-    min-width: 500px;
-  }
-  .hero-title {
-    font-size: 18px !important;
-  }
-}
-
