@@ -851,10 +851,10 @@ ul, li { list-style: none; }
 .gantt-weeks {
   flex: 1;
   display: grid;
-  grid-template-columns: repeat(10, 1fr);
+  grid-template-columns: repeat(4, 1fr);
 }
 .gantt-week {
-  padding: 10px 4px;
+  padding: 10px 12px;
   font-size: 11px;
   font-weight: 600;
   color: var(--ink-secondary);
@@ -918,18 +918,12 @@ ul, li { list-style: none; }
   position: absolute;
   top: 0;
   bottom: 0;
-  width: 10%;
+  width: 25%;
 }
 .gantt-week-bg:nth-child(1) { left: 0%; }
-.gantt-week-bg:nth-child(2) { left: 10%; }
-.gantt-week-bg:nth-child(3) { left: 20%; }
-.gantt-week-bg:nth-child(4) { left: 30%; }
-.gantt-week-bg:nth-child(5) { left: 40%; }
-.gantt-week-bg:nth-child(6) { left: 50%; }
-.gantt-week-bg:nth-child(7) { left: 60%; }
-.gantt-week-bg:nth-child(8) { left: 70%; }
-.gantt-week-bg:nth-child(9) { left: 80%; }
-.gantt-week-bg:nth-child(10) { left: 90%; }
+.gantt-week-bg:nth-child(2) { left: 25%; }
+.gantt-week-bg:nth-child(3) { left: 50%; }
+.gantt-week-bg:nth-child(4) { left: 75%; }
 
 .gantt-week-bg--alt { background: rgba(0,0,0,0.02); }
 .gantt-bar {
@@ -1422,12 +1416,11 @@ ul, li { list-style: none; }
     padding-bottom: 8px;
   }
   .gantt-wrapper {
-    min-width: 580px;
+    min-width: 600px;
   }
-  .gantt-agent-label {
-    width: 120px !important;
+  .gantt-agent-label, .gantt-agent-col {
+    width: 130px !important;
     font-size: 11px !important;
-    padding: 0 4px !important;
   }
   .gantt-bar-label {
     font-size: 9px !important;
