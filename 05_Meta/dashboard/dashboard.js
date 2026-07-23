@@ -22,15 +22,25 @@ let logsDoughnutChart = null;
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 const GANTT_DATA = [
   {
-    agent: "Aegis (이지스)",
+    agent: "오케스트레이터 (Aegis)",
     key: "aegis",
     color: "#735c00",
     tasks: [
       { 
-        label: "[Lv2] 스마트 계약 및 해시 서명 체계 검증", start: 1, end: 2, status: "planned",
-        details: [
-          { name: "결제/매칭에 따른 구직자 기여도 인증서 스마트 계약/해시 서명 체계 검증 및 최종 보안 정책 수립", target: 2 }
-        ]
+        label: "[Lv5] 글로벌 다국어 결제 검수", start: 1, end: 1, status: "planned",
+        details: [{ name: "글로벌 매칭 모델 및 Stripe 다중 외화 결제 정책 검수 및 승인", target: 5 }]
+      },
+      { 
+        label: "[Lv6] C2C 분쟁 중재 가이드 승인", start: 2, end: 2, status: "planned",
+        details: [{ name: "C2C 거래 규제 대응 및 정산금 분쟁 중재 마스터 정책 승인", target: 6 }]
+      },
+      { 
+        label: "[Lv7] ATS 인턴십 데이터 최종 QA", start: 3, end: 3, status: "planned",
+        details: [{ name: "ATS 연동 데이터 무결성 검수 및 구직자 기여도 인증 최종 승인", target: 7 }]
+      },
+      { 
+        label: "[Lv8] 자율 AX 롤백 모니터링 배포", start: 4, end: 4, status: "planned",
+        details: [{ name: "24/7 장애 에스컬레이션 롤백 시스템 검수 및 정식 상용화 마스터 배포 승인", target: 8 }]
       }
     ]
   },
@@ -40,10 +50,20 @@ const GANTT_DATA = [
     color: "#2a5d80",
     tasks: [
       { 
-        label: "[Lv2] 수수료 차등 및 환불 정책 확정", start: 1, end: 2, status: "planned",
-        details: [
-          { name: "결제 모듈 도입에 따른 수수료 차등 모델 및 매칭 탈락 시 구직자 보상 환불 정책(시나리오) 확정", target: 2 }
-        ]
+        label: "[Lv5] 글로벌 과제 & 영문 프로세스 기획", start: 1, end: 1, status: "planned",
+        details: [{ name: "글로벌 아웃소싱 표준 과제 양식 기획 및 영문 블라인드 채용 프로세스 정립", target: 5 }]
+      },
+      { 
+        label: "[Lv6] 레시피 C2C 수수료 & 정산 기획", start: 2, end: 2, status: "planned",
+        details: [{ name: "레시피 스토어 거래 수수료 모델 기획 및 크리에이터 보상 정책서 작성", target: 6 }]
+      },
+      { 
+        label: "[Lv7] B2B ATS 채용 연계 명세 수립", start: 3, end: 3, status: "planned",
+        details: [{ name: "B2B 타겟 단기 인턴십 기여도 검증 및 채용 연계 ATS 시스템 시나리오 기획", target: 7 }]
+      },
+      { 
+        label: "[Lv8] 1인 AX 자동 자율 예외 대응 기획", start: 4, end: 4, status: "planned",
+        details: [{ name: "1인 기업 AX(Agentic Transformation) 완전 자동화 운영 예외 대응 정책서 수립", target: 8 }]
       }
     ]
   },
@@ -53,10 +73,20 @@ const GANTT_DATA = [
     color: "#6a3080",
     tasks: [
       { 
-        label: "[Lv2] 실시간 매칭 상태 대시보드 UI/UX", start: 2, end: 3, status: "planned",
-        details: [
-          { name: "실시간 매칭 진행 상태 대시보드(진행중/매칭완료/대기) 상세 컴포넌트 목업 및 모달 UI 디자인", target: 3 }
-        ]
+        label: "[Lv5] 다국어 톤앤매너 디자인 배포", start: 1, end: 1, status: "planned",
+        details: [{ name: "다국어(영어/일어) 대응 반응형 대시보드 UI/UX 디자인 가이드 배포", target: 5 }]
+      },
+      { 
+        label: "[Lv6] 레시피 마켓 UI 목업 설계", start: 2, end: 2, status: "planned",
+        details: [{ name: "레시피 상세 화면 목업 및 크리에이터 전용 판매 현황 대시보드 UI 설계", target: 6 }]
+      },
+      { 
+        label: "[Lv7] ATS 대시보드 UI/UX 설계", start: 3, end: 3, status: "planned",
+        details: [{ name: "기업 고객용 통합 관리 대시보드 UI/UX 설계 (Stitch 프로젝트 연동)", target: 7 }]
+      },
+      { 
+        label: "[Lv8] 실시간 KPI/비용 UI 최종 디자인", start: 4, end: 4, status: "planned",
+        details: [{ name: "실시간 매출/비용/토큰 비용 KPI 시각화 대시보드 최종 디자인", target: 8 }]
       }
     ]
   },
@@ -66,10 +96,20 @@ const GANTT_DATA = [
     color: "#1d6840",
     tasks: [
       { 
-        label: "[Lv2] 실시간 매칭 백엔드/프론트 연동", start: 2, end: 4, status: "planned",
-        details: [
-          { name: "실시간 매칭 상태 변경에 따른 백엔드 DB 연동 및 프론트엔드 모달 라우팅 연동 테스트", target: 4 }
-        ]
+        label: "[Lv5] 다국어화 & Stripe API 연동", start: 1, end: 1, status: "planned",
+        details: [{ name: "i18n 라이브러리 연동 및 글로벌 결제 모듈(Stripe API) 프론트/백엔드 연동", target: 5 }]
+      },
+      { 
+        label: "[Lv6] 레시피 C2C API & 마일리지 DB", start: 2, end: 2, status: "planned",
+        details: [{ name: "레시피 등록/조회/평가 API 구축 및 분산 포인트/마일리지 DB 스키마 설계", target: 6 }]
+      },
+      { 
+        label: "[Lv7] ATS 기업용 과제 진척 모니터링 API", start: 3, end: 3, status: "planned",
+        details: [{ name: "기업 전용 ATS 대시보드 프론트엔드 연동 및 인턴십 진척 관리 API 빌드", target: 7 }]
+      },
+      { 
+        label: "[Lv8] 오토스케일링 & Gemini Cache 릴리즈", start: 4, end: 4, status: "planned",
+        details: [{ name: "OCI 클라우드 자동 확장 및 Gemini Context Cache 적용 비용 최적화 인프라 최종 릴리즈", target: 8 }]
       }
     ]
   },
@@ -79,10 +119,20 @@ const GANTT_DATA = [
     color: "#8a2800",
     tasks: [
       { 
-        label: "[Lv2] UTM 바이럴 성과 측정 및 카드뉴스 배포", start: 3, end: 4, status: "planned",
-        details: [
-          { name: "취업 커뮤니티(블라인드 등) 대상 바이럴 성과 측정을 위한 UTM 파라미터 태깅 및 성과 리포트 포맷 기획", target: 4 }
-        ]
+        label: "[Lv5] 글로벌 커뮤니티 콜드 메일 배포", start: 1, end: 1, status: "planned",
+        details: [{ name: "Reddit/LinkedIn 해외 테크 커뮤니티 타겟 글로벌 콜드 메일 및 마케팅 자동화", target: 5 }]
+      },
+      { 
+        label: "[Lv6] 크리에이터 섭외 프로모션 자동화", start: 2, end: 2, status: "planned",
+        details: [{ name: "우수 AI 레시피 크리에이터 섭외 프로모션 기획 및 SNS 카드뉴스 자동 배포", target: 6 }]
+      },
+      { 
+        label: "[Lv7] 테크 기업 B2B Cold LinkedIn 아웃리치", start: 3, end: 3, status: "planned",
+        details: [{ name: "LinkedIn 활용 테크 스타트업 의사결정권자 대상 Cold 아웃리치 마케팅 자동화", target: 7 }]
+      },
+      { 
+        label: "[Lv8] CAC/LTV 자동 연산 ROI 분석", start: 4, end: 4, status: "planned",
+        details: [{ name: "광고 유입 단가(CAC) 대비 고객 가치(LTV) 자동 ROI 연산 통계 파이프라인 완성", target: 8 }]
       }
     ]
   },
@@ -92,10 +142,20 @@ const GANTT_DATA = [
     color: "#2a3880",
     tasks: [
       { 
-        label: "[Lv2] 가입 이탈 및 챗봇 FAQ 에스컬레이션", start: 2, end: 3, status: "planned",
-        details: [
-          { name: "초기 챗봇 문의(FAQ) 대응 실패 시 이탈 방지 에스컬레이션 알림(슬랙/이메일 브리지) 시나리오 구현", target: 3 }
-        ]
+        label: "[Lv5] 영문 FAQ & 챗봇 다국어 프롬프트", start: 1, end: 1, status: "planned",
+        details: [{ name: "다국어 CS 대응을 위한 AI 챗봇 영문 프롬프트 탑재 및 글로벌 FAQ 채널 개설", target: 5 }]
+      },
+      { 
+        label: "[Lv6] C2C 분쟁 CS 시나리오 적용", start: 2, end: 2, status: "planned",
+        details: [{ name: "C2C 레시피 하자 환불 규정 및 분쟁 해결 CS 에스컬레이션 대응 매뉴얼", target: 6 }]
+      },
+      { 
+        label: "[Lv7] B2B 슬랙 CS 채널 자동 조율", start: 3, end: 3, status: "planned",
+        details: [{ name: "B2B 고객 전용 온보딩 매뉴얼 및 기업 전담 CS 슬랙 채널 연동", target: 7 }]
+      },
+      { 
+        label: "[Lv8] 24/7 CS 자율 대응 가동", start: 4, end: 4, status: "planned",
+        details: [{ name: "24/7 CS 자율 대응 챗봇 모니터링 및 CS 이탈율 5% 미만 방어 매뉴얼 CS 시스템 동기화", target: 8 }]
       }
     ]
   },
@@ -105,10 +165,20 @@ const GANTT_DATA = [
     color: "#5c3a21",
     tasks: [
       { 
-        label: "[Lv2] 경쟁사 BM 변화 및 구인 예산 범위 조사", start: 1, end: 2, status: "planned",
-        details: [
-          { name: "경쟁사(원티드 긱스 등)의 단기 매칭 BM 변화율 및 구인 스타트업의 최근 단기 프로젝트 예산 범위 트렌드 조사", target: 2 }
-        ]
+        label: "[Lv5] 글로벌 아웃소싱 단가 트렌드 분석", start: 1, end: 1, status: "planned",
+        details: [{ name: "글로벌 프리랜서 아웃소싱 단가 트렌드 조사 보고서 작성", target: 5 }]
+      },
+      { 
+        label: "[Lv6] 글로벌 프롬프트 마켓 동향 조사", start: 2, end: 2, status: "planned",
+        details: [{ name: "글로벌 프롬프트 마켓 수수료 및 거래액 분석 보고서 작성", target: 6 }]
+      },
+      { 
+        label: "[Lv7] HR SaaS 경쟁사 비교 분석", start: 3, end: 3, status: "planned",
+        details: [{ name: "HR 테크 경쟁사 채용 관리 도구 기능 비교 및 스타트업 채용 단가 비교 보고서", target: 7 }]
+      },
+      { 
+        label: "[Lv8] 오픈 첫 주 트래픽 분석 리포팅", start: 4, end: 4, status: "planned",
+        details: [{ name: "정식 오픈 첫 주 트래픽 분석 및 최종 마켓 경쟁 차별성 리포트 배포", target: 8 }]
       }
     ]
   },
@@ -118,10 +188,20 @@ const GANTT_DATA = [
     color: "#4a4a4a",
     tasks: [
       { 
-        label: "[Lv2] 매칭/결제 라우팅 보안 및 코드 감사", start: 3, end: 4, status: "planned",
-        details: [
-          { name: "Bitz가 작성할 매칭/결제 라우팅 코드 구조의 SQL 인젝션 및 보안 취약점 사전 모의 해킹 분석 보고서 작성", target: 4 }
-        ]
+        label: "[Lv5] 다국어 GDPR 개인정보 규정 감사", start: 1, end: 1, status: "planned",
+        details: [{ name: "외환 결제 규정(GDPR 등) 준수 여부 및 해외 서비스 약관 최종 법률 감사", target: 5 }]
+      },
+      { 
+        label: "[Lv6] C2C 이중 지불 금융 보안 감사", start: 2, end: 2, status: "planned",
+        details: [{ name: "가상 포인트 발급 금융 규제 취약점 및 이중 지불 방지 코드 감사", target: 6 }]
+      },
+      { 
+        label: "[Lv7] ATS 개인정보 유출 모의 감사", start: 3, end: 3, status: "planned",
+        details: [{ name: "ATS 시스템 내 개인정보 수집 및 구직자 데이터 변조 방지 코드 보안 감사", target: 7 }]
+      },
+      { 
+        label: "[Lv8] 상용 배포 보안성 모의 해킹 감사", start: 4, end: 4, status: "planned",
+        details: [{ name: "실서버 정밀 보안 침투 모의 팩트체크 및 API Key/Credential 노출 최종 감사", target: 8 }]
       }
     ]
   }
@@ -133,8 +213,10 @@ const LONG_TERM_GANTT_DATA = [
     key: "business",
     color: "#d4af37",
     tasks: [
-      { label: "중고 신입 - 스타트업 매칭 모델 확립", start: 1, end: 2 },
-      { label: "블라인드 실무 과제 DB 확보 (100건)", start: 3, end: 4 }
+      { label: "중고 신입 - 스타트업 매칭 모델 확립", start: 1, end: 1.5 },
+      { label: "블라인드 실무 과제 DB 확보 (100건)", start: 1.5, end: 2 },
+      { label: "글로벌 아웃소싱 & C2C 정산 모델", start: 2.5, end: 3.5 },
+      { label: "ATS SaaS & AX 1인 자동화 기획", start: 3.5, end: 4 }
     ]
   },
   {
@@ -142,17 +224,19 @@ const LONG_TERM_GANTT_DATA = [
     key: "product",
     color: "#1d6840",
     tasks: [
-      { label: "MVP 기능 배포 (레시피/DB 동기화)", start: 1, end: 2 },
-      { label: "a-알파 수익화(결제 모듈) 연동 및 오픈", start: 3, end: 4 }
+      { label: "MVP 기능 배포 (레시피/DB 동기화)", start: 1, end: 1.5 },
+      { label: "a-알파 수익화(결제 모듈) 연동", start: 1.5, end: 2 },
+      { label: "글로벌 Stripe & 레시피 마켓 구축", start: 2.5, end: 3.5 },
+      { label: "B2B ATS SaaS & 오토스케일링 릴리즈", start: 3.5, end: 4 }
     ]
   }
 ];
 
-// 오늘 날짜 기준 진도 계산
-const PROJECT_START = new Date("2026-07-21");
-const PROJECT_END   = new Date("2026-07-24");
+// 오늘 날짜 기준 진도 계산 (Lv5 ~ Lv8에 맞춰 갱신)
+const PROJECT_START = new Date("2026-07-24");
+const PROJECT_END   = new Date("2026-07-27");
 const LT_PROJECT_START = new Date("2026-07-15");
-const LT_PROJECT_END   = new Date("2026-08-11");
+const LT_PROJECT_END   = new Date("2026-09-15");
 const TODAY         = new Date();
 
 function calcWeekProgress() {
