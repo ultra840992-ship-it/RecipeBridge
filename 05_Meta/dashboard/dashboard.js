@@ -178,21 +178,83 @@ const GANTT_DATA = [
 
 const LONG_TERM_GANTT_DATA = [
   {
-    agent: "비즈니스 기획",
-    key: "business",
-    color: "#d4af37",
+    agent: "Aegis (이지스)",
+    key: "aegis",
+    color: "#735c00",
     tasks: [
-      { label: "중고 신입 - 스타트업 매칭 모델 확립", start: 1, end: 2 },
-      { label: "블라인드 실무 과제 DB 확보 (100건)", start: 3, end: 4 }
+      { label: "[Week 1-2] 기여인증 서명 체계 & 보안 QA", start: 1, end: 2 },
+      { label: "[Week 3] a-알파 런칭 트래픽 모니터링 & AI 롤백", start: 3, end: 3 },
+      { label: "[Week 4+] 스마트 계약 검증 자동화 & 글로벌 연동", start: 4, end: 4 }
     ]
   },
   {
-    agent: "프로덕트 구축",
-    key: "product",
+    agent: "Nova (노바)",
+    key: "nova",
+    color: "#2a5d80",
+    tasks: [
+      { label: "[Week 1-2] 차등 수수료 & B2B 채용 연계 기획", start: 1, end: 2 },
+      { label: "[Week 3] 베타 테스터 50인 피드백 2차 기획", start: 3, end: 3 },
+      { label: "[Week 4+] B2B 과제 마켓플레이스 확장 설계", start: 4, end: 4 }
+    ]
+  },
+  {
+    agent: "Vivid (비비드)",
+    key: "vivid",
+    color: "#6a3080",
+    tasks: [
+      { label: "[Week 1-2] 대시보드 와이어프레임 & 폰트 경량화", start: 1, end: 2 },
+      { label: "[Week 3] 모바일 반응형 UI 마이크로 인터랙션", start: 3, end: 3 },
+      { label: "[Week 4+] 다크모드/글로벌 i18n 디자인 토큰 배포", start: 4, end: 4 }
+    ]
+  },
+  {
+    agent: "Bitz (비츠)",
+    key: "bitz",
     color: "#1d6840",
     tasks: [
-      { label: "MVP 기능 배포 (레시피/DB 동기화)", start: 1, end: 2 },
-      { label: "a-알파 수익화(결제 모듈) 연동 및 오픈", start: 3, end: 4 }
+      { label: "[Week 1-2] DB 스키마 설계 & 캐시 최적화 배포", start: 1, end: 2 },
+      { label: "[Week 3] API 예외 처리 강화 & Sentry 연동", start: 3, end: 3 },
+      { label: "[Week 4+] 오라클 VPS 오토스케일링 구축", start: 4, end: 4 }
+    ]
+  },
+  {
+    agent: "Echo (에코)",
+    key: "echo",
+    color: "#8a2800",
+    tasks: [
+      { label: "[Week 1-2] UTM 바이럴 추적 & 카드뉴스 크론 연동", start: 1, end: 2 },
+      { label: "[Week 3] 서치콘솔 SEO 퍼널 분석 & 리포팅", start: 3, end: 3 },
+      { label: "[Week 4+] 타깃 마케팅 캠페인 확장 및 SNS 2기", start: 4, end: 4 }
+    ]
+  },
+  {
+    agent: "Carey (케리)",
+    key: "carey",
+    color: "#2a3880",
+    tasks: [
+      { label: "[Week 1-2] 챗봇 시나리오 & 복귀 이메일링 연동", start: 1, end: 2 },
+      { label: "[Week 3] CS 피드백 티켓팅 & 이탈 긴급 우회 동기화", start: 3, end: 3 },
+      { label: "[Week 4+] 24/7 AI 실시간 CS 봇 완전 자동화 탑재", start: 4, end: 4 }
+    ]
+  },
+  {
+    agent: "Insight (인사이트)",
+    key: "insight",
+    color: "#5c3a21",
+    tasks: [
+      { label: "[Week 1-2] 경쟁사 BM 추이 분석 & 차별화 보고", start: 1, end: 2 },
+      { label: "[Week 3] 가입 유저 패턴 분석 & 리텐션 강화 보고", start: 3, end: 3 },
+      { label: "[Week 4+] 글로벌 매칭 시장 경쟁력 비교 리포트", start: 4, end: 4 }
+    ]
+  },
+  {
+    agent: "Verity (베리티)",
+    key: "verity",
+    color: "#4a4a4a",
+    tasks: [
+      { label: "[Week 1-2] 매칭 라우팅 모의 해킹 & 개인정보 감사", start: 1, end: 2 },
+      { label: "[Week 3] 실서버 보안 침투 테스트 (SQLi/XSS)", start: 3, end: 3 },
+      { label: "[Week 4+] 보안 침투 모니터링 2차 파이프라인 탑재", start: 4, end: 4 }
     ]
   }
 ];
@@ -201,7 +263,7 @@ const LONG_TERM_GANTT_DATA = [
 const PROJECT_START = new Date("2026-07-21");
 const PROJECT_END   = new Date("2026-07-24");
 const LT_PROJECT_START = new Date("2026-07-15");
-const LT_PROJECT_END   = new Date("2026-08-11");
+const LT_PROJECT_END   = new Date("2026-08-20");
 const TODAY         = new Date();
 
 function calcWeekProgress() {
@@ -211,7 +273,6 @@ function calcWeekProgress() {
 }
 
 function todayWeekFraction() {
-  // 오늘이 전체 4일 중 몇 %인지
   const startMs = PROJECT_START.getTime();
   const endMs   = PROJECT_END.getTime();
   const todayMs = TODAY.getTime();
@@ -225,6 +286,65 @@ function ltTodayWeekFraction() {
   return Math.max(0, Math.min(1, (todayMs - startMs) / (endMs - startMs)));
 }
 
+function buildDynamicGanttData(actionPlan) {
+  if (!actionPlan || Object.keys(actionPlan).length === 0) return GANTT_DATA;
+
+  const agentConfig = {
+    aegis: { agent: "Aegis (이지스)", color: "#735c00" },
+    nova: { agent: "Nova (노바)", color: "#2a5d80" },
+    vivid: { agent: "Vivid (비비드)", color: "#6a3080" },
+    bitz: { agent: "Bitz (비츠)", color: "#1d6840" },
+    echo: { agent: "Echo (에코)", color: "#8a2800" },
+    carey: { agent: "Carey (케리)", color: "#2a3880" },
+    insight: { agent: "Insight (인사이트)", color: "#5c3a21" },
+    verity: { agent: "Verity (베리티)", color: "#4a4a4a" }
+  };
+
+  const dynamicGantt = [];
+
+  Object.keys(agentConfig).forEach(key => {
+    const cfg = agentConfig[key];
+    const planData = actionPlan[key];
+    const staticRow = GANTT_DATA.find(r => r.key === key);
+    let tasks = [];
+
+    if (planData && planData.tasks && planData.tasks.length > 0) {
+      planData.tasks.forEach(t => {
+        const txt = t.text;
+        // 지나간 과거 [Lv2] 태스크는 대시보드 표출 시 필터링하여 최소화 (미래 계획 위주 시각화)
+        if (txt.includes("[Lv2]")) return;
+
+        let start = 1, end = 2;
+        if (txt.includes("[Lv3]")) { start = 1; end = 2; }
+        else if (txt.includes("[Lv4]")) { start = 3; end = 4; }
+        else if (txt.includes("[Lv5]")) { start = 4; end = 4; }
+        else if (txt.includes("[Advance]")) { start = 1; end = 2; }
+
+        tasks.push({
+          label: txt,
+          start: start,
+          end: end,
+          completed: t.completed,
+          details: [{ name: txt, target: end }]
+        });
+      });
+    }
+
+    if (tasks.length === 0 && staticRow) {
+      tasks = staticRow.tasks.filter(t => !t.label.includes("[Lv2]"));
+    }
+
+    dynamicGantt.push({
+      agent: cfg.agent,
+      key: key,
+      color: cfg.color,
+      tasks: tasks
+    });
+  });
+
+  return dynamicGantt;
+}
+
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 //  간트차트 렌더러
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -233,7 +353,9 @@ function renderGantt(actionPlan) {
   if (!body) return;
   body.innerHTML = "";
 
-  GANTT_DATA.forEach(agentRow => {
+  const ganttList = buildDynamicGanttData(actionPlan);
+
+  ganttList.forEach(agentRow => {
     const planData = actionPlan[agentRow.key] || { total: 0, completed: 0 };
     const pct = planData.total > 0
       ? Math.round((planData.completed / planData.total) * 100)
@@ -268,11 +390,10 @@ function renderGantt(actionPlan) {
       const leftPct  = ((task.start - 1) / 4) * 100;
       const widthPct = ((task.end - task.start + 1) / 4) * 100;
 
-      // 태스크가 완료된 주 이전이면 완료 처리
       const weekFrac = todayWeekFraction();
       const taskMidFrac = ((task.start - 0.5) / 4);
-      const isDone = weekFrac >= taskMidFrac && pct > 0;
-      const isDelayed = weekFrac > (task.end / 4) && !isDone;
+      const isDone = task.completed !== undefined ? task.completed : (weekFrac >= taskMidFrac && pct > 0);
+      const isDelayed = !isDone && (weekFrac > (task.end / 4));
 
       barEl.className = `gantt-bar ${isDone ? "gantt-bar--done" : ""} ${isDelayed ? "gantt-bar--delayed" : ""}`;
       barEl.style.cssText = `
