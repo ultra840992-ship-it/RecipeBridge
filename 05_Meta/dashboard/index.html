@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>RecipeBridge AI Agent OS — Portal Dashboard</title>
   <meta name="description" content="RecipeBridge 가상 AI 기업 오퍼레이팅 포털 대시보드">
-  <link rel="stylesheet" href="dashboard.css?v=20260723_v6">
+  <link rel="stylesheet" href="dashboard.css?v=20260723_v7">
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
@@ -164,12 +164,11 @@
         <div class="gantt-wrapper dashboard-card">
           <div class="gantt-header-row">
             <div class="gantt-agent-col">에이전트</div>
-            <div class="gantt-weeks" style="grid-template-columns: repeat(5, 1fr);">
+            <div class="gantt-weeks">
               <div class="gantt-week" data-week="1">7월 3주차 <span>MVP 샌드박스</span></div>
               <div class="gantt-week" data-week="2">7월 4주차 <span>매칭/인증 테스트</span></div>
               <div class="gantt-week" data-week="3">8월 1주차 <span>a-알파 배포</span></div>
-              <div class="gantt-week" data-week="4">8월 2주차 <span>수익화 연동</span></div>
-              <div class="gantt-week" data-week="5">8월 3주차 <span>글로벌 확장</span></div>
+              <div class="gantt-week" data-week="4">8월 2주차 <span>수익화/글로벌</span></div>
             </div>
           </div>
           <div class="gantt-body" id="ganttLongTermBody">
@@ -194,17 +193,11 @@
         <div class="gantt-wrapper dashboard-card">
           <div class="gantt-header-row">
             <div class="gantt-agent-col">담당자</div>
-            <div class="gantt-weeks" style="grid-template-columns: repeat(10, 1fr);">
-              <div class="gantt-week" data-week="1">D-1 <span>기획</span></div>
-              <div class="gantt-week" data-week="2">D-2 <span>디자인</span></div>
-              <div class="gantt-week" data-week="3">D-3 <span>백엔드</span></div>
-              <div class="gantt-week" data-week="4">D-4 <span>프론트</span></div>
-              <div class="gantt-week" data-week="5">D-5 <span>보안감사</span></div>
-              <div class="gantt-week" data-week="6">D-6 <span>마케팅</span></div>
-              <div class="gantt-week" data-week="7">D-7 <span>CS구현</span></div>
-              <div class="gantt-week" data-week="8">D-8 <span>통합QA</span></div>
-              <div class="gantt-week" data-week="9">D-9 <span>피드백</span></div>
-              <div class="gantt-week" data-week="10">D-10 <span>공식오픈</span></div>
+            <div class="gantt-weeks">
+              <div class="gantt-week" data-week="1">Day 1 <span>기획/디자인</span></div>
+              <div class="gantt-week" data-week="2">Day 2 <span>핵심 개발</span></div>
+              <div class="gantt-week" data-week="3">Day 3 <span>인프라/마케팅</span></div>
+              <div class="gantt-week" data-week="4">Day 4 <span>QA/정식오픈</span></div>
             </div>
           </div>
           <div class="gantt-body" id="ganttBody">
@@ -600,6 +593,6 @@
     </main>
   </div>
 
-  <script src="dashboard.js?v=20260723_v6"></script>
+  <script src="dashboard.js?v=20260723_v7"></script>
 </body>
 </html>

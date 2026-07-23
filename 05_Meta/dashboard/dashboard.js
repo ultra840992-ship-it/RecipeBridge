@@ -539,21 +539,19 @@ function renderLongTermGantt() {
     const timelineEl = document.createElement("div");
     timelineEl.className = "gantt-timeline";
 
-    for (let w = 1; w <= 5; w++) {
+    for (let w = 1; w <= 4; w++) {
       const bg = document.createElement("div");
       bg.className = `gantt-week-bg ${w % 2 === 0 ? "gantt-week-bg--alt" : ""}`;
-      bg.style.width = "20%";
-      bg.style.left = `${(w - 1) * 20}%`;
       timelineEl.appendChild(bg);
     }
 
     row.tasks.forEach((task, idx) => {
       const barEl = document.createElement("div");
-      const leftPct  = ((task.start - 1) / 5) * 100;
-      const widthPct = ((task.end - task.start + 1) / 5) * 100;
+      const leftPct  = ((task.start - 1) / 4) * 100;
+      const widthPct = ((task.end - task.start + 1) / 4) * 100;
 
       const weekFrac = ltTodayWeekFraction();
-      const isDone = weekFrac > (task.end / 5);
+      const isDone = weekFrac > (task.end / 4);
 
       barEl.className = `gantt-bar ${isDone ? "gantt-bar--done" : ""}`;
       barEl.style.cssText = `
