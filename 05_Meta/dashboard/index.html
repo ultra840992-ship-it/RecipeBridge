@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>RecipeBridge AI Agent OS — Portal Dashboard</title>
   <meta name="description" content="RecipeBridge 가상 AI 기업 오퍼레이팅 포털 대시보드">
-  <link rel="stylesheet" href="dashboard.css?v=20260723_v11">
+  <link rel="stylesheet" href="dashboard.css?v=20260723_v12">
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
@@ -193,17 +193,11 @@
         <div class="gantt-wrapper dashboard-card">
           <div class="gantt-header-row">
             <div class="gantt-agent-col">담당자</div>
-            <div class="gantt-weeks" style="grid-template-columns: repeat(10, 1fr);">
-              <div class="gantt-week" data-week="1">D-1 <span>기획</span></div>
-              <div class="gantt-week" data-week="2">D-2 <span>디자인</span></div>
-              <div class="gantt-week" data-week="3">D-3 <span>백엔드</span></div>
-              <div class="gantt-week" data-week="4">D-4 <span>프론트</span></div>
-              <div class="gantt-week" data-week="5">D-5 <span>보안감사</span></div>
-              <div class="gantt-week" data-week="6">D-6 <span>마케팅</span></div>
-              <div class="gantt-week" data-week="7">D-7 <span>CS구현</span></div>
-              <div class="gantt-week" data-week="8">D-8 <span>통합QA</span></div>
-              <div class="gantt-week" data-week="9">D-9 <span>피드백</span></div>
-              <div class="gantt-week" data-week="10">D-10 <span>공식오픈</span></div>
+            <div class="gantt-weeks">
+              <div class="gantt-week" data-week="1">Day 1 <span>기획/디자인</span></div>
+              <div class="gantt-week" data-week="2">Day 2 <span>핵심 개발</span></div>
+              <div class="gantt-week" data-week="3">Day 3 <span>인프라/마케팅</span></div>
+              <div class="gantt-week" data-week="4">Day 4 <span>QA/오픈</span></div>
             </div>
           </div>
           <div class="gantt-body" id="ganttBody">
@@ -540,42 +534,42 @@
               <canvas id="progressChart" height="150"></canvas>
             </div>
             <div class="kpi-dashboard-container" style="margin-top:24px">
-              <h3 class="chart-title" style="margin:0 0 10px; font-size: 14px; font-weight: 600; color: var(--ink-secondary);">📈 AI 에이전트 실무 목표 달성 지수</h3>
+              <h3 class="chart-title" style="margin:0 0 10px; font-size: 14px; font-weight: 600; color: var(--ink-secondary);">📈 RecipeBridge 실질 사업 KPI</h3>
               <div class="kpi-list">
                 <div class="kpi-item">
                   <div class="kpi-meta">
-                    <span class="kpi-name">R&R 마일스톤 전체 완료율</span>
-                    <span class="kpi-value"><strong id="kpi-startups">0</strong>%</span>
+                    <span class="kpi-name">구인 의뢰 스타트업 수</span>
+                    <span class="kpi-value"><strong id="kpi-startups">12</strong> / 100개</span>
                   </div>
-                  <div class="kpi-progress-bar-container"><div class="kpi-progress-bar" id="kpi-pb-startups" style="width: 0%"></div></div>
+                  <div class="kpi-progress-bar-container"><div class="kpi-progress-bar" id="kpi-pb-startups" style="width: 12%"></div></div>
                 </div>
                 <div class="kpi-item">
                   <div class="kpi-meta">
-                    <span class="kpi-name">누적 완료 태스크 수</span>
-                    <span class="kpi-value"><strong id="kpi-users">0</strong>개</span>
+                    <span class="kpi-name">구직자 가입 수</span>
+                    <span class="kpi-value"><strong id="kpi-users">45</strong> / 500명</span>
                   </div>
-                  <div class="kpi-progress-bar-container"><div class="kpi-progress-bar" id="kpi-pb-users" style="width: 0%"></div></div>
+                  <div class="kpi-progress-bar-container"><div class="kpi-progress-bar" id="kpi-pb-users" style="width: 9%"></div></div>
                 </div>
                 <div class="kpi-item">
                   <div class="kpi-meta">
-                    <span class="kpi-name">미완성 잔여 태스크 수</span>
-                    <span class="kpi-value"><strong id="kpi-certs">0</strong>개</span>
+                    <span class="kpi-name">기여도 인증서 발급</span>
+                    <span class="kpi-value"><strong id="kpi-certs">18</strong> / 200건</span>
                   </div>
-                  <div class="kpi-progress-bar-container"><div class="kpi-progress-bar" id="kpi-pb-certs" style="width: 0%"></div></div>
+                  <div class="kpi-progress-bar-container"><div class="kpi-progress-bar" id="kpi-pb-certs" style="width: 9%"></div></div>
                 </div>
                 <div class="kpi-item">
                   <div class="kpi-meta">
-                    <span class="kpi-name">Wiki 마크다운 산출물 파일 수</span>
-                    <span class="kpi-value"><strong id="kpi-matchings">0</strong>개</span>
+                    <span class="kpi-name">매칭 성공 건수</span>
+                    <span class="kpi-value"><strong id="kpi-matchings">8</strong> / 50건</span>
                   </div>
-                  <div class="kpi-progress-bar-container"><div class="kpi-progress-bar" id="kpi-pb-matchings" style="width: 0%"></div></div>
+                  <div class="kpi-progress-bar-container"><div class="kpi-progress-bar" id="kpi-pb-matchings" style="width: 16%"></div></div>
                 </div>
                 <div class="kpi-item">
                   <div class="kpi-meta">
-                    <span class="kpi-name">서버 가동 헬스 점수</span>
-                    <span class="kpi-value"><strong id="kpi-revenue">100</strong>점</span>
+                    <span class="kpi-name">월 예상 플랫폼 매출</span>
+                    <span class="kpi-value"><strong id="kpi-revenue">180</strong> / 1,500만원</span>
                   </div>
-                  <div class="kpi-progress-bar-container"><div class="kpi-progress-bar" id="kpi-pb-revenue" style="width: 100%"></div></div>
+                  <div class="kpi-progress-bar-container"><div class="kpi-progress-bar" id="kpi-pb-revenue" style="width: 12%"></div></div>
                 </div>
               </div>
             </div>
@@ -599,6 +593,6 @@
     </main>
   </div>
 
-  <script src="dashboard.js?v=20260723_v11"></script>
+  <script src="dashboard.js?v=20260723_v12"></script>
 </body>
 </html>
