@@ -63,6 +63,8 @@
 
 - [[02_Wiki/dev-tasks/dashboard_and_agent_sync_20260719|대시보드 UI 및 에이전트 동기화 패치 내역 (2026-07-19)]]
 - [[02_Wiki/dev-tasks/dashboard_longterm_gantt_20260719|대시보드 장기(Lv1) 간트차트 시각화 및 Advance 단계 가동 내역 (2026-07-19)]]
+- [[02_Wiki/dev-tasks/dashboard_static_asset_patch_20260724|대시보드 정적 에셋 404 로딩 오류 및 VPS 복구 패치 (2026-07-24)]]
+
 
 ## Employee Manuals
 

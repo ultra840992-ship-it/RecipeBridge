@@ -81,6 +81,8 @@ YYYY-MM-DD HH:mm | command | summary | linked files
 2026-07-21 20:51 | task | [VIVID] 태스크 완료: [Lv2] 실시간 매칭 진행 상태 대시보드(진행중/매칭완료/대기) 상세 컴포넌트 목업 및 모달 UI 디자인. | 
 2026-07-21 20:51 | task | [NOVA] 태스크 완료: **[Critical]** [Lv2] 결제 모듈 도입에 따른 수수료 차등 모델 및 매칭 탈락 시 구직자 보상 환불 정책(시나리오) 확정. | 
 2026-07-23 22:32 | auto_plan | [SYSTEM] 8인 에이전트 일정 조기 완료에 따른 [Lv4] 마일스톤 자동 수립 및 텔레그램 개별 보고 완료 | [[02_Wiki/projects/recipebridge_action_plan.md]]
+2026-07-24 06:48 | save | [Bitz] 대시보드 정적 에셋 로딩 404 오류(쿼리 스트링 파싱 누락) 패치 및 클라우드 VPS 무한 재시작 복구 완료 | [[02_Wiki/dev-tasks/dashboard_static_asset_patch_20260724.md]], [[05_Meta/scripts/live_server.py]]
+
 2026-07-23 23:52 | task | [VERITY] 태스크 완료: **[Critical]** [Lv4] 실서버 배포 후 정밀 보안 침투 테스트(SQLi/XSS) 및 외부 API key 노출 여부 최종 보안 감사 보고서 배포. | [[02_Wiki/errors/task_rejection_verity.md]]
 2026-07-23 23:52 | task | [INSIGHT] 태스크 완료: **[Critical]** [Lv4] 초기 가입 유저 패턴 분석 및 플랫폼 체류 시간(Retention) 증대를 위한 시장 경쟁사 추가 비교 우위 보고서 작성. | [[02_Wiki/dev-tasks/task_result_20260723_235257_0.md]]
 2026-07-23 23:52 | task | [CAREY] 태스크 완료: **[Critical]** [Lv4] 1:1 고객 피드백 수집 및 고통 지수 분석을 통한 이탈 고객 긴급 우회 대응 매뉴얼 CS 시스템 동기화. | [[02_Wiki/cs-scenarios/churned_customer_emergency_response_manual.md]]
