@@ -27,16 +27,10 @@ const GANTT_DATA = [
     color: "#735c00",
     tasks: [
       { 
-        label: "[Lv2] 스마트계약 아키텍처 해시 검증", start: 1, end: 1, status: "planned",
-        details: [{ name: "결제/매칭 인증서 스마트계약 서명 체계 검증", target: 1 }]
-      },
-      { 
-        label: "[Lv2] 기여인증 서명 최종 보안 정책 수립", start: 1, end: 2, status: "planned",
-        details: [{ name: "구직자 기여인증 보안 해시 체인 및 해킹 방지 정책 확정", target: 2 }]
-      },
-      { 
-        label: "[Lv3] 에이전트 6인 최종 릴리즈 교차 QA", start: 2, end: 3, status: "planned",
-        details: [{ name: "릴리즈 코드/문서 정합성 및 배포 서명 최종 승인", target: 3 }]
+        label: "[Lv2] 스마트 계약 및 해시 서명 체계 검증", start: 1, end: 2, status: "planned",
+        details: [
+          { name: "결제/매칭에 따른 구직자 기여도 인증서 스마트 계약/해시 서명 체계 검증 및 최종 보안 정책 수립", target: 2 }
+        ]
       }
     ]
   },
@@ -46,16 +40,10 @@ const GANTT_DATA = [
     color: "#2a5d80",
     tasks: [
       { 
-        label: "[Lv2] 결제모듈 도입 차등수수료 기획", start: 1, end: 1, status: "planned",
-        details: [{ name: "결제 도입에 따른 구간별 차등 수수료 모델 기획", target: 1 }]
-      },
-      { 
-        label: "[Lv2] 매칭 탈락 구직자 보상 환불 정책", start: 1, end: 2, status: "planned",
-        details: [{ name: "매칭 실패 시 보상 포인트 및 환불 정책 시나리오 확정", target: 2 }]
-      },
-      { 
-        label: "[Lv3] 채용 연계 대행 비즈니스 정책 수립", start: 2, end: 2, status: "planned",
-        details: [{ name: "블라인드 명세서 기반 B2B 채용 연계 프로세스 설계", target: 2 }]
+        label: "[Lv2] 수수료 차등 및 환불 정책 확정", start: 1, end: 2, status: "planned",
+        details: [
+          { name: "결제 모듈 도입에 따른 수수료 차등 모델 및 매칭 탈락 시 구직자 보상 환불 정책(시나리오) 확정", target: 2 }
+        ]
       }
     ]
   },
@@ -65,16 +53,10 @@ const GANTT_DATA = [
     color: "#6a3080",
     tasks: [
       { 
-        label: "[Lv2] 대시보드 컴포넌트 와이어프레임", start: 1, end: 1, status: "planned",
-        details: [{ name: "진행중/완료/대기 매칭 상세 뷰 와이어프레임 설계", target: 1 }]
-      },
-      { 
-        label: "[Lv2] 실시간 매칭 상태 모달 UX 디자인", start: 1, end: 2, status: "planned",
-        details: [{ name: "매칭 진행 상태 모달 UI 가이드라인 배포", target: 2 }]
-      },
-      { 
-        label: "[Lv3] Pretendard 웹폰트 최적화 가이드", start: 2, end: 2, status: "planned",
-        details: [{ name: "프론트 로딩 속도 향상을 위한 폰트 경량화 가이드라인", target: 2 }]
+        label: "[Lv2] 실시간 매칭 상태 대시보드 UI/UX", start: 2, end: 3, status: "planned",
+        details: [
+          { name: "실시간 매칭 진행 상태 대시보드(진행중/매칭완료/대기) 상세 컴포넌트 목업 및 모달 UI 디자인", target: 3 }
+        ]
       }
     ]
   },
@@ -84,16 +66,10 @@ const GANTT_DATA = [
     color: "#1d6840",
     tasks: [
       { 
-        label: "[Lv2] 매칭상태 변경 DB 스키마 설계", start: 1, end: 1, status: "planned",
-        details: [{ name: "실시간 상태 제어용 DB 컬럼 패치 및 연동 설계", target: 1 }]
-      },
-      { 
-        label: "[Lv2] 백엔드 결제 라우팅 연동 테스트", start: 1, end: 2, status: "planned",
-        details: [{ name: "live_server.py 기반 결제/매칭 API 샌드박스 검증", target: 2 }]
-      },
-      { 
-        label: "[Lv3] 코드 스플리팅 및 캐시 최적화 배포", start: 2, end: 3, status: "planned",
-        details: [{ name: "초기 번들 최소화 및 Cache-Control 연동 배포", target: 3 }]
+        label: "[Lv2] 실시간 매칭 백엔드/프론트 연동", start: 2, end: 4, status: "planned",
+        details: [
+          { name: "실시간 매칭 상태 변경에 따른 백엔드 DB 연동 및 프론트엔드 모달 라우팅 연동 테스트", target: 4 }
+        ]
       }
     ]
   },
@@ -103,16 +79,10 @@ const GANTT_DATA = [
     color: "#8a2800",
     tasks: [
       { 
-        label: "[Lv2] 블라인드 채용 UTM 설계", start: 1, end: 2, status: "planned",
-        details: [{ name: "취업 커뮤니티 바이럴 추적용 UTM 태깅 규격 기획", target: 2 }]
-      },
-      { 
-        label: "[Lv3] 스키마 마크업/리치 스니펫 최적화", start: 2, end: 3, status: "planned",
-        details: [{ name: "구글 서치콘솔 검색 결과 노출 고도화 스키마 구현", target: 3 }]
-      },
-      { 
-        label: "[Lv3] 런칭 바이럴 카드뉴스 크론 배포", start: 3, end: 4, status: "planned",
-        details: [{ name: "SNS 자동 업로드 크론 활용 카드뉴스 배포", target: 4 }]
+        label: "[Lv2] UTM 바이럴 성과 측정 및 카드뉴스 배포", start: 3, end: 4, status: "planned",
+        details: [
+          { name: "취업 커뮤니티(블라인드 등) 대상 바이럴 성과 측정을 위한 UTM 파라미터 태깅 및 성과 리포트 포맷 기획", target: 4 }
+        ]
       }
     ]
   },
@@ -122,16 +92,10 @@ const GANTT_DATA = [
     color: "#2a3880",
     tasks: [
       { 
-        label: "[Lv2] 챗봇 에스컬레이션 시나리오", start: 1, end: 2, status: "planned",
-        details: [{ name: "FAQ 미해결 시 슬랙/이메일 브리지 에스컬레이션 구현", target: 2 }]
-      },
-      { 
-        label: "[Lv3] 가입이탈 이메일링(CS-EB-001) 연동", start: 2, end: 3, status: "planned",
-        details: [{ name: "GA4 이탈자 트래킹 기반 자동 복귀 메일링 자동화", target: 3 }]
-      },
-      { 
-        label: "[Lv3] 고객불만 티켓 수집 채널 개설", start: 3, end: 3, status: "planned",
-        details: [{ name: "피드백 수집용 CS 티켓 구조 백로그 적재", target: 3 }]
+        label: "[Lv2] 가입 이탈 및 챗봇 FAQ 에스컬레이션", start: 2, end: 3, status: "planned",
+        details: [
+          { name: "초기 챗봇 문의(FAQ) 대응 실패 시 이탈 방지 에스컬레이션 알림(슬랙/이메일 브리지) 시나리오 구현", target: 3 }
+        ]
       }
     ]
   },
@@ -141,16 +105,10 @@ const GANTT_DATA = [
     color: "#5c3a21",
     tasks: [
       { 
-        label: "[Lv2] 경쟁사 단기 매칭 BM 추이 분석", start: 1, end: 1, status: "planned",
-        details: [{ name: "원티드 긱스 등 유사 플랫폼 BM 변화 비교", target: 1 }]
-      },
-      { 
-        label: "[Lv2] 구인 스타트업 단기 예산 조사", start: 1, end: 2, status: "planned",
-        details: [{ name: "개발/디자인 단기 프로젝트 평균 예산 스펙트럼 분석", target: 2 }]
-      },
-      { 
-        label: "[Lv3] 3단계 비즈니스 차별화 강화 보고", start: 2, end: 3, status: "planned",
-        details: [{ name: "경쟁사 대응 RecipeBridge 경쟁 우위 전략 보고서 작성", target: 3 }]
+        label: "[Lv2] 경쟁사 BM 변화 및 구인 예산 범위 조사", start: 1, end: 2, status: "planned",
+        details: [
+          { name: "경쟁사(원티드 긱스 등)의 단기 매칭 BM 변화율 및 구인 스타트업의 최근 단기 프로젝트 예산 범위 트렌드 조사", target: 2 }
+        ]
       }
     ]
   },
@@ -160,21 +118,14 @@ const GANTT_DATA = [
     color: "#4a4a4a",
     tasks: [
       { 
-        label: "[Lv2] 매칭/결제 라우팅 취약점 사전 해킹", start: 1, end: 2, status: "planned",
-        details: [{ name: "Bitz의 라우팅 스크립트 SQL 인젝션 취약성 공격 시뮬레이션", target: 2 }]
-      },
-      { 
-        label: "[Lv3] 최적화 코드 개인정보 유출 감사", start: 2, end: 3, status: "planned",
-        details: [{ name: "CS-EB-001 메일링 데이터 전송 스펙 보안 감사", target: 3 }]
-      },
-      { 
-        label: "[Lv3] 시스템 할루시네이션 방지 최종 검증", start: 3, end: 4, status: "planned",
-        details: [{ name: "최종 산출물 검증 기준표 작성 및 크리틱 매뉴얼 점검", target: 4 }]
+        label: "[Lv2] 매칭/결제 라우팅 보안 및 코드 감사", start: 3, end: 4, status: "planned",
+        details: [
+          { name: "Bitz가 작성할 매칭/결제 라우팅 코드 구조의 SQL 인젝션 및 보안 취약점 사전 모의 해킹 분석 보고서 작성", target: 4 }
+        ]
       }
     ]
   }
 ];
-
 
 const LONG_TERM_GANTT_DATA = [
   {
