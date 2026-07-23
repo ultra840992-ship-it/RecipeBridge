@@ -37,6 +37,10 @@ const GANTT_DATA = [
       { 
         label: "[Lv3] 에이전트 6인 최종 릴리즈 교차 QA", start: 2, end: 3, status: "planned",
         details: [{ name: "릴리즈 코드/문서 정합성 및 배포 서명 최종 승인", target: 3 }]
+      },
+      {
+        label: "[Lv4] 실시간 트래픽 대응 비즈니스 모니터링 & AI 롤백 배포", start: 4, end: 4, status: "planned",
+        details: [{ name: "정식 런칭 후 트래픽 모니터링 및 AI 오작동 롤백 시스템 배포", target: 4 }]
       }
     ]
   },
@@ -56,6 +60,10 @@ const GANTT_DATA = [
       { 
         label: "[Lv3] 채용 연계 대행 비즈니스 정책 수립", start: 2, end: 2, status: "planned",
         details: [{ name: "블라인드 명세서 기반 B2B 채용 연계 프로세스 설계", target: 2 }]
+      },
+      {
+        label: "[Lv4] 베타 피드백 반영 B2B 채용 과제 확장 기획서 수립", start: 4, end: 4, status: "planned",
+        details: [{ name: "베타 테스터 50인 피드백 데이터 기반 2차 기획 및 B2B 채용 과제 확장", target: 4 }]
       }
     ]
   },
@@ -75,6 +83,10 @@ const GANTT_DATA = [
       { 
         label: "[Lv3] Pretendard 웹폰트 최적화 가이드", start: 2, end: 2, status: "planned",
         details: [{ name: "프론트 로딩 속도 향상을 위한 폰트 경량화 가이드라인", target: 2 }]
+      },
+      {
+        label: "[Lv4] 실사용자 UI 피드백 반영 모바일 반응형 인터랙션 최적화", start: 4, end: 4, status: "planned",
+        details: [{ name: "실사용자 UI 피드백 반영 모바일 반응형 컴포넌트 최적화 배포", target: 4 }]
       }
     ]
   },
@@ -94,6 +106,10 @@ const GANTT_DATA = [
       { 
         label: "[Lv3] 코드 스플리팅 및 캐시 최적화 배포", start: 2, end: 3, status: "planned",
         details: [{ name: "초기 번들 최소화 및 Cache-Control 연동 배포", target: 3 }]
+      },
+      {
+        label: "[Lv4] 결제/매칭 API 예외 처리 강화 & Sentry 연동 실서버 배포", start: 4, end: 4, status: "planned",
+        details: [{ name: "결제/매칭 API 예외 처리 강화 및 실시간 에러 로그 Sentry 연동 배포", target: 4 }]
       }
     ]
   },
@@ -113,6 +129,10 @@ const GANTT_DATA = [
       { 
         label: "[Lv3] 런칭 바이럴 카드뉴스 크론 배포", start: 3, end: 4, status: "planned",
         details: [{ name: "SNS 자동 업로드 크론 활용 카드뉴스 배포", target: 4 }]
+      },
+      {
+        label: "[Lv4] 실 서비스 마케팅 퍼널 분석 & UTM 성과 리포팅", start: 4, end: 4, status: "planned",
+        details: [{ name: "서치콘솔 및 UTM 퍼널 성과 리포팅 자동화", target: 4 }]
       }
     ]
   },
@@ -132,6 +152,10 @@ const GANTT_DATA = [
       { 
         label: "[Lv3] 고객불만 티켓 수집 채널 개설", start: 3, end: 3, status: "planned",
         details: [{ name: "피드백 수집용 CS 티켓 구조 백로그 적재", target: 3 }]
+      },
+      {
+        label: "[Lv4] CS 피드백 티켓팅 & 이탈 긴급 대응 매뉴얼 동기화", start: 4, end: 4, status: "planned",
+        details: [{ name: "1:1 피드백 수집 및 고통 지수 분석을 통한 이탈 대응 CS 동기화", target: 4 }]
       }
     ]
   },
@@ -151,6 +175,10 @@ const GANTT_DATA = [
       { 
         label: "[Lv3] 3단계 비즈니스 차별화 강화 보고", start: 2, end: 3, status: "planned",
         details: [{ name: "경쟁사 대응 RecipeBridge 경쟁 우위 전략 보고서 작성", target: 3 }]
+      },
+      {
+        label: "[Lv4] 가입 유저 패턴 분석 기반 리텐션 증대 차별화 보고서", start: 4, end: 4, status: "planned",
+        details: [{ name: "초기 가입 유저 패턴 분석 및 체류 시간 증대 차별화 보고서 작성", target: 4 }]
       }
     ]
   },
@@ -170,6 +198,10 @@ const GANTT_DATA = [
       { 
         label: "[Lv3] 시스템 할루시네이션 방지 최종 검증", start: 3, end: 4, status: "planned",
         details: [{ name: "최종 산출물 검증 기준표 작성 및 크리틱 매뉴얼 점검", target: 4 }]
+      },
+      {
+        label: "[Lv4] 실서버 배포 후 정밀 보안 침투 테스트(SQLi/XSS) 감사", start: 4, end: 4, status: "planned",
+        details: [{ name: "실서버 배포 취약점 침투 테스트 및 외부 API key 노출 여부 최종 감사", target: 4 }]
       }
     ]
   }
@@ -225,6 +257,60 @@ function ltTodayWeekFraction() {
   return Math.max(0, Math.min(1, (todayMs - startMs) / (endMs - startMs)));
 }
 
+function buildDynamicGanttData(actionPlan) {
+  if (!actionPlan || Object.keys(actionPlan).length === 0) return GANTT_DATA;
+
+  const agentConfig = {
+    aegis: { agent: "Aegis (이지스)", color: "#735c00" },
+    nova: { agent: "Nova (노바)", color: "#2a5d80" },
+    vivid: { agent: "Vivid (비비드)", color: "#6a3080" },
+    bitz: { agent: "Bitz (비츠)", color: "#1d6840" },
+    echo: { agent: "Echo (에코)", color: "#8a2800" },
+    carey: { agent: "Carey (케리)", color: "#2a3880" },
+    insight: { agent: "Insight (인사이트)", color: "#5c3a21" },
+    verity: { agent: "Verity (베리티)", color: "#4a4a4a" }
+  };
+
+  const dynamicGantt = [];
+
+  Object.keys(agentConfig).forEach(key => {
+    const cfg = agentConfig[key];
+    const planData = actionPlan[key];
+    const staticRow = GANTT_DATA.find(r => r.key === key);
+    let tasks = [];
+
+    if (planData && planData.tasks && planData.tasks.length > 0) {
+      planData.tasks.forEach(t => {
+        const txt = t.text;
+        let start = 1, end = 2;
+        if (txt.includes("[Lv2]")) { start = 1; end = 2; }
+        else if (txt.includes("[Lv3]")) { start = 2; end = 3; }
+        else if (txt.includes("[Lv4]")) { start = 4; end = 4; }
+        else if (txt.includes("[Advance]")) { start = 1; end = 2; }
+
+        tasks.push({
+          label: txt,
+          start: start,
+          end: end,
+          completed: t.completed,
+          details: [{ name: txt, target: end }]
+        });
+      });
+    } else if (staticRow) {
+      tasks = staticRow.tasks;
+    }
+
+    dynamicGantt.push({
+      agent: cfg.agent,
+      key: key,
+      color: cfg.color,
+      tasks: tasks
+    });
+  });
+
+  return dynamicGantt;
+}
+
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 //  간트차트 렌더러
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -233,7 +319,9 @@ function renderGantt(actionPlan) {
   if (!body) return;
   body.innerHTML = "";
 
-  GANTT_DATA.forEach(agentRow => {
+  const ganttList = buildDynamicGanttData(actionPlan);
+
+  ganttList.forEach(agentRow => {
     const planData = actionPlan[agentRow.key] || { total: 0, completed: 0 };
     const pct = planData.total > 0
       ? Math.round((planData.completed / planData.total) * 100)
@@ -268,11 +356,10 @@ function renderGantt(actionPlan) {
       const leftPct  = ((task.start - 1) / 4) * 100;
       const widthPct = ((task.end - task.start + 1) / 4) * 100;
 
-      // 태스크가 완료된 주 이전이면 완료 처리
       const weekFrac = todayWeekFraction();
       const taskMidFrac = ((task.start - 0.5) / 4);
-      const isDone = weekFrac >= taskMidFrac && pct > 0;
-      const isDelayed = weekFrac > (task.end / 4) && !isDone;
+      const isDone = task.completed !== undefined ? task.completed : (weekFrac >= taskMidFrac && pct > 0);
+      const isDelayed = !isDone && (weekFrac > (task.end / 4));
 
       barEl.className = `gantt-bar ${isDone ? "gantt-bar--done" : ""} ${isDelayed ? "gantt-bar--delayed" : ""}`;
       barEl.style.cssText = `
