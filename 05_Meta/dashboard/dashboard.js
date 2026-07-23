@@ -37,10 +37,6 @@ const GANTT_DATA = [
       { 
         label: "[Lv3] 에이전트 6인 최종 릴리즈 교차 QA", start: 2, end: 3, status: "planned",
         details: [{ name: "릴리즈 코드/문서 정합성 및 배포 서명 최종 승인", target: 3 }]
-      },
-      {
-        label: "[Lv4] 실시간 트래픽 대응 비즈니스 모니터링 & AI 롤백 배포", start: 4, end: 4, status: "planned",
-        details: [{ name: "정식 런칭 후 트래픽 모니터링 및 AI 오작동 롤백 시스템 배포", target: 4 }]
       }
     ]
   },
@@ -60,10 +56,6 @@ const GANTT_DATA = [
       { 
         label: "[Lv3] 채용 연계 대행 비즈니스 정책 수립", start: 2, end: 2, status: "planned",
         details: [{ name: "블라인드 명세서 기반 B2B 채용 연계 프로세스 설계", target: 2 }]
-      },
-      {
-        label: "[Lv4] 베타 피드백 반영 B2B 채용 과제 확장 기획서 수립", start: 4, end: 4, status: "planned",
-        details: [{ name: "베타 테스터 50인 피드백 데이터 기반 2차 기획 및 B2B 채용 과제 확장", target: 4 }]
       }
     ]
   },
@@ -83,10 +75,6 @@ const GANTT_DATA = [
       { 
         label: "[Lv3] Pretendard 웹폰트 최적화 가이드", start: 2, end: 2, status: "planned",
         details: [{ name: "프론트 로딩 속도 향상을 위한 폰트 경량화 가이드라인", target: 2 }]
-      },
-      {
-        label: "[Lv4] 실사용자 UI 피드백 반영 모바일 반응형 인터랙션 최적화", start: 4, end: 4, status: "planned",
-        details: [{ name: "실사용자 UI 피드백 반영 모바일 반응형 컴포넌트 최적화 배포", target: 4 }]
       }
     ]
   },
@@ -106,10 +94,6 @@ const GANTT_DATA = [
       { 
         label: "[Lv3] 코드 스플리팅 및 캐시 최적화 배포", start: 2, end: 3, status: "planned",
         details: [{ name: "초기 번들 최소화 및 Cache-Control 연동 배포", target: 3 }]
-      },
-      {
-        label: "[Lv4] 결제/매칭 API 예외 처리 강화 & Sentry 연동 실서버 배포", start: 4, end: 4, status: "planned",
-        details: [{ name: "결제/매칭 API 예외 처리 강화 및 실시간 에러 로그 Sentry 연동 배포", target: 4 }]
       }
     ]
   },
@@ -129,10 +113,6 @@ const GANTT_DATA = [
       { 
         label: "[Lv3] 런칭 바이럴 카드뉴스 크론 배포", start: 3, end: 4, status: "planned",
         details: [{ name: "SNS 자동 업로드 크론 활용 카드뉴스 배포", target: 4 }]
-      },
-      {
-        label: "[Lv4] 실 서비스 마케팅 퍼널 분석 & UTM 성과 리포팅", start: 4, end: 4, status: "planned",
-        details: [{ name: "서치콘솔 및 UTM 퍼널 성과 리포팅 자동화", target: 4 }]
       }
     ]
   },
@@ -152,10 +132,6 @@ const GANTT_DATA = [
       { 
         label: "[Lv3] 고객불만 티켓 수집 채널 개설", start: 3, end: 3, status: "planned",
         details: [{ name: "피드백 수집용 CS 티켓 구조 백로그 적재", target: 3 }]
-      },
-      {
-        label: "[Lv4] CS 피드백 티켓팅 & 이탈 긴급 대응 매뉴얼 동기화", start: 4, end: 4, status: "planned",
-        details: [{ name: "1:1 피드백 수집 및 고통 지수 분석을 통한 이탈 대응 CS 동기화", target: 4 }]
       }
     ]
   },
@@ -175,10 +151,6 @@ const GANTT_DATA = [
       { 
         label: "[Lv3] 3단계 비즈니스 차별화 강화 보고", start: 2, end: 3, status: "planned",
         details: [{ name: "경쟁사 대응 RecipeBridge 경쟁 우위 전략 보고서 작성", target: 3 }]
-      },
-      {
-        label: "[Lv4] 가입 유저 패턴 분석 기반 리텐션 증대 차별화 보고서", start: 4, end: 4, status: "planned",
-        details: [{ name: "초기 가입 유저 패턴 분석 및 체류 시간 증대 차별화 보고서 작성", target: 4 }]
       }
     ]
   },
@@ -198,10 +170,6 @@ const GANTT_DATA = [
       { 
         label: "[Lv3] 시스템 할루시네이션 방지 최종 검증", start: 3, end: 4, status: "planned",
         details: [{ name: "최종 산출물 검증 기준표 작성 및 크리틱 매뉴얼 점검", target: 4 }]
-      },
-      {
-        label: "[Lv4] 실서버 배포 후 정밀 보안 침투 테스트(SQLi/XSS) 감사", start: 4, end: 4, status: "planned",
-        details: [{ name: "실서버 배포 취약점 침투 테스트 및 외부 API key 노출 여부 최종 감사", target: 4 }]
       }
     ]
   }
@@ -210,83 +178,21 @@ const GANTT_DATA = [
 
 const LONG_TERM_GANTT_DATA = [
   {
-    agent: "Aegis (이지스)",
-    key: "aegis",
-    color: "#735c00",
+    agent: "비즈니스 기획",
+    key: "business",
+    color: "#d4af37",
     tasks: [
-      { label: "[Week 1-2] 기여인증 서명 체계 & 보안 QA", start: 1, end: 2 },
-      { label: "[Week 3] a-알파 런칭 트래픽 모니터링 & AI 롤백", start: 3, end: 3 },
-      { label: "[Week 4-5] 스마트 계약 검증 자동화 & 글로벌 인증 연동", start: 4, end: 5 }
+      { label: "중고 신입 - 스타트업 매칭 모델 확립", start: 1, end: 2 },
+      { label: "블라인드 실무 과제 DB 확보 (100건)", start: 3, end: 4 }
     ]
   },
   {
-    agent: "Nova (노바)",
-    key: "nova",
-    color: "#2a5d80",
-    tasks: [
-      { label: "[Week 1-2] 차등 수수료 & B2B 채용 연계 명세 기획", start: 1, end: 2 },
-      { label: "[Week 3] 베타 테스터 50인 피드백 2차 기획", start: 3, end: 4 },
-      { label: "[Week 5] B2B 기업 과제 마켓플레이스 확장 설계", start: 5, end: 5 }
-    ]
-  },
-  {
-    agent: "Vivid (비비드)",
-    key: "vivid",
-    color: "#6a3080",
-    tasks: [
-      { label: "[Week 1-2] 대시보드 와이어프레임 & 폰트 경량화", start: 1, end: 2 },
-      { label: "[Week 3-4] 모바일 반응형 UI 마이크로 인터랙션", start: 3, end: 4 },
-      { label: "[Week 5] 다크모드/글로벌 i18n 디자인 토큰 배포", start: 5, end: 5 }
-    ]
-  },
-  {
-    agent: "Bitz (비츠)",
-    key: "bitz",
+    agent: "프로덕트 구축",
+    key: "product",
     color: "#1d6840",
     tasks: [
-      { label: "[Week 1-2] DB 스키마 설계 & 캐시 최적화 배포", start: 1, end: 2 },
-      { label: "[Week 3-4] API 예외 처리 강화 & Sentry 연동", start: 3, end: 4 },
-      { label: "[Week 5] 오라클 VPS 오토스케일링 & 멀티 클라우드 구축", start: 5, end: 5 }
-    ]
-  },
-  {
-    agent: "Echo (에코)",
-    key: "echo",
-    color: "#8a2800",
-    tasks: [
-      { label: "[Week 1-2] UTM 바이럴 추적 & 카드뉴스 크론 연동", start: 1, end: 2 },
-      { label: "[Week 3-4] 서치콘솔 SEO 퍼널 분석 & 리포팅 자동화", start: 3, end: 4 },
-      { label: "[Week 5] 타깃 마케팅 캠페인 확장 및 SNS 자동화 2기", start: 5, end: 5 }
-    ]
-  },
-  {
-    agent: "Carey (케리)",
-    key: "carey",
-    color: "#2a3880",
-    tasks: [
-      { label: "[Week 1-2] 챗봇 시나리오 & 복귀 이메일링 연동", start: 1, end: 2 },
-      { label: "[Week 3-4] CS 피드백 티켓팅 & 이탈 긴급 우회 동기화", start: 3, end: 4 },
-      { label: "[Week 5] 24/7 AI 실시간 CS 봇 완전 자동화 탑재", start: 5, end: 5 }
-    ]
-  },
-  {
-    agent: "Insight (인사이트)",
-    key: "insight",
-    color: "#5c3a21",
-    tasks: [
-      { label: "[Week 1-2] 경쟁사 BM 추이 분석 & 차별화 보고", start: 1, end: 2 },
-      { label: "[Week 3-4] 가입 유저 패턴 분석 & 리텐션 강화 보고", start: 3, end: 4 },
-      { label: "[Week 5] 글로벌 매칭 시장 경쟁력 비교 리포트", start: 5, end: 5 }
-    ]
-  },
-  {
-    agent: "Verity (베리티)",
-    key: "verity",
-    color: "#4a4a4a",
-    tasks: [
-      { label: "[Week 1-2] 매칭 라우팅 모의 해킹 & 개인정보 감사", start: 1, end: 2 },
-      { label: "[Week 3-4] 실서버 보안 침투 테스트 (SQLi/XSS)", start: 3, end: 4 },
-      { label: "[Week 5] 보안 침투 모니터링 2차 파이프라인 탑재", start: 5, end: 5 }
+      { label: "MVP 기능 배포 (레시피/DB 동기화)", start: 1, end: 2 },
+      { label: "a-알파 수익화(결제 모듈) 연동 및 오픈", start: 3, end: 4 }
     ]
   }
 ];
@@ -295,7 +201,7 @@ const LONG_TERM_GANTT_DATA = [
 const PROJECT_START = new Date("2026-07-21");
 const PROJECT_END   = new Date("2026-07-24");
 const LT_PROJECT_START = new Date("2026-07-15");
-const LT_PROJECT_END   = new Date("2026-08-20");
+const LT_PROJECT_END   = new Date("2026-08-11");
 const TODAY         = new Date();
 
 function calcWeekProgress() {
@@ -319,66 +225,6 @@ function ltTodayWeekFraction() {
   return Math.max(0, Math.min(1, (todayMs - startMs) / (endMs - startMs)));
 }
 
-function buildDynamicGanttData(actionPlan) {
-  if (!actionPlan || Object.keys(actionPlan).length === 0) return GANTT_DATA;
-
-  const agentConfig = {
-    aegis: { agent: "Aegis (이지스)", color: "#735c00" },
-    nova: { agent: "Nova (노바)", color: "#2a5d80" },
-    vivid: { agent: "Vivid (비비드)", color: "#6a3080" },
-    bitz: { agent: "Bitz (비츠)", color: "#1d6840" },
-    echo: { agent: "Echo (에코)", color: "#8a2800" },
-    carey: { agent: "Carey (케리)", color: "#2a3880" },
-    insight: { agent: "Insight (인사이트)", color: "#5c3a21" },
-    verity: { agent: "Verity (베리티)", color: "#4a4a4a" }
-  };
-
-  const dynamicGantt = [];
-
-  Object.keys(agentConfig).forEach(key => {
-    const cfg = agentConfig[key];
-    const planData = actionPlan[key];
-    const staticRow = GANTT_DATA.find(r => r.key === key);
-    let tasks = [];
-
-    if (planData && planData.tasks && planData.tasks.length > 0) {
-      planData.tasks.forEach(t => {
-        const txt = t.text;
-        // 지나간 과거 [Lv2] 태스크는 대시보드 렌더링에서 필터링하여 최소화 (미래 계획 위주 시각화)
-        if (txt.includes("[Lv2]")) return;
-
-        let start = 1, end = 2;
-        if (txt.includes("[Lv3]")) { start = 1; end = 2; }
-        else if (txt.includes("[Lv4]")) { start = 3; end = 4; }
-        else if (txt.includes("[Lv5]")) { start = 4; end = 4; }
-        else if (txt.includes("[Advance]")) { start = 1; end = 2; }
-
-        tasks.push({
-          label: txt,
-          start: start,
-          end: end,
-          completed: t.completed,
-          details: [{ name: txt, target: end }]
-        });
-      });
-    }
-    
-    // 만약 미래 태스크가 없거나 staticRow 활용 시
-    if (tasks.length === 0 && staticRow) {
-      tasks = staticRow.tasks.filter(t => !t.label.includes("[Lv2]"));
-    }
-
-    dynamicGantt.push({
-      agent: cfg.agent,
-      key: key,
-      color: cfg.color,
-      tasks: tasks
-    });
-  });
-
-  return dynamicGantt;
-}
-
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 //  간트차트 렌더러
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -387,9 +233,7 @@ function renderGantt(actionPlan) {
   if (!body) return;
   body.innerHTML = "";
 
-  const ganttList = buildDynamicGanttData(actionPlan);
-
-  ganttList.forEach(agentRow => {
+  GANTT_DATA.forEach(agentRow => {
     const planData = actionPlan[agentRow.key] || { total: 0, completed: 0 };
     const pct = planData.total > 0
       ? Math.round((planData.completed / planData.total) * 100)
@@ -424,10 +268,11 @@ function renderGantt(actionPlan) {
       const leftPct  = ((task.start - 1) / 4) * 100;
       const widthPct = ((task.end - task.start + 1) / 4) * 100;
 
+      // 태스크가 완료된 주 이전이면 완료 처리
       const weekFrac = todayWeekFraction();
       const taskMidFrac = ((task.start - 0.5) / 4);
-      const isDone = task.completed !== undefined ? task.completed : (weekFrac >= taskMidFrac && pct > 0);
-      const isDelayed = !isDone && (weekFrac > (task.end / 4));
+      const isDone = weekFrac >= taskMidFrac && pct > 0;
+      const isDelayed = weekFrac > (task.end / 4) && !isDone;
 
       barEl.className = `gantt-bar ${isDone ? "gantt-bar--done" : ""} ${isDelayed ? "gantt-bar--delayed" : ""}`;
       barEl.style.cssText = `
