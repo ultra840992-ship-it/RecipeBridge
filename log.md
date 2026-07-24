@@ -131,3 +131,19 @@ YYYY-MM-DD HH:mm | command | summary | linked files
 2026-07-24 11:54 | task | [NOVA] 태스크 완료: **[Critical]** [Lv6] 레시피 스토어 거래 수수료 모델 기획 및 크리에이터 보상 정책서 작성. | [[02_Wiki/projects/recipe_store_fee_creator_policy.md]]
 2026-07-24 11:54 | task | [CAREY] 태스크 완료: [Lv6] C2C 레시피 하자 환불 규정 및 분쟁 해결 CS 에스컬레이션 대응 매뉴얼. | [[02_Wiki/projects/260725_c2c_recipe_cs_escalation_manual.md]]
 2026-07-24 11:54 | task | [VIVID] 태스크 완료: [Lv6] 레시피 상세 화면 목업 및 크리에이터 전용 판매 현황 대시보드 UI 설계. | 
+2026-07-24 14:54 | task | [INSIGHT] 태스크 완료: [Lv7] HR 테크 경쟁사 채용 관리 도구 기능 비교 및 스타트업 채용 단가 비교 보고서. | [[02_Wiki/dev-tasks/task_result_20260724_145457_0.md]]
+2026-07-24 14:54 | task | [AEGIS] 태스크 완료: **[Critical]** [Lv7] ATS 연동 데이터 무결성 검수 및 구직자 기여도 인증 최종 승인. | [[02_Wiki/reports/260724_ats_data_integrity_approval_status.md]]
+2026-07-24 14:54 | task | [CAREY] 태스크 완료: [Lv7] B2B 고객 전용 온보딩 매뉴얼 및 기업 전담 CS 슬랙 채널 연동. | [[02_Wiki/projects/260725_b2b_onboarding_manual_slack_integration_lv7.md]]
+2026-07-24 14:54 | task | [VIVID] 태스크 완료: [Lv7] 기업 고객용 통합 관리 대시보드 UI/UX 설계 (Stitch 프로젝트 연동). | [[02_Wiki/design/stitch_enterprise_dashboard_ui_ux_lv7.md]]
+2026-07-24 14:54 | task | [BITZ] 태스크 완료: [Lv7] 기업 전용 ATS 대시보드 프론트엔드 연동 및 인턴십 진척 관리 API 빌드. | 
+2026-07-24 14:54 | task | [NOVA] 태스크 완료: **[Critical]** [Lv7] B2B 타겟 단기 인턴십 기여도 검증 및 채용 연계 ATS 시스템 시나리오 기획. | [[02_Wiki/projects/b2b_short_term_internship_ats_scenario_lv7.md]]
+2026-07-24 14:54 | task | [VERITY] 태스크 완료: [Lv7] ATS 시스템 내 개인정보 수집 및 구직자 데이터 변조 방지 코드 보안 감사. | [[02_Wiki/errors/260724_ats_personal_data_security_audit_failure.md]]
+2026-07-24 14:54 | task | [ECHO] 태스크 완료: [Lv7] LinkedIn 활용 테크 스타트업 의사결정권자 대상 Cold 아웃리치 마케팅 자동화. | 
+2026-07-24 14:55 | task | [VERITY] 태스크 완료: [Lv7] ATS 시스템 내 개인정보 수집 및 구직자 데이터 변조 방지 코드 보안 감사. | [[02_Wiki/dev-tasks/task_result_20260724_145502_0.md]]
+2026-07-24 14:55 | task | [AEGIS] 태스크 완료: **[Critical]** [Lv7] ATS 연동 데이터 무결성 검수 및 구직자 기여도 인증 최종 승인. | [[02_Wiki/reports/260725_ats_data_integrity_approval_status.md]]
+2026-07-24 14:55 | task | [INSIGHT] 태스크 완료: [Lv7] HR 테크 경쟁사 채용 관리 도구 기능 비교 및 스타트업 채용 단가 비교 보고서. | 
+2026-07-24 14:55 | task | [BITZ] 태스크 완료: [Lv7] 기업 전용 ATS 대시보드 프론트엔드 연동 및 인턴십 진척 관리 API 빌드. | [[02_Wiki/dev-tasks/Lv7_ats_internship_api_build.md]]
+2026-07-24 14:55 | task | [CAREY] 태스크 완료: [Lv7] B2B 고객 전용 온보딩 매뉴얼 및 기업 전담 CS 슬랙 채널 연동. | [[02_Wiki/projects/260725_b2b_onboarding_cs_slack_manual_lv7.md]]
+2026-07-24 14:55 | task | [ECHO] 태스크 완료: [Lv7] LinkedIn 활용 테크 스타트업 의사결정권자 대상 Cold 아웃리치 마케팅 자동화. | [[02_Wiki/sources/260725_linkedin_cold_outreach_automation_plan_lv7.md]]
+2026-07-24 14:55 | task | [VIVID] 태스크 완료: [Lv7] 기업 고객용 통합 관리 대시보드 UI/UX 설계 (Stitch 프로젝트 연동). | [[02_Wiki/design/enterprise_dashboard_ui_ux_lv7.md]]
+2026-07-24 14:55 | task | [NOVA] 태스크 완료: **[Critical]** [Lv7] B2B 타겟 단기 인턴십 기여도 검증 및 채용 연계 ATS 시스템 시나리오 기획. | 
