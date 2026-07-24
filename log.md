@@ -115,3 +115,19 @@ YYYY-MM-DD HH:mm | command | summary | linked files
 2026-07-24 08:53 | task | [CAREY] 태스크 완료: [Lv5] 다국어 CS 대응을 위한 AI 챗봇 영문 프롬프트 탑재 및 글로벌 FAQ 채널 개설. | [[02_Wiki/decisions/260724_global_cs_chatbot_faq_content_lv5.md]]
 2026-07-24 08:53 | task | [NOVA] 태스크 완료: **[Critical]** [Lv5] 글로벌 아웃소싱 표준 과제 양식 기획 및 영문 블라인드 채용 프로세스 정립. | 
 2026-07-24 08:53 | task | [VIVID] 태스크 완료: [Lv5] 다국어(영어/일어) 대응 반응형 대시보드 UI/UX 디자인 가이드 배포. | [[02_Wiki/design/multilingual_responsive_dashboard_ui_guide.md]]
+2026-07-24 11:54 | task | [INSIGHT] 태스크 완료: [Lv6] 글로벌 프롬프트 마켓 수수료 및 거래액 분석 보고서 작성. | [[02_Wiki/sources/260725_global_prompt_market_analysis.md]]
+2026-07-24 11:54 | task | [AEGIS] 태스크 완료: **[Critical]** [Lv6] C2C 거래 규제 대응 및 정산금 분쟁 중재 마스터 정책 승인. | [[02_Wiki/policies/260724_c2c_master_policy_approval.md]]
+2026-07-24 11:54 | task | [ECHO] 태스크 완료: [Lv6] 우수 AI 레시피 크리에이터 섭외 프로모션 기획 및 SNS 카드뉴스 자동 배포. | [[02_Wiki/sources/260724_ai_recipe_creator_promotion_plan.md]]
+2026-07-24 11:54 | task | [NOVA] 태스크 완료: **[Critical]** [Lv6] 레시피 스토어 거래 수수료 모델 기획 및 크리에이터 보상 정책서 작성. | [[02_Wiki/projects/recipe_store_bm_creator_policy.md]]
+2026-07-24 11:54 | task | [CAREY] 태스크 완료: [Lv6] C2C 레시피 하자 환불 규정 및 분쟁 해결 CS 에스컬레이션 대응 매뉴얼. | [[02_Wiki/decisions/260725_c2c_recipe_refund_dispute_cs_escalation_manual_lv6.md]]
+2026-07-24 11:54 | task | [VIVID] 태스크 완료: [Lv6] 레시피 상세 화면 목업 및 크리에이터 전용 판매 현황 대시보드 UI 설계. | [[02_Wiki/design/recipe_creator_ui_design_lv6.md]]
+2026-07-24 11:54 | task | [BITZ] 태스크 완료: [Lv6] 레시피 등록/조회/평가 API 구축 및 분산 포인트/마일리지 DB 스키마 설계. | [[02_Wiki/dev-tasks/Lv6_recipe_api_point_mileage_schema.md]]
+2026-07-24 11:54 | task | [VERITY] 태스크 완료: [Lv6] 가상 포인트 발급 금융 규제 취약점 및 이중 지불 방지 코드 감사. | 
+2026-07-24 11:54 | task | [VERITY] 태스크 완료: [Lv6] 가상 포인트 발급 금융 규제 취약점 및 이중 지불 방지 코드 감사. | [[02_Wiki/errors/260724_virtual_points_audit_failure.md]]
+2026-07-24 11:54 | task | [AEGIS] 태스크 완료: **[Critical]** [Lv6] C2C 거래 규제 대응 및 정산금 분쟁 중재 마스터 정책 승인. | [[02_Wiki/reports/c2c_policy_approval_status_20260724.md]]
+2026-07-24 11:54 | task | [INSIGHT] 태스크 완료: [Lv6] 글로벌 프롬프트 마켓 수수료 및 거래액 분석 보고서 작성. | [[02_Wiki/sources/260724_global_prompt_market_analysis.md]]
+2026-07-24 11:54 | task | [BITZ] 태스크 완료: [Lv6] 레시피 등록/조회/평가 API 구축 및 분산 포인트/마일리지 DB 스키마 설계. | [[02_Wiki/dev-tasks/Lv6_recipe_api_point_mileage_schema_design.md]]
+2026-07-24 11:54 | task | [ECHO] 태스크 완료: [Lv6] 우수 AI 레시피 크리에이터 섭외 프로모션 기획 및 SNS 카드뉴스 자동 배포. | [[02_Wiki/sources/260724_ai_recipe_creator_promo_plan.md]]
+2026-07-24 11:54 | task | [NOVA] 태스크 완료: **[Critical]** [Lv6] 레시피 스토어 거래 수수료 모델 기획 및 크리에이터 보상 정책서 작성. | [[02_Wiki/projects/recipe_store_fee_creator_policy.md]]
+2026-07-24 11:54 | task | [CAREY] 태스크 완료: [Lv6] C2C 레시피 하자 환불 규정 및 분쟁 해결 CS 에스컬레이션 대응 매뉴얼. | [[02_Wiki/projects/260725_c2c_recipe_cs_escalation_manual.md]]
+2026-07-24 11:54 | task | [VIVID] 태스크 완료: [Lv6] 레시피 상세 화면 목업 및 크리에이터 전용 판매 현황 대시보드 UI 설계. | 
