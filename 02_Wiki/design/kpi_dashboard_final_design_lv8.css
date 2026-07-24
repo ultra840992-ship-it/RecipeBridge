@@ -1,0 +1,145 @@
+// filepath: 02_Wiki/design/kpi_dashboard_final_design_lv8.css
+/*
+ * [Lv8] 실시간 매출/비용/토큰 비용 KPI 시각화 대시보드 최종 디자인
+ * 프리미엄 라이트(샌드 크림/샴페인 골드) 테마 및 서리 낀 유리(Frosted Glassmorphism) 효과 극대화
+ */
+
+:root {
+    --color-sand-cream-bg: #F5F5DC; /* 소프트 뉴트럴 샌드 베이지 배경 */
+    --color-sand-cream-card-alpha: rgba(250, 250, 240, 0.6); /* 카드 배경 (투명도 적용) */
+    --color-champagne-gold-light: #E6BE8A; /* 샴페인 골드 (하이라이트) */
+    --color-champagne-gold-dark: #D4AF37; /* 샴페인 골드 (포인트) */
+    --color-text-dark: #333333; /* 기본 텍스트 색상 */
+    --color-text-light: #666666; /* 보조 텍스트 색상 */
+    --blur-strength: 15px; /* 서리 낀 유리 효과 강도 */
+    --border-radius-lg: 16px; /* 큰 라운드 코너 */
+    --shadow-light: 0 4px 12px rgba(0, 0, 0, 0.08); /* 은은한 그림자 */
+    --shadow-glass: 0 8px 32px 0 rgba(0, 0, 0, 0.1); /* 글래스모피즘 그림자 */
+}
+
+body {
+    font-family: 'Pretendard Variable', Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, 'Helvetica Neue', 'Segoe UI', 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', sans-serif;
+    background-color: var(--color-sand-cream-bg);
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start; /* 대시보드가 상단에 위치하도록 조정 */
+    min-height: 100vh;
+    overflow: auto; /* 내용이 넘칠 경우 스크롤 가능하도록 */
+    color: var(--color-text-dark);
+}
+
+.kpi-dashboard-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* 반응형 그리드 */
+    gap: 24px;
+    padding: 40px;
+    max-width: 1400px; /* 대시보드 최대 너비 */
+    width: 100%;
+}
+
+.kpi-card {
+    background: var(--color-sand-cream-card-alpha);
+    border-radius: var(--border-radius-lg);
+    border: 1px solid rgba(255, 255, 255, 0.18); /* 미세한 화이트 보더 */
+    box-shadow: var(--shadow-glass);
+    backdrop-filter: blur(var(--blur-strength)); /* 서리 낀 유리 효과 */
+    -webkit-backdrop-filter: blur(var(--blur-strength)); /* Safari 지원 */
+    padding: 28px 32px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    transition: transform 0.3s ease, box-shadow 0.3s ease; /* 호버 효과 */
+}
+
+.kpi-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 48px 0 rgba(0, 0, 0, 0.15); /* 호버 시 그림자 강화 */
+}
+
+.kpi-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.kpi-card-title {
+    font-size: 1.25rem; /* 20px */
+    font-weight: 600;
+    color: var(--color-text-dark);
+    letter-spacing: -0.02em;
+}
+
+.kpi-card-icon {
+    color: var(--color-champagne-gold-light);
+    font-size: 1.8rem; /* 아이콘 크기 */
+}
+
+.kpi-card-value {
+    font-size: 2.8rem; /* 45px */
+    font-weight: 700;
+    color: var(--color-champagne-gold-dark); /* 샴페인 골드 포인트 */
+    letter-spacing: -0.04em;
+    margin-bottom: 10px;
+}
+
+.kpi-card-unit {
+    font-size: 1rem; /* 16px */
+    color: var(--color-text-light);
+    margin-left: 8px;
+}
+
+.kpi-card-trend {
+    display: flex;
+    align-items: center;
+    font-size: 0.95rem; /* 15px */
+    color: var(--color-text-light);
+}
+
+.kpi-card-trend.positive {
+    color: #4CAF50; /* 긍정적인 트렌드 (녹색) */
+}
+
+.kpi-card-trend.negative {
+    color: #F44336; /* 부정적인 트렌드 (빨간색) */
+}
+
+.kpi-card-trend-icon {
+    margin-right: 6px;
+    font-size: 1.1rem;
+}
+
+.kpi-card-description {
+    font-size: 0.85rem; /* 14px */
+    color: var(--color-text-light);
+    margin-top: 15px;
+    line-height: 1.5;
+}
+
+/* 예시: 차트 영역을 위한 스타일 */
+.kpi-card-chart {
+    min-height: 120px; /* 차트가 들어갈 공간 */
+    background-color: rgba(255, 255, 255, 0.2);
+    border-radius: 8px;
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: var(--color-text-light);
+    font-style: italic;
+    font-size: 0.9rem;
+}
+
+/* 반응형 디자인 */
+@media (max-width: 768px) {
+    .kpi-dashboard-container {
+        grid-template-columns: 1fr; /* 모바일에서는 한 줄에 하나씩 */
+        padding: 20px;
+    }
+
+    .kpi-card-value {
+        font-size: 2.2rem; /* 모바일에서 값 크기 조정 */
+    }
+}
