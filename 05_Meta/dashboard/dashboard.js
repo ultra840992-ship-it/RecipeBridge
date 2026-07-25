@@ -800,14 +800,6 @@ function syncAgentsWithRealLogs(logs) {
   });
 }
 
-    // Return to desk after 8s
-    setTimeout(() => {
-      placeToken(agent, agent, 0);
-      setBubble(agent, agentBubbles[agent], false);
-    }, 8000);
-  });
-}
-
 // Move all agents to meeting table (called when group chat is active)
 function gatherForMeeting() {
   AGENTS.forEach((agent, i) => {
