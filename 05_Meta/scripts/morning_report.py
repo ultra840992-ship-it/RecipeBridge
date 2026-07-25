@@ -119,21 +119,41 @@ def send_telegram(text):
         print("[오류] 텔레그램 설정 없음")
         return False
     url = f"https://api.telegram.org/bot{TELEGRAM_TOKEN}/sendMessage"
-    # 4096자 제한 분할 전송
-    chunks = [text[i:i+3900] for i in range(0, len(text), 3900)]
-    for chunk in chunks:
+    
+    # 텔레그램 4096자 제한을 고려해 안전하게 3500자 단위 분할
+    chunks = [text[i:i+3500] for i in range(0, len(text), 3500)]
+    all_success = True
+    
+    for idx, chunk in enumerate(chunks):
+        # 1차 시도: Markdown 파싱 전송
         payload = {"chat_id": TELEGRAM_CHAT_ID, "text": chunk, "parse_mode": "Markdown"}
         data = json.dumps(payload).encode("utf-8")
         req = urllib.request.Request(url, data=data, headers={"Content-Type": "application/json"})
+        
         try:
-            with urllib.request.urlopen(req, timeout=15) as res:
+            with urllib.request.urlopen(req, timeout=20) as res:
                 r = json.loads(res.read().decode("utf-8"))
                 if not r.get("ok"):
-                    print(f"[TG 오류] {r}")
+                    raise Exception(f"Telegram API response not OK: {r}")
         except Exception as e:
-            print(f"[TG 전송 실패] {e}")
-            return False
-    return True
+            print(f"[TG 1차 전송 실패 (Markdown 파싱 오류 가능성)]: {e}")
+            # 2차 시도 (Fallback): parse_mode 없이 안전한 일반 텍스트로 전송 (메시지 끊김 완전 방지)
+            try:
+                payload_fallback = {"chat_id": TELEGRAM_CHAT_ID, "text": chunk}
+                data_fb = json.dumps(payload_fallback).encode("utf-8")
+                req_fb = urllib.request.Request(url, data=data_fb, headers={"Content-Type": "application/json"})
+                with urllib.request.urlopen(req_fb, timeout=20) as res_fb:
+                    r_fb = json.loads(res_fb.read().decode("utf-8"))
+                    if r_fb.get("ok"):
+                        print(f"[TG 2차 전송 성공 (Plain Text Fallback)]: Chunk {idx+1}/{len(chunks)}")
+                    else:
+                        print(f"[TG 2차 전송 실패]: {r_fb}")
+                        all_success = False
+            except Exception as e_fb:
+                print(f"[TG Fallback 최종 실패]: {e_fb}")
+                all_success = False
+                
+    return all_success
 
 # ── 메인 실행 ──────────────────────────────────────────
 def main():

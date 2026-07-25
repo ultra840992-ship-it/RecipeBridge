@@ -11,10 +11,14 @@
             "id": "26dbb9bbb2f86c34",
             "type": "leaf",
             "state": {
-              "type": "graph",
-              "state": {},
-              "icon": "lucide-git-fork",
-              "title": "그래프 뷰"
+              "type": "markdown",
+              "state": {
+                "file": "log.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "log"
             }
           }
         ]
@@ -49,7 +53,7 @@
             "state": {
               "type": "search",
               "state": {
-                "query": "sources",
+                "query": "기획",
                 "matchingCase": false,
                 "explainSearch": false,
                 "collapseAll": false,
@@ -70,7 +74,8 @@
               "title": "북마크"
             }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "horizontal",
@@ -187,39 +192,39 @@
       "obsidian-git:Open Git source control": false
     }
   },
-  "active": "34fc806931957902",
+  "active": "26dbb9bbb2f86c34",
   "lastOpenFiles": [
+    "index.md",
+    "01_Raw/episode_2_token_optimization.md",
+    "01_Raw/episode_1_item_discovery.md",
+    "01_Raw/episode_3_multi_agent_setup.md",
+    "02_Wiki/decisions/alpha_chatbot_manual.md",
+    "05_Meta/manuals/bitz_manual.md",
+    "05_Meta/agents/bitz/agent.md",
+    "05_Meta/agents/aegis/agent.md",
     "AGENTS.md",
+    "05_Meta/agents/echo/agent.md",
+    "05_Meta/agents/nova/agent.md",
+    "05_Meta/agents/verity/agent.md",
+    "05_Meta/agents/vivid/agent.md",
+    "05_Meta/manuals/aegis_manual.md",
+    "02_Wiki/decisions/a-alpha_chatbot_and_churn_manual.md",
     "05_Meta/scripts/cron_scheduler.md",
     "CLAUDE.md",
     "02_Wiki/sources/viral_marketing_templates_a-alpha.md",
     "_templates/worker-brief.md",
     "_templates/log.md",
     "04_Prompts/ingest.md",
-    "index.md",
     "_templates/context.md",
     "_shared/design-basis.md",
-    "05_Meta/agents/echo/agent.md",
     "02_Wiki/sources/무제.base",
     "02_Wiki/sources/viral_marketing_messages_a_alpha_launch.md",
     "_shared/orchestrator-rules.md",
     "02_Wiki/dev-tasks/task_result_20260721_205116_1.md",
-    "02_Wiki/dev-tasks/task_result_20260721_205116_0.md",
-    "02_Wiki/dev-tasks/task_result_20260721_205114_3.md",
-    "02_Wiki/dev-tasks/task_result_20260721_205114_2.md",
-    "02_Wiki/dev-tasks/task_result_20260721_205114_1.md",
-    "02_Wiki/dev-tasks/task_result_20260721_205114_0.md",
-    "02_Wiki/dev-tasks/smart_contract_security_verification_plan.md",
-    "02_Wiki/dev-tasks/lv2_realtime_matching_status_test.md",
-    "02_Wiki/dev-tasks/chatbot_escalation_scenario.md",
-    "02_Wiki/design/realtime_matching_dashboard_ui.md",
-    "02_Wiki/cs-scenarios/chatbot_escalation_scenario.md",
     "02_Wiki/cs-scenarios",
     "backup_tmp/cron_scheduler.py",
     "backup_tmp/live_server.py",
     "backup_tmp",
-    "02_Wiki/dev-tasks/Lv2_realtime_matching_status_test.md",
-    "02_Wiki/GA4_Event_Tracking_Design.md",
     "src/App.jsx",
     "src",
     "fix_git_2.py",
