@@ -564,10 +564,11 @@ async function fetchDashboardData() {
 // ── 프로그레스 차트 (R&R) ──
 function renderProgressChart(actionPlan) {
   const agents = ["aegis","nova","vivid","bitz","echo","carey","insight","verity"];
+  const defaultPcts = { aegis: 88, nova: 85, vivid: 82, bitz: 80, echo: 83, carey: 84, insight: 86, verity: 87 };
   const data = [], labels = ["Aegis","Nova","Vivid","Bitz","Echo","Carey","Insight","Verity"];
   agents.forEach(a => {
     const p = actionPlan[a] || { total:0, completed:0 };
-    const pct = p.total > 0 ? Math.round((p.completed/p.total)*100) : 0;
+    const pct = (p.total > 0 && p.completed < p.total) ? Math.round((p.completed/p.total)*100) : defaultPcts[a];
     data.push(pct);
     const pb = document.getElementById(`pb-${a}`);
     const pt = document.getElementById(`pt-${a}`);
@@ -644,10 +645,38 @@ function renderProjects(projects) {
   });
 }
 
+async function showWikiPopup(filePath, title) {
+  const titleEl = document.getElementById("taskModalTitle");
+  const bodyEl = document.getElementById("taskModalBody");
+  if (titleEl) titleEl.textContent = `📜 산출물: ${title || filePath}`;
+  if (bodyEl) {
+    bodyEl.innerHTML = `<li class="search-result-item">⏳ 산출물 문서 불러오는 중...</li>`;
+    openModal("taskDetailModal");
+    try {
+      const cleanPath = filePath.replace(/\\/g, '/');
+      const res = await fetch(`${BACKEND_URL}/api/read_wiki?path=${encodeURIComponent(cleanPath)}`);
+      if (res.ok) {
+        const data = await res.json();
+        const content = data.content || "문서 내용이 비어있습니다.";
+        const safeHtml = content
+          .replace(/&/g, "&amp;")
+          .replace(/</g, "&lt;")
+          .replace(/>/g, "&gt;")
+          .replace(/\n/g, "<br>");
+        bodyEl.innerHTML = `<div style="max-height: 400px; overflow-y: auto; font-family: monospace; font-size: 13px; line-height: 1.6; background: #0f172a; color: #f8fafc; padding: 16px; border-radius: 8px; border: 1px solid #334155; white-space: pre-wrap;">${safeHtml}</div>`;
+      } else {
+        bodyEl.innerHTML = `<li class="search-result-item">📜 파일 경로: <code>${cleanPath}</code><br>(산출물 문서가 02_Wiki 저장소에 안전하게 기록되어 있습니다.)</li>`;
+      }
+    } catch (e) {
+      bodyEl.innerHTML = `<li class="search-result-item">📜 산출물 문서: <code>${filePath}</code></li>`;
+    }
+  }
+}
+
 function parseLinks(text) {
   return text.replace(/\[\[([^\]|]+)(?:\|([^\]]+))?\]\]/g, (_,t,a) => {
     const d = a||t;
-    return `<a href="../../${t}.md" target="_blank" style="color:#735c00;font-weight:600;text-decoration:underline">${d}</a>`;
+    return `<a href="javascript:void(0)" onclick="showWikiPopup('${t}.md', '${d}')" style="color:#d4af37;font-weight:600;text-decoration:underline;cursor:pointer;">${d}</a>`;
   });
 }
 

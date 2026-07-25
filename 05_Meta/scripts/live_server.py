@@ -367,7 +367,33 @@ class LiveChatRequestHandler(BaseHTTPRequestHandler):
             self.send_header("Content-Type", "application/json")
             self.send_header("Access-Control-Allow-Origin", "*")
             self.end_headers()
-            self.wfile.write(json.dumps({"results": results}).encode("utf-8"))
+        elif clean_path.startswith("/api/read_wiki"):
+            query_components = urllib.parse.parse_qs(urllib.parse.urlparse(self.path).query)
+            file_path_param = query_components.get("path", [""])[0]
+            base_dir = os.path.join(os.path.dirname(__file__), "..", "..")
+            
+            # 경로 정형화
+            if file_path_param.startswith("02_Wiki/"):
+                target_fp = os.path.join(base_dir, file_path_param)
+            else:
+                target_fp = os.path.join(base_dir, "02_Wiki", file_path_param.lstrip("/"))
+                
+            target_fp = os.path.abspath(target_fp)
+            content = ""
+            if os.path.exists(target_fp) and os.path.isfile(target_fp):
+                try:
+                    with open(target_fp, "r", encoding="utf-8", errors="replace") as f:
+                        content = f.read()
+                except Exception as e:
+                    content = f"파일 읽기 오류: {e}"
+            else:
+                content = f"요청한 위키 산출물 문서 파일이 존재하지 않습니다: {file_path_param}"
+
+            self.send_response(200)
+            self.send_header("Content-Type", "application/json; charset=utf-8")
+            self.send_header("Access-Control-Allow-Origin", "*")
+            self.end_headers()
+            self.wfile.write(json.dumps({"content": content}, ensure_ascii=False).encode("utf-8"))
         else:
             # 정적 파일 서빙 (대시보드 UI)
             base_dir = os.path.join(os.path.dirname(__file__), "..", "..")
