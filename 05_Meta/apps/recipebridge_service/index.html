@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RecipeBridge — 상업용 블라인드 경력 인증 및 과제 매칭 서비스</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Outfit:wght@500;700&display=swap">
+  <style>
+    :root {
+      --bg-dark: #0f172a;
+      --card-bg: #1e293b;
+      --accent-gold: #d4af37;
+      --accent-green: #10b981;
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+      --border-color: #334155;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Inter', -apple-system, sans-serif; }
+    body { background: var(--bg-dark); color: var(--text-main); line-height: 1.6; }
+    header { background: rgba(15, 23, 42, 0.9); backdrop-filter: blur(10px); border-bottom: 1px solid var(--border-color); padding: 16px 32px; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 100; }
+    .logo { font-family: 'Outfit', sans-serif; font-size: 22px; font-weight: 700; color: var(--accent-gold); display: flex; align-items: center; gap: 10px; }
+    .nav-links { display: flex; gap: 24px; }
+    .nav-links a { color: var(--text-muted); text-decoration: none; font-size: 14px; font-weight: 600; transition: color 0.2s; }
+    .nav-links a:hover { color: var(--accent-gold); }
+    .hero-banner { padding: 80px 32px; text-align: center; max-width: 900px; margin: 0 auto; }
+    .hero-banner h1 { font-family: 'Outfit', sans-serif; font-size: 42px; margin-bottom: 20px; line-height: 1.2; background: linear-gradient(135deg, #fff 0%, var(--accent-gold) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+    .hero-banner p { font-size: 18px; color: var(--text-muted); margin-bottom: 36px; }
+    .cta-btn { background: linear-gradient(135deg, var(--accent-gold) 0%, #b8860b 100%); color: #000; padding: 14px 32px; border-radius: 8px; font-weight: 700; text-decoration: none; display: inline-block; box-shadow: 0 4px 16px rgba(212, 175, 55, 0.3); transition: transform 0.2s; }
+    .cta-btn:hover { transform: translateY(-2px); }
+    .features-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; padding: 40px 32px; max-width: 1200px; margin: 0 auto; }
+    .feature-card { background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 12px; padding: 28px; transition: border-color 0.2s; }
+    .feature-card:hover { border-color: var(--accent-gold); }
+    .feature-card h3 { font-family: 'Outfit', sans-serif; font-size: 20px; color: var(--accent-gold); margin-bottom: 12px; }
+    .feature-card p { font-size: 14px; color: var(--text-muted); }
+    footer { text-align: center; padding: 32px; border-top: 1px solid var(--border-color); color: var(--text-muted); font-size: 13px; margin-top: 60px; }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="logo">🍳 RecipeBridge Commercial App</div>
+    <nav class="nav-links">
+      <a href="#services">서비스 소개</a>
+      <a href="#matching">블라인드 매칭</a>
+      <a href="#certificate">경력 인증서</a>
+      <a href="http://158.180.69.24:8000/">🛡️ 내부 모니터링 포털</a>
+    </nav>
+  </header>
+
+  <section class="hero-banner">
+    <h1>실무 과제 중심의 블라인드 채용 &<br>스마트 경력 인증 매칭 플랫폼</h1>
+    <p>경력증명서 대신 검증된 오픈소스 레시피 코드로 당신의 진짜 실력을 증명하세요. 8인 AI 오퍼레이팅 엔진이 실무 과제 검수부터 스타트업 매칭까지 100% 블라인드로 연결합니다.</p>
+    <a href="#matching" class="cta-btn">🚀 단기 실무 과제 참가하기</a>
+  </section>
+
+  <section class="features-grid" id="services">
+    <div class="feature-card">
+      <h3>📜 100% 블라인드 실무 검증</h3>
+      <p>학벌, 나이, 성별을 완전 차단하고 오직 샌드박스에서 제출한 실무 코드와 레시피로만 평가합니다.</p>
+    </div>
+    <div class="feature-card">
+      <h3>💼 스타트업 1:1 자동 매칭</h3>
+      <p>구직자의 실무 검증 점수에 맞춰 검증된 협력 스타트업 단기 마이크로 프로젝트와 매칭됩니다.</p>
+    </div>
+    <div class="feature-card">
+      <h3>🔒 스마트 계약 경력 도장</h3>
+      <p>수행된 과제 결과는 위변조 불가능한 블록체인 스마트 계약 해시로 영구 저장 및 인증됩니다.</p>
+    </div>
+  </section>
+
+  <footer>
+    © 2026 RecipeBridge Inc. All rights reserved. | Powered by 8-Agent Autonomous AI Engine
+  </footer>
+</body>
+</html>

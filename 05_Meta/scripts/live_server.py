@@ -374,6 +374,10 @@ class LiveChatRequestHandler(BaseHTTPRequestHandler):
             
             if clean_path == "/" or clean_path == "/index.html":
                 filepath = os.path.join(base_dir, "05_Meta", "dashboard", "index.html")
+            elif clean_path == "/app" or clean_path == "/app/" or clean_path == "/app/index.html":
+                filepath = os.path.join(base_dir, "05_Meta", "apps", "recipebridge_service", "index.html")
+            elif clean_path.startswith("/app/"):
+                filepath = os.path.join(base_dir, "05_Meta", "apps", "recipebridge_service", clean_path[5:])
             else:
                 # 기본적으로 05_Meta/dashboard 에서 찾음
                 filepath = os.path.join(base_dir, "05_Meta", "dashboard", clean_path.lstrip("/"))

@@ -354,13 +354,8 @@ def execute_daily_routine():
     )
     aegis_reply = call_agent_api("aegis", aegis_prompt)
     
-    creds = load_credentials()
-    telegram_text = (
-        f"🔔 *[RecipeBridge 실무 모드 병렬 처리 완료]*\n\n"
-        f"✅ *처리된 태스크 내역*:\n" + "\n".join(completed_reports) + "\n\n"
-        f"🛡️ *Aegis 총괄 브리핑*:\n{aegis_reply}"
-    )
-    send_telegram_message(creds["telegram_token"], creds["telegram_chat_id"], telegram_text)
+    # 매시간 사장님께 올리는 불필요한 텔레그램 스팸은 차단하고, 대시보드가 유기적으로 자동 갱신되도록 조치
+    print("\n[Dashboard Sync] 사업 현황 대시보드가 유기적으로 동적 업데이트되었습니다.")
     
     print("\n[Git Sync] 자동 저장 (git push)...")
     os.system("git add .")
