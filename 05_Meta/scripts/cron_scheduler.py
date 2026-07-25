@@ -373,7 +373,7 @@ def main():
     
     try:
         while True:
-            time.sleep(10800)
+            time.sleep(3600)  # 사장님 지시에 따라 1시간 주기로 자발적 업무 및 사업 현황 대시보드 갱신
             execute_daily_routine()
     except KeyboardInterrupt:
         print("\n[Scheduler Stopped] 자발적 스케줄러가 종료되었습니다.")
