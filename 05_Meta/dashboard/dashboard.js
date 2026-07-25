@@ -738,41 +738,67 @@ function setBubble(agent, text, show) {
   bubble.className = 'agent-token__bubble' + (show ? ' visible' : '');
 }
 
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+//  🏢 REAL EVENT-DRIVEN METAVERSE OFFICE — Fact-Based Agent Communication
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
 function initMetaverseOffice() {
-  // Initial placement
+  // 초기 에이전트 지정석 배치
   AGENTS.forEach((agent, i) => {
     placeToken(agent, agent, i);
-    setTimeout(() => setBubble(agent, agentBubbles[agent], true), 400 + i * 150);
+    setBubble(agent, `[대기] ${agent.toUpperCase()} 연구실 가동 중`, true);
   });
-
-  // Start wandering loop
-  setInterval(wanderAgents, 12000);
-  wanderAgents(); // first wander after 12s, but kick off once for freshness
 }
 
-function wanderAgents() {
-  AGENTS.forEach(agent => {
-    const roll = Math.random();
-    let targetRoom = agent; // default: own desk
+// 팩트 연동 엔진: 실시간 활동 피드/로그에 찍힌 실제 에이전트 소통/협업 이벤트에 기반하여 캐릭터 이동 및 말풍선 연동
+function syncAgentsWithRealLogs(logs) {
+  if (!logs || !logs.length) return;
 
-    if (roll < 0.20) {
-      // 20%: go to lounge
-      targetRoom = 'lounge';
-      setBubble(agent, '☕ 커피 타러 이동 중...', true);
-    } else if (roll < 0.25) {
-      // 5%: peek at neighbour's room
-      const others = AGENTS.filter(a => a !== agent);
-      targetRoom = others[Math.floor(Math.random() * others.length)];
-      setBubble(agent, '🤝 동료 방문 중...', true);
-    } else {
-      // 75%: stay or micro-wander at desk
-      const wIdx = Math.floor(Math.random() * WANDER_OFFSETS.length);
-      placeToken(agent, agent, wIdx);
-      setBubble(agent, agentBubbles[agent], Math.random() > 0.5);
-      return;
+  const agentRoleTitles = {
+    aegis: '🛡️ [Master] 전체 마일스톤 및 검수 조율 중',
+    nova: '💡 [기획] 블라인드 채용 과제 및 수수료 BM 기획 중',
+    vivid: '🎨 [디자인] 모바일 UI 컴포넌트 & 와이어프레임 설계 중',
+    bitz: '💻 [개발] 상업용 API 라우팅 및 Sentry 트래킹 빌드 중',
+    echo: '📢 [마케팅] SEO 구조화 데이터 & UTM 성과 분석 중',
+    carey: '🎧 [CS] GA4 이탈율 추적 & 챗봇 에스컬레이션 대응 중',
+    insight: '📈 [R&D] 경쟁사 BM 비교 & 체류시간 증대 리포트 작성 중',
+    verity: '🔍 [감사] SQLi/XSS 모의 침투 및 코드 보안 검증 중'
+  };
+
+  // 최신 로그 3개 분석
+  const recentLogs = logs.slice(0, 3);
+  recentLogs.forEach((log, idx) => {
+    const text = log.summary || '';
+    const type = log.type || '';
+
+    // 로그 텍스트에서 에이전트 파싱
+    let sender = null;
+    AGENTS.forEach(a => {
+      if (text.toLowerCase().includes(a) || text.includes(a.toUpperCase())) {
+        sender = a;
+      }
+    });
+
+    if (sender) {
+      // 1. 소통/협업 이벤트 발생 시: Handoff / Critic 상대방에게 걸어가서 대화 연출
+      if (text.includes("검수") || text.includes("QA") || text.includes("Critic")) {
+        // 감사/검수 소통: Verity나 Aegis가 Bitz/Nova의 방으로 이동
+        const target = sender === 'verity' ? 'bitz' : (sender === 'aegis' ? 'nova' : 'meeting');
+        placeToken(sender, target, idx);
+        setBubble(sender, `💬 ${agentRoleTitles[sender]} (협업 검수 중)`, true);
+      } else if (text.includes("기획") || text.includes("디자인")) {
+        // 기획/디자인 인수인계 Handoff: Nova가 Vivid의 방으로 이동
+        const target = sender === 'nova' ? 'vivid' : 'meeting';
+        placeToken(sender, target, idx);
+        setBubble(sender, `💬 ${agentRoleTitles[sender]} (실무 인수인계 중)`, true);
+      } else {
+        // 일반 실무 집행: 자기 지정석에서 실무 수치와 함께 이동
+        placeToken(sender, sender, idx);
+        setBubble(sender, `${agentRoleTitles[sender]}`, true);
+      }
     }
-
-    placeToken(agent, targetRoom, Math.floor(Math.random() * WANDER_OFFSETS.length));
+  });
+}
 
     // Return to desk after 8s
     setTimeout(() => {
@@ -1079,6 +1105,7 @@ async function fetchDashboardData() {
     renderProgressChart(data.action_plan);
     renderLogsDoughnut(data.log_stats);
     renderActivityFeed(data.logs);
+    syncAgentsWithRealLogs(data.logs);
     renderProjects(data.projects);
     if (data.settings) renderPauseStatus(data.settings);
   } catch {
