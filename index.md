@@ -33,6 +33,7 @@
 - [[02_Wiki/projects/micro_project_recipe_platform|RecipeBridge: AI 레시피 기반 마이크로 프로젝트 및 신입 경력 인증 플랫폼 사업 기획서]]
 - [[02_Wiki/projects/recipebridge_multi_agent_setup|RecipeBridge: 멀티 에이전트 운영 설계도 (AI 5인 부서 구축안)]]
 - [[02_Wiki/projects/recipebridge_action_plan|RecipeBridge: 에이전트별 Action List 및 4주 로드맵 일정 계획서]]
+- [[02_Wiki/projects/2026-07-25_lv4_milestone_and_commercial_app_release|RecipeBridge: [Lv4] 마일스톤 진속, 상업용 실서비스 앱 분리 및 자율 엔진 릴리즈 보고서]]
 
 ## Conversations
 
