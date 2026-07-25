@@ -645,10 +645,10 @@ function renderProjects(projects) {
   });
 }
 
-async function showWikiPopup(filePath, title) {
+window.showWikiPopup = async function(filePath, title) {
   const titleEl = document.getElementById("taskModalTitle");
   const bodyEl = document.getElementById("taskModalBody");
-  if (titleEl) titleEl.textContent = `📜 산출물: ${title || filePath}`;
+  if (titleEl) titleEl.textContent = `📜 산출물 원본: ${title || filePath}`;
   if (bodyEl) {
     bodyEl.innerHTML = `<li class="search-result-item">⏳ 산출물 문서 불러오는 중...</li>`;
     openModal("taskDetailModal");
@@ -663,15 +663,15 @@ async function showWikiPopup(filePath, title) {
           .replace(/</g, "&lt;")
           .replace(/>/g, "&gt;")
           .replace(/\n/g, "<br>");
-        bodyEl.innerHTML = `<div style="max-height: 400px; overflow-y: auto; font-family: monospace; font-size: 13px; line-height: 1.6; background: #0f172a; color: #f8fafc; padding: 16px; border-radius: 8px; border: 1px solid #334155; white-space: pre-wrap;">${safeHtml}</div>`;
+        bodyEl.innerHTML = `<div style="max-height: 450px; overflow-y: auto; font-family: monospace; font-size: 13px; line-height: 1.6; background: #0f172a; color: #f8fafc; padding: 16px; border-radius: 8px; border: 1px solid #334155; white-space: pre-wrap;">${safeHtml}</div>`;
       } else {
-        bodyEl.innerHTML = `<li class="search-result-item">📜 파일 경로: <code>${cleanPath}</code><br>(산출물 문서가 02_Wiki 저장소에 안전하게 기록되어 있습니다.)</li>`;
+        bodyEl.innerHTML = `<li class="search-result-item">📜 파일 경로: <code>${cleanPath}</code><br>(산출물 문서가 02_Wiki 저장소에 기록되어 있습니다.)</li>`;
       }
     } catch (e) {
       bodyEl.innerHTML = `<li class="search-result-item">📜 산출물 문서: <code>${filePath}</code></li>`;
     }
   }
-}
+};
 
 function parseLinks(text) {
   return text.replace(/\[\[([^\]|]+)(?:\|([^\]]+))?\]\]/g, (_,t,a) => {

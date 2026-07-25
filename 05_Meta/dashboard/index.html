@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>RecipeBridge AI Agent OS — Portal Dashboard</title>
   <meta name="description" content="RecipeBridge 가상 AI 기업 오퍼레이팅 포털 대시보드">
-  <link rel="stylesheet" href="dashboard.css?v=20260723_v13">
+  <link rel="stylesheet" href="dashboard.css?v=20260723_v14">
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
@@ -118,6 +118,7 @@
               <div class="hero-actions">
                 <button class="primary-portal-btn" onclick="location.href='chat.html'">💬 AI 협업 회의실 입장</button>
                 <button class="secondary-portal-btn" onclick="window.open('/app/','_blank')">🌐 상업용 실서비스 (App)</button>
+                <button class="secondary-portal-btn" onclick="window.open('/app/#certificate','_blank')" style="background: rgba(16, 185, 129, 0.15); color: #10b981; border-color: #10b981;">🔒 스마트 인증 도장 (Cert)</button>
                 <button class="ghost-portal-btn" onclick="window.open('https://stitch.withgoogle.com/projects/3948981696864625229','_blank')">🎨 Stitch 디자인</button>
               </div>
               <div class="hero-meta">
@@ -125,6 +126,51 @@
                 <span class="meta-tag">📅 Since 2026-07-18</span>
               </div>
             </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 🌟 [NEW] 히어로 섹션 아래 큼직한 핵심 사업 KPI 카드 나열 대시보드 -->
+      <section class="large-kpi-section" style="margin: 24px 0;">
+        <div class="section-header">
+          <h2 class="section-title">📊 RecipeBridge [Lv4] 핵심 사업 KPI — 오케스트레이터 중앙 관리</h2>
+        </div>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px;">
+          <!-- KPI 1 -->
+          <div class="dashboard-card" style="padding: 20px; border-left: 4px solid #d4af37;">
+            <div style="font-size: 13px; color: var(--ink-secondary); font-weight: 600;">🚩 [Lv4] 마일스톤 달성률</div>
+            <div style="font-size: 28px; font-weight: 700; color: #d4af37; margin: 8px 0;">75.0%</div>
+            <div style="background: rgba(212,175,55,0.15); height: 10px; border-radius: 5px; overflow: hidden;">
+              <div style="width: 75%; background: #d4af37; height: 100%;"></div>
+            </div>
+            <div style="font-size: 11px; color: var(--ink-tertiary); margin-top: 6px;">목표: Lv4 마일스톤 완수 (Aegis 관리)</div>
+          </div>
+          <!-- KPI 2 -->
+          <div class="dashboard-card" style="padding: 20px; border-left: 4px solid #10b981;">
+            <div style="font-size: 13px; color: var(--ink-secondary); font-weight: 600;">🌐 상업용 웹 앱 (/app/) 구축률</div>
+            <div style="font-size: 28px; font-weight: 700; color: #10b981; margin: 8px 0;">80.0%</div>
+            <div style="background: rgba(16,185,129,0.15); height: 10px; border-radius: 5px; overflow: hidden;">
+              <div style="width: 80%; background: #10b981; height: 100%;"></div>
+            </div>
+            <div style="font-size: 11px; color: var(--ink-tertiary); margin-top: 6px;">모달 3종 및 스마트 인증 연동 완료</div>
+          </div>
+          <!-- KPI 3 -->
+          <div class="dashboard-card" style="padding: 20px; border-left: 4px solid #3b82f6;">
+            <div style="font-size: 13px; color: var(--ink-secondary); font-weight: 600;">📜 팩트 검증 산출물 문서 수</div>
+            <div style="font-size: 28px; font-weight: 700; color: #3b82f6; margin: 8px 0;">28건</div>
+            <div style="background: rgba(59,130,246,0.15); height: 10px; border-radius: 5px; overflow: hidden;">
+              <div style="width: 70%; background: #3b82f6; height: 100%;"></div>
+            </div>
+            <div style="font-size: 11px; color: var(--ink-tertiary); margin-top: 6px;">Wiki & Code 100% 검증 원본 데이터</div>
+          </div>
+          <!-- KPI 4 -->
+          <div class="dashboard-card" style="padding: 20px; border-left: 4px solid #a855f7;">
+            <div style="font-size: 13px; color: var(--ink-secondary); font-weight: 600;">⚡ 24/7 자율 크론 & VPS 상태</div>
+            <div style="font-size: 28px; font-weight: 700; color: #a855f7; margin: 8px 0;">100%</div>
+            <div style="background: rgba(168,85,247,0.15); height: 10px; border-radius: 5px; overflow: hidden;">
+              <div style="width: 100%; background: #a855f7; height: 100%;"></div>
+            </div>
+            <div style="font-size: 11px; color: var(--ink-tertiary); margin-top: 6px;">1시간 주기 자율 엔진 정상 기동 중</div>
           </div>
         </div>
       </section>
@@ -212,7 +258,7 @@
           <span class="sprint-banner-icon">🚀</span>
           <div>
             <strong>전 에이전트 스프린트 완료!</strong>
-            <span>모든 태스크 100% 달성 — 다음 단계(Lv2)로 자동 전환되었습니다.</span>
+            <span>모든 태스크 100% 달성 — 다음단계(Lv4)로 자동 전환되었습니다.</span>
           </div>
           <button onclick="this.closest('.sprint-advance-banner').classList.add('hidden')">✕</button>
         </div>
@@ -593,6 +639,6 @@
     </main>
   </div>
 
-  <script src="dashboard.js?v=20260723_v13"></script>
+  <script src="dashboard.js?v=20260723_v14"></script>
 </body>
 </html>

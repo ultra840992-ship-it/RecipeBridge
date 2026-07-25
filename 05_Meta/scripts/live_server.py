@@ -364,9 +364,10 @@ class LiveChatRequestHandler(BaseHTTPRequestHandler):
             results.sort(key=lambda x: x["mtime"], reverse=True)
             
             self.send_response(200)
-            self.send_header("Content-Type", "application/json")
+            self.send_header("Content-Type", "application/json; charset=utf-8")
             self.send_header("Access-Control-Allow-Origin", "*")
             self.end_headers()
+            self.wfile.write(json.dumps({"results": results}, ensure_ascii=False).encode("utf-8"))
         elif clean_path.startswith("/api/read_wiki"):
             query_components = urllib.parse.parse_qs(urllib.parse.urlparse(self.path).query)
             file_path_param = query_components.get("path", [""])[0]
