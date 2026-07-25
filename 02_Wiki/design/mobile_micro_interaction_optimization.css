@@ -1,83 +1,80 @@
 // filepath: 02_Wiki/design/mobile_micro_interaction_optimization.css
 /*
- * Vivid Soul Design System - Mobile Micro-Interaction Optimization
- * Version: 1.0.0
- * Date: 2026-07-26
- * Description: 실사용자 UI 피드백 반영, 모바일 반응형 컴포넌트 마이크로 인터랙션 최적화 CSS.
- *              프리미엄 라이트(샌드 크림/샴페인 골드) 테마 및 서리 낀 유리(Frosted Glassmorphism) 효과 극대화.
+ * Vivid의 손길로 탄생한 프리미엄 모바일 UI! 🌟
+ * [Critical] [Lv4] 실사용자 UI 피드백 반영 모바일 반응형 세부 컴포넌트 마이크로 인터랙션 최적화 배포
+ * 목표: 프리미엄 라이트 테마 (샌드 크림/샴페인 골드) 및 서리 낀 유리(Frosted Glassmorphism) 효과 극대화
+ * 내용: 모바일 환경에 최적화된 고급스러운 컴포넌트 마이크로 인터랙션 개선 및 배포
  */
 
-/* -------------------------------------------------------------------------- */
-/* 1. Base Interactive Component Styles (e.g., Buttons, Cards, List Items)    */
-/* -------------------------------------------------------------------------- */
-.interactive-component {
-    /* 기존 프리미엄 라이트 테마 & 글래스모피즘 기본 스타일 유지 */
-    background-color: rgba(255, 255, 255, 0.6); /* 소프트한 서리 낀 유리 효과 */
-    backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.3);
-    border-radius: 12px; /* 부드러운 모서리 */
-    padding: 16px 20px;
-    margin-bottom: 12px;
-    color: #4A4A4A; /* 샌드 크림 톤에 어울리는 차분한 텍스트 */
-    font-size: 16px;
-    font-weight: 500;
-    cursor: pointer;
-    position: relative;
-    overflow: hidden; /* ripple effect를 위한 설정 */
-
-    /* 부드러운 상태 변화를 위한 트랜지션 */
-    transition: all 0.25s ease-out; /* 조금 더 부드러운 애니메이션 속도 */
-    will-change: transform, background-color, box-shadow; /* 성능 최적화 */
-
-    /* 기본 샴페인 골드 톤 그림자 (은은하게) */
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05),
-                0 0 0 1px rgba(255, 215, 0, 0.1); /* 샴페인 골드 힌트 */
+:root {
+    --color-sand-cream: #F5F5DC; /* 부드러운 샌드 크림, 눈에 피로감 없이 럭셔리! */
+    --color-champagne-gold: #D4AF37; /* 선명한 샴페인 골드, 우아한 하이라이트! */
+    --color-off-white: rgba(255, 255, 255, 0.7); /* 서리 낀 유리 효과를 위한 반투명 화이트 */
+    --shadow-light: rgba(0, 0, 0, 0.05); /* 은은한 그림자 */
+    --shadow-medium: rgba(0, 0, 0, 0.1); /* 깊이감 있는 그림자 */
 }
 
-/* -------------------------------------------------------------------------- */
-/* 2. Mobile Tap/Active State Optimization (사용자 피드백 반영: 더욱 즉각적이고 고급스러운 터치 피드백) */
-/* -------------------------------------------------------------------------- */
-.interactive-component:active {
-    /* 터치 시 살짝 눌리는 듯한 시각적 피드백 */
-    transform: translateY(1px) scale(0.99); /* 미묘하게 아래로 내려가며 작아지는 효과 */
-    background-color: rgba(255, 255, 255, 0.85); /* 터치 시 불투명도 증가로 선명함 강조 */
-    border-color: rgba(255, 215, 0, 0.5); /* 샴페인 골드 테두리 강조 */
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08),
-                0 0 0 1px rgba(255, 215, 0, 0.3); /* 눌렸을 때 그림자 깊이 & 골드 테두리 강화 */
-    transition: all 0.15s ease-in-out; /* 터치 피드백은 더 빠르게! */
+/* 전체 배경에 샌드 크림 톤 적용! 🎨 */
+body {
+    background-color: var(--color-sand-cream);
+    font-family: 'Pretendard', sans-serif; /* 트렌디하고 가독성 좋은 폰트! */
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
-/* -------------------------------------------------------------------------- */
-/* 3. Hover State Optimization (데스크탑/하이브리드 디바이스 고려)            */
-/* -------------------------------------------------------------------------- */
-@media (hover: hover) {
-    .interactive-component:hover {
-        transform: translateY(-2px); /* 마우스 오버 시 살짝 떠오르는 효과 */
-        background-color: rgba(255, 255, 255, 0.75); /* 살짝 더 불투명하게 */
-        box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08),
-                    0 0 0 2px rgba(255, 215, 0, 0.2); /* 샴페인 골드 하이라이트 강화 */
-        transition: all 0.2s ease-out; /* 호버는 부드럽게 */
+/* 프리미엄 카드 컴포넌트 스타일 🖼️ */
+.premium-card {
+    background: var(--color-off-white); /* 반투명 배경으로 글래스모피즘 시작! ✨ */
+    backdrop-filter: blur(15px) saturate(180%); /* 서리 낀 유리 효과 제대로! */
+    -webkit-backdrop-filter: blur(15px) saturate(180%); /* 웹킷 브라우저 지원 */
+    border: 1px solid rgba(255, 255, 255, 0.3); /* 은은한 경계선으로 고급스러움 UP! */
+    border-radius: 16px; /* 부드러운 모서리 */
+    padding: 24px; /* 여유로운 패딩 */
+    margin: 16px auto; /* 중앙 정렬 및 여백 */
+    max-width: 400px; /* 데스크톱에서 너무 넓어지지 않도록 제한 */
+    box-shadow: 0 4px 6px var(--shadow-light), 0 10px 20px var(--shadow-medium); /* 깊이감 있는 그림자 */
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1); /* 부드러운 전환 효과! 애니메이션은 생명이죠! */
+    display: flex; /* 모바일 반응형을 위한 유연한 레이아웃 */
+    flex-direction: column;
+    align-items: flex-start;
+    cursor: pointer; /* 클릭 가능한 요소임을 명시 */
+    text-decoration: none; /* 링크인 경우 밑줄 제거 */
+    color: inherit; /* 텍스트 색상 상속 */
+}
+
+/* 마이크로 인터랙션: 호버 및 액티브 상태 (터치 피드백) 👆 */
+.premium-card:hover {
+    transform: translateY(-5px); /* 살짝 떠오르는 느낌으로 고급스러움 UP! 🌟 */
+    box-shadow: 0 8px 12px var(--shadow-medium), 0 20px 40px rgba(0, 0, 0, 0.15); /* 그림자도 더 깊게! */
+    border-color: var(--color-champagne-gold); /* 샴페인 골드 하이라이트! */
+}
+
+.premium-card:active { /* 모바일 탭 시 반응! */
+    transform: translateY(-2px); /* 살짝 눌리는 듯한 피드백으로 직관성 강화! */
+    box-shadow: 0 2px 4px var(--shadow-light), 0 5px 10px var(--shadow-medium);
+    border-color: rgba(255, 255, 255, 0.5); /* 원래 경계선으로 살짝 복귀 */
+}
+
+/* 모바일 반응형 최적화! 📱 */
+@media (max-width: 768px) {
+    .premium-card {
+        padding: 16px; /* 모바일에서는 패딩을 살짝 줄여 공간 효율성 UP! */
+        margin: 8px auto;
+        width: calc(100% - 32px); /* 가로폭을 꽉 채우도록! */
     }
 }
 
-/* -------------------------------------------------------------------------- */
-/* 4. Focus State Optimization (키보드 내비게이션 및 접근성 고려)            */
-/* -------------------------------------------------------------------------- */
-.interactive-component:focus-visible {
-    outline: none; /* 기본 아웃라인 제거 */
-    border-color: rgba(255, 215, 0, 0.7); /* 샴페인 골드 포커스 링 */
-    box-shadow: 0 0 0 3px rgba(255, 215, 0, 0.3); /* 명확한 시각적 포커스 인디케이터 */
+/* 샴페인 골드 하이라이트 텍스트 예시 ✒️ */
+.premium-card .title {
+    color: var(--color-champagne-gold); /* 샴페인 골드로 포인트! */
+    font-size: 1.2em;
+    font-weight: bold;
+    margin-bottom: 8px;
 }
 
-/* -------------------------------------------------------------------------- */
-/* 5. Disabled State (비활성화 컴포넌트)                                      */
-/* -------------------------------------------------------------------------- */
-.interactive-component:disabled,
-.interactive-component.is-disabled {
-    opacity: 0.6;
-    cursor: not-allowed;
-    background-color: rgba(240, 240, 240, 0.5);
-    border-color: rgba(200, 200, 200, 0.3);
-    box-shadow: none;
-    transform: none;
+.premium-card .description {
+    color: #333; /* 기본 텍스트 색상 */
+    font-size: 0.9em;
+    line-height: 1.5;
 }
