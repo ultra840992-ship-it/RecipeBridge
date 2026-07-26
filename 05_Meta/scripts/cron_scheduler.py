@@ -212,29 +212,8 @@ def auto_plan_next_milestone(plan_path):
         f.writelines(new_lines)
 
     creds = load_credentials()
-    telegram_token = creds.get("telegram_token")
-    telegram_chat_id = creds.get("telegram_chat_id")
-    
-    reports = [
-        ("Aegis 이지스", "[Lv3] 마일스톤 검수를 조기 완수하여, 정식 런칭 트래픽 대응 [Lv4] 모니터링 체계 배포 일정을 수립하고 자발적 수행에 착수합니다."),
-        ("Nova 노바", "[Lv3] 기획 검수가 조기 종료되어 [Lv4] B2B 채용 연계 마이크로 과제 확장 기획서 수립 일정을 자체 확정하고 실행합니다."),
-        ("Vivid 비비드", "[Lv3] Pretendard 폰트 최적화를 마치고 [Lv4] 모바일 반응형 UI 마이크로 인터랙션 최적화 일정을 수립하여 진행합니다."),
-        ("Bitz 비츠", "[Lv3] 프론트 최적화를 마치고 [Lv4] Sentry 에러 트래킹 연동 및 API 예외 처리 강화 개발 일정을 자체 수립하여 착수합니다."),
-        ("Echo 에코", "[Lv3] 마케팅 자동 배포 완수 후 [Lv4] 서치콘솔 및 UTM 퍼널 분석 리포팅 일정을 수립하여 자발적으로 수행합니다."),
-        ("Carey 케리", "[Lv3] 이탈 메일링 연동 완료 후 [Lv4] CS 피드백 티켓팅 시스템 동기화 일정을 수립하고 수행에 착수합니다."),
-        ("Insight 인사이트", "[Lv3] 비교 분석 완료 후 [Lv4] 유저 체류시간 증대 차별화 보고서 수립 일정을 수립하여 자발적 진행 중입니다."),
-        ("Verity 베리티", "[Lv3] QA 감사를 마치고 [Lv4] 실서버 배포 후 정밀 보안 침투 테스트(SQLi/XSS) 일정을 자체 수립하고 검수 작업을 시작합니다.")
-    ]
-    
-    if telegram_token and telegram_chat_id:
-        print("[Telegram Individual Reporting] 8명 에이전트 개별 보고 발송 시작...")
-        for agent_title, message in reports:
-            msg_text = f"📢 *[{agent_title}] 개별 업무 보고*\n\n대표님! {message}\n\n📅 *타겟 일정*: [Lv4] 마일스톤\n📊 *상태*: 대시보드 간트표 자동 반영 완료"
-            send_telegram_message(telegram_token, telegram_chat_id, msg_text)
-            time.sleep(1)
-            
-    append_to_log_md("system", "auto_plan", "8인 에이전트 일정 조기 완료에 따른 [Lv4] 마일스톤 자동 수립 및 텔레그램 개별 보고 완료", "[[02_Wiki/projects/recipebridge_action_plan.md]]")
-    print("[SUCCESS] [Lv4] 마일스톤 자동 수립 및 텔레그램 개별 보고가 완료되었습니다!")
+    append_to_log_md("system", "auto_plan", "8인 에이전트 일정 조기 완료에 따른 [Lv4] 마일스톤 자동 수립", "[[02_Wiki/projects/recipebridge_action_plan.md]]")
+    print("[SUCCESS] [Lv4] 마일스톤 자발적 액션 플랜 갱신이 완료되었습니다. (스팸 텔레그램 방지 처리)")
 
 def execute_daily_routine():
     """Real Business Mode: Parallel execution for all agents."""
@@ -335,28 +314,30 @@ def execute_daily_routine():
             print(f"   └─ 파일 저장 성공: {clean_path}")
             
         lines[line_idx] = lines[line_idx].replace("- [ ]", "- [x]", 1)
-        completed_reports.append(f"- {agent}: {task} (파일: {', '.join(agent_saved) if agent_saved else '없음'})")
+        completed_reports.append(f"- [{agent.upper()}] {task}")
         
         links = f"[[{agent_saved[0]}]]" if agent_saved else ""
         append_to_log_md(agent, "task", f"태스크 완료: {task}", links)
+
+        # ★ 사장님 규칙: 실제로 개별 업무가 최종 완수(종료) 되었을 때만 텔레그램 1회 발송
+        if creds.get("telegram_token") and creds.get("telegram_chat_id"):
+            finish_msg = (
+                f"📢 *[{agent.upper()} 업무 완료 보고]*\n\n"
+                f"대표님! 지시하신 업무가 성공적으로 종료(완료)되었습니다.\n\n"
+                f"📌 *완료 태스크*: {task}\n"
+                f"📜 *산출물 파일*: {', '.join(agent_saved) if agent_saved else 'Wiki 저장소 기록'}\n"
+                f"📊 *상태*: 대시보드 및 log.md 반영 완료"
+            )
+            send_telegram_message(creds.get("telegram_token"), creds.get("telegram_chat_id"), finish_msg)
+            time.sleep(1)
         
     with open(plan_path, "w", encoding="utf-8") as f:
         f.writelines(lines)
         
     if not completed_reports:
         return
-        
-    aegis_prompt = (
-        "다음은 현재 주기에 완료된 각 에이전트들의 태스크 결과 요약입니다:\n" +
-        "\n".join(completed_reports) +
-        "\n\n마스터로서 나머지 에이전트들의 수행 결과를 모니터링하고, "
-        "전체 사업의 방향성에 어긋나지 않는지 어드바이징 하는 짧고 명확한 사장님 보고용(텔레그램) 브리핑 문구를 작성해 주세요."
-    )
-    aegis_reply = call_agent_api("aegis", aegis_prompt)
-    
-    # 매시간 사장님께 올리는 불필요한 텔레그램 스팸은 차단하고, 대시보드가 유기적으로 자동 갱신되도록 조치
-    print("\n[Dashboard Sync] 사업 현황 대시보드가 유기적으로 동적 업데이트되었습니다.")
-    
+
+    print(f"\n[Task Completed] 총 {len(completed_reports)}건의 태스크가 완료되어 텔레그램 보고 및 대시보드 갱신이 완료되었습니다.")
     print("\n[Git Sync] 자동 저장 (git push)...")
     os.system("git add .")
     os.system('git commit -m "Auto-sync: Parallel agents completed tasks"')
