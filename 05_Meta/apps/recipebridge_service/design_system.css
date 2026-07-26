@@ -1,0 +1,459 @@
+/* ==========================================================================
+   BÉCANE STYLE REFERENCE — RECIPEBRIDGE COMMERCIAL APP DESIGN SYSTEM
+   Theme: Light Gallery Canvas (01_Raw/design md Spec)
+   ========================================================================== */
+
+:root {
+  /* Colors */
+  --color-bone-white: #f6f6f6;
+  --color-divider-grey: #e6e6e6;
+  --color-off-black: #0a0a0a;
+  --color-pure-white: #ffffff;
+  --color-muted-grey: #b2b2b2;
+  --color-signal-red: #ff0000;
+
+  /* Typography — Font Families & Rules */
+  --font-eurostile-becane: 'Eurostile Becane', 'Helvetica Neue', Arial, ui-sans-serif, system-ui, sans-serif;
+  --text-display: 30px;
+  --leading-display: 1.0;
+  --tracking-display: 1.2px;
+
+  /* Spacing Scale */
+  --spacing-7: 7px;
+  --spacing-8: 8px;
+  --spacing-9: 9px;
+  --spacing-10: 10px;
+  --spacing-20: 20px;
+  --spacing-100: 100px;
+}
+
+/* Reset & Base Canvas */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  border-radius: 0px !important; /* Sharp 0px Edges Required */
+}
+
+body {
+  background-color: var(--color-bone-white);
+  color: var(--color-off-black);
+  font-family: var(--font-eurostile-becane);
+  font-size: 12px;
+  line-height: 1.4;
+  -webkit-font-smoothing: antialiased;
+  min-height: 100vh;
+}
+
+/* Sticky Header Bar (86px, Hairline Bottom Border) */
+.becane-header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  height: 64px;
+  background-color: var(--color-pure-white);
+  border-bottom: 0.5px solid var(--color-divider-grey);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 20px;
+}
+
+.becane-brand-cluster {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.becane-brand-logo {
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--color-off-black);
+  text-decoration: none;
+}
+
+.becane-nav-links {
+  display: flex;
+  gap: 16px;
+  list-style: none;
+}
+
+.becane-nav-link {
+  font-size: 9px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--color-off-black);
+  text-decoration: none;
+  padding: 4px 0;
+  border-bottom: 2px solid transparent;
+  cursor: pointer;
+  transition: border-color 0.2s, color 0.2s;
+}
+
+.becane-nav-link.active, .becane-nav-link:hover {
+  border-bottom-color: var(--color-off-black);
+}
+
+.becane-header-right {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.becane-stitch-badge {
+  font-size: 8px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--color-signal-red);
+  background-color: rgba(255, 0, 0, 0.08);
+  padding: 4px 8px;
+  border: 0.5px solid var(--color-signal-red);
+}
+
+.becane-cert-trigger-btn {
+  font-size: 9px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  background-color: var(--color-off-black);
+  color: var(--color-pure-white);
+  border: none;
+  padding: 8px 14px;
+  cursor: pointer;
+}
+
+.becane-cert-trigger-btn:hover {
+  background-color: #333333;
+}
+
+/* Page Hero Block */
+.becane-hero {
+  padding: 40px 20px 30px 20px;
+  border-bottom: 0.5px solid var(--color-divider-grey);
+  background-color: var(--color-bone-white);
+}
+
+.becane-hero-meta {
+  font-size: 8px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--color-muted-grey);
+  margin-bottom: 8px;
+}
+
+.becane-hero-title {
+  font-size: var(--text-display);
+  line-height: var(--leading-display);
+  letter-spacing: var(--tracking-display);
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--color-off-black);
+  margin-bottom: 12px;
+}
+
+.becane-hero-desc {
+  font-size: 11px;
+  color: var(--color-off-black);
+  max-width: 800px;
+  line-height: 1.6;
+}
+
+.becane-signal-bar {
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  background-color: var(--color-signal-red);
+  margin-right: 8px;
+  vertical-align: middle;
+}
+
+/* Tab Filter Bar */
+.becane-filter-bar {
+  display: flex;
+  background-color: var(--color-pure-white);
+  border-bottom: 0.5px solid var(--color-divider-grey);
+  padding: 0 20px;
+}
+
+.becane-filter-btn {
+  font-size: 9px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  padding: 14px 20px;
+  background: none;
+  border: none;
+  border-bottom: 2px solid transparent;
+  color: var(--color-muted-grey);
+  cursor: pointer;
+}
+
+.becane-filter-btn.active {
+  color: var(--color-off-black);
+  border-bottom-color: var(--color-signal-red);
+}
+
+/* Main Layout Stage */
+.becane-stage {
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 30px 20px;
+}
+
+.becane-section-title-strip {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  border-bottom: 0.5px solid var(--color-divider-grey);
+  padding-bottom: 10px;
+  margin-bottom: 20px;
+}
+
+.becane-section-headline {
+  font-size: 14px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--color-off-black);
+}
+
+.becane-section-count {
+  font-size: 8px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--color-muted-grey);
+}
+
+/* Grid & Cards */
+.becane-grid-3 {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+  gap: 20px;
+  margin-bottom: 40px;
+}
+
+.becane-card {
+  background-color: var(--color-pure-white);
+  border: 0.5px solid var(--color-divider-grey);
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transition: border-color 0.2s;
+}
+
+.becane-card:hover {
+  border-color: var(--color-off-black);
+}
+
+.becane-card-tag-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.becane-card-tag {
+  font-size: 8px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--color-off-black);
+  background-color: var(--color-bone-white);
+  padding: 3px 6px;
+  border: 0.5px solid var(--color-divider-grey);
+}
+
+.becane-card-price {
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--color-signal-red);
+}
+
+.becane-card-title {
+  font-size: 13px;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--color-off-black);
+  margin-bottom: 8px;
+  line-height: 1.3;
+}
+
+.becane-card-desc {
+  font-size: 11px;
+  color: #555555;
+  margin-bottom: 16px;
+  line-height: 1.5;
+}
+
+.becane-card-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-top: 0.5px solid var(--color-divider-grey);
+  padding-top: 12px;
+}
+
+.becane-action-btn {
+  font-size: 8px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  padding: 8px 12px;
+  background-color: var(--color-off-black);
+  color: var(--color-pure-white);
+  border: none;
+  cursor: pointer;
+}
+
+.becane-action-btn:hover {
+  background-color: #333333;
+}
+
+.becane-action-btn-outline {
+  font-size: 8px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  padding: 8px 12px;
+  background-color: transparent;
+  color: var(--color-off-black);
+  border: 0.5px solid var(--color-off-black);
+  cursor: pointer;
+}
+
+.becane-action-btn-outline:hover {
+  background-color: var(--color-bone-white);
+}
+
+/* AI Recipe Builder Component Box */
+.becane-builder-box {
+  background-color: var(--color-pure-white);
+  border: 0.5px solid var(--color-divider-grey);
+  padding: 24px;
+  margin-bottom: 40px;
+}
+
+.becane-builder-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+@media (max-width: 768px) {
+  .becane-builder-grid { grid-template-columns: 1fr; }
+}
+
+.becane-form-group {
+  margin-bottom: 16px;
+}
+
+.becane-form-label {
+  display: block;
+  font-size: 8px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--color-off-black);
+  margin-bottom: 6px;
+}
+
+.becane-select, .becane-input, .becane-textarea {
+  width: 100%;
+  font-family: var(--font-eurostile-becane);
+  font-size: 11px;
+  padding: 8px 10px;
+  background-color: var(--color-bone-white);
+  border: 0.5px solid var(--color-divider-grey);
+  color: var(--color-off-black);
+}
+
+.becane-select:focus, .becane-input:focus, .becane-textarea:focus {
+  outline: none;
+  border-color: var(--color-off-black);
+}
+
+.becane-prompt-preview {
+  background-color: var(--color-off-black);
+  color: #00ff66;
+  font-family: monospace;
+  font-size: 11px;
+  padding: 16px;
+  min-height: 180px;
+  white-space: pre-wrap;
+  word-break: break-all;
+}
+
+/* Modal Popup (Bécane Style) */
+.becane-modal-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(10, 10, 10, 0.6);
+  z-index: 200;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.becane-modal-backdrop.hidden {
+  display: none;
+}
+
+.becane-modal-content {
+  background-color: var(--color-pure-white);
+  border: 0.5px solid var(--color-off-black);
+  width: 100%;
+  max-width: 600px;
+  padding: 24px;
+  box-shadow: none;
+}
+
+.becane-modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 0.5px solid var(--color-divider-grey);
+  padding-bottom: 12px;
+  margin-bottom: 16px;
+}
+
+.becane-modal-title {
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--color-off-black);
+}
+
+.becane-modal-close-btn {
+  background: none;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+  color: var(--color-off-black);
+}
+
+/* Footer Strip */
+.becane-footer {
+  border-top: 0.5px solid var(--color-divider-grey);
+  background-color: var(--color-pure-white);
+  padding: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 8px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--color-muted-grey);
+}

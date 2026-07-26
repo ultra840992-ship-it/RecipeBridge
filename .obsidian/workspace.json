@@ -190,8 +190,9 @@
   },
   "active": "26dbb9bbb2f86c34",
   "lastOpenFiles": [
-    "log.md",
     "index.md",
+    "log.md",
+    "02_Wiki/dev-tasks/task_result_20260721_205116_1.md",
     "01_Raw/episode_2_token_optimization.md",
     "01_Raw/episode_1_item_discovery.md",
     "01_Raw/episode_3_multi_agent_setup.md",
@@ -216,7 +217,6 @@
     "_shared/design-basis.md",
     "02_Wiki/sources/무제.base",
     "02_Wiki/sources/viral_marketing_messages_a_alpha_launch.md",
-    "_shared/orchestrator-rules.md",
     "02_Wiki/cs-scenarios",
     "backup_tmp/cron_scheduler.py",
     "backup_tmp/live_server.py",
