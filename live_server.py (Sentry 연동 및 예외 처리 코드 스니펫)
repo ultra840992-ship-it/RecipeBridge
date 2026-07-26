@@ -1,0 +1,71 @@
+// filepath: live_server.py (Sentry 연동 및 예외 처리 코드 스니펫)
+import sentry_sdk
+from flask import Flask, jsonify, request
+import os
+
+# Sentry DSN은 환경 변수에서 로드하는 것이 보안상 좋다.
+SENTRY_DSN = os.getenv("SENTRY_DSN", "YOUR_SENTRY_DSN_HERE")
+
+sentry_sdk.init(
+    dsn=SENTRY_DSN,
+    traces_sample_rate=1.0,
+    environment="production" # 배포 환경 명시
+)
+
+app = Flask(__name__)
+
+@app.route('/api/payment', methods=['POST'])
+def process_payment():
+    try:
+        data = request.get_json()
+        user_id = data.get('user_id')
+        amount = data.get('amount')
+
+        if not user_id or not amount:
+            return jsonify({"status": "error", "message": "user_id 또는 amount가 누락되었습니다."}), 400
+
+        if not isinstance(amount, (int, float)) or amount <= 0:
+            raise ValueError("유효하지 않거나 0 이하의 결제 금액입니다.")
+        
+        # 실제 결제 처리 로직 (외부 API 연동 등)
+        # 예: external_payment_gateway.charge(user_id, amount)
+        # 이 과정에서 발생하는 모든 예외는 아래 except 블록에서 처리된다.
+        
+        return jsonify({"status": "success", "message": f"user {user_id}의 {amount} 결제가 완료되었습니다."}), 200
+
+    except ValueError as e:
+        sentry_sdk.capture_exception(e)
+        return jsonify({"status": "error", "message": str(e)}), 400
+    except Exception as e:
+        sentry_sdk.capture_exception(e) # 예상치 못한 모든 서버 오류 Sentry 전송
+        return jsonify({"status": "error", "message": "결제 처리 중 예상치 못한 오류가 발생했습니다."}), 500
+
+@app.route('/api/match', methods=['POST'])
+def find_match():
+    try:
+        data = request.get_json()
+        user_id = data.get('user_id')
+        preferences = data.get('preferences')
+
+        if not user_id or not preferences:
+            return jsonify({"status": "error", "message": "user_id 또는 preferences가 누락되었습니다."}), 400
+
+        if not isinstance(preferences, list) or not preferences:
+            raise TypeError("preferences는 비어있지 않은 리스트여야 합니다.")
+
+        # 실제 매칭 로직 (복잡한 알고리즘, DB 조회 등)
+        # 예: matched_users = matching_engine.find_best_match(user_id, preferences)
+        # 이 과정에서 발생하는 모든 예외는 아래 except 블록에서 처리된다.
+
+        matched_users = ["matched_user_1", "matched_user_2"] # 더미 결과
+        return jsonify({"status": "success", "message": "매칭이 성공적으로 이루어졌습니다.", "matches": matched_users}), 200
+
+    except TypeError as e:
+        sentry_sdk.capture_exception(e)
+        return jsonify({"status": "error", "message": str(e)}), 400
+    except Exception as e:
+        sentry_sdk.capture_exception(e) # 예상치 못한 모든 서버 오류 Sentry 전송
+        return jsonify({"status": "error", "message": "매칭 처리 중 예상치 못한 오류가 발생했습니다."}), 500
+
+if __name__ == '__main__':
+    app.run(debug=False, port=5000)
