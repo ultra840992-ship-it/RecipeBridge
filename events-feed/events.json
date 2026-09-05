@@ -1,6 +1,6 @@
 {
   "feedVersion": "2.0.0",
-  "generatedAt": "2026-09-05T11:00:00",
+  "generatedAt": "2026-09-05T12:00:00",
   "eventCount": 16,
   "events": [
     {
@@ -98,7 +98,7 @@
       "reservationCloseAt": "2026-10-09T20:54:17",
       "reservationUrl": "https://www.hangeul.go.kr",
       "officialUrl": "https://www.hangeul.go.kr",
-      "verificationStatus": "SUPPRESSED",
+      "verificationStatus": "OFFICIAL_VERIFIED",
       "alertPriorityScore": 74.6,
       "recommendationReasons": "AGE_MATCH,NEARBY,RESERVATION_SOON,FREE_ADMISSION",
       "lastVerifiedAt": "2026-08-30"
@@ -173,7 +173,7 @@
       "reservationCloseAt": "2026-12-08T20:54:17",
       "reservationUrl": "https://www.sciport.or.kr",
       "officialUrl": "https://www.sciport.or.kr",
-      "verificationStatus": "SUPPRESSED",
+      "verificationStatus": "OFFICIAL_VERIFIED",
       "alertPriorityScore": 63.0,
       "recommendationReasons": "AGE_MATCH,RESERVATION_SOON",
       "lastVerifiedAt": "2026-08-30"
@@ -298,7 +298,7 @@
       "reservationCloseAt": "2026-12-08T20:54:17",
       "reservationUrl": "https://www.songpa.go.kr",
       "officialUrl": "https://www.songpa.go.kr",
-      "verificationStatus": "SUPPRESSED",
+      "verificationStatus": "OFFICIAL_VERIFIED",
       "alertPriorityScore": 44.4,
       "recommendationReasons": "AGE_MATCH",
       "lastVerifiedAt": "2026-08-30"
@@ -323,7 +323,7 @@
       "reservationCloseAt": "2026-11-18T20:54:17",
       "reservationUrl": "https://www.insiseol.or.kr",
       "officialUrl": "https://www.insiseol.or.kr",
-      "verificationStatus": "SUPPRESSED",
+      "verificationStatus": "OFFICIAL_VERIFIED",
       "alertPriorityScore": 41.1,
       "recommendationReasons": "AGE_MATCH",
       "lastVerifiedAt": "2026-08-30"
@@ -348,7 +348,7 @@
       "reservationCloseAt": "2026-10-19T20:54:17",
       "reservationUrl": "https://home.pen.go.kr",
       "officialUrl": "https://home.pen.go.kr",
-      "verificationStatus": "SUPPRESSED",
+      "verificationStatus": "OFFICIAL_VERIFIED",
       "alertPriorityScore": 38.1,
       "recommendationReasons": "AGE_MATCH,FREE_ADMISSION",
       "lastVerifiedAt": "2026-08-30"
@@ -373,7 +373,7 @@
       "reservationCloseAt": "2026-11-18T20:54:17",
       "reservationUrl": "https://www.lucida.or.kr",
       "officialUrl": "https://www.lucida.or.kr",
-      "verificationStatus": "SUPPRESSED",
+      "verificationStatus": "OFFICIAL_VERIFIED",
       "alertPriorityScore": 37.7,
       "recommendationReasons": "AGE_MATCH",
       "lastVerifiedAt": "2026-08-30"
@@ -398,11 +398,11 @@
       "reservationCloseAt": "2026-11-18T20:54:17",
       "reservationUrl": "https://www.dnsm.or.kr",
       "officialUrl": "https://www.dnsm.or.kr",
-      "verificationStatus": "SUPPRESSED",
+      "verificationStatus": "OFFICIAL_VERIFIED",
       "alertPriorityScore": 37.4,
       "recommendationReasons": "AGE_MATCH",
       "lastVerifiedAt": "2026-08-30"
     }
   ],
-  "feedChecksum": "29b96e5b3c9d9a4d16635bd3944669cdebda2b4e6e41446d1ed2acc50dc12cb1"
+  "feedChecksum": "51f3a3bf6e6af57ff0bec26f5dbbdf4977060d39f52819f6eca43d0eb87f98b1"
 }
