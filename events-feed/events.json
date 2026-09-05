@@ -404,5 +404,6 @@
       "lastVerifiedAt": "2026-08-30"
     }
   ],
-  "feedChecksum": "51f3a3bf6e6af57ff0bec26f5dbbdf4977060d39f52819f6eca43d0eb87f98b1"
+  "feedChecksum": "b29ad747169f0829d45bc184e64caf72d3628ad0e10c0c49461b09f4d1a1b7b9",
+  "feedSignature": "MEQCIECH+x8ZXmooYuub0vMlbRzpSI3R6TMI6LB9cQLSH/rhAiBOLRh1X7ar+3Ea2Mdixq+sE6bFy1wklALcAbGnUZqQAw=="
 }
